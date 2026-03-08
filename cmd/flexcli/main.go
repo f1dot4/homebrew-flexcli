@@ -15,11 +15,13 @@ var (
 	contextName string
 	rootCfg     *config.Config
 	resolvedCtx config.Context
+	Version     = "0.1.0"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "flexcli",
-	Short: "FlexCLI - FlexCoach Command Line Interface",
+	Use:     "flexcli",
+	Short:   "FlexCLI - FlexCoach Command Line Interface",
+	Version: Version,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		// 1. Load config
 		cfg, err := config.LoadConfig(cfgFile)
