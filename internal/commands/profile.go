@@ -21,6 +21,7 @@ func NewProfileCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.
 	cmd.AddCommand(newProfileGetCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newProfileDeleteCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newBodyCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newPreferencesCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewStatsCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewGoalCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewConstraintCmd(rootCfg, resolvedCtx))
@@ -73,6 +74,18 @@ func newBodyCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Com
 
 	cmd.AddCommand(newVitalsCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewThresholdCmd(rootCfg, resolvedCtx))
+
+	return cmd
+}
+
+func newPreferencesCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "preferences",
+		Short: "Manage user preferences (timezone, plan time, insight time)",
+	}
+
+	cmd.AddCommand(newPreferencesGetCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newPreferencesSetCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -242,6 +255,90 @@ func newVitalsSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobr
 	cmd.Flags().Float64Var(&height, "height", 0, "Height in cm")
 	cmd.Flags().StringVar(&sex, "sex", "", "Sex (male/female/other)")
 	cmd.Flags().StringVar(&birthdate, "birthdate", "", "Birthdate (YYYY-MM-DD)")
+	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+
+	return cmd
+}
+
+func newPreferencesGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var asJSON bool
+
+	cmd := &cobra.Command{
+		Use:   "get",
+		Short: "View current preferences",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			resp, err := client.Request("GET", "/api/profile", nil)
+			if err != nil {
+				return err
+			}
+
+			if asJSON {
+				fmt.Println(string(resp.Data))
+				return nil
+			}
+
+			var data map[string]interface{}
+			if err := json.Unmarshal(resp.Data, &data); err != nil {
+				return err
+			}
+
+			fmt.Println("⚙️ Current Preferences")
+			fmt.Printf("  • Timezone:     %v\n", data["timezone"])
+			fmt.Printf("  • Plan Time:    %v\n", data["daily_plan_time"])
+			fmt.Printf("  • Insight Time: %v\n", data["weekly_insight_time"])
+			return nil
+		},
+	}
+
+	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+	return cmd
+}
+
+func newPreferencesSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var timezone, planTime, insightTime string
+	var asJSON bool
+
+	cmd := &cobra.Command{
+		Use:   "set",
+		Short: "Update user preferences",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			updates := make(map[string]interface{})
+			if cmd.Flags().Changed("timezone") {
+				updates["timezone"] = timezone
+			}
+			if cmd.Flags().Changed("plan-time") {
+				updates["daily_plan_time"] = planTime
+			}
+			if cmd.Flags().Changed("insight-time") {
+				updates["weekly_insight_time"] = insightTime
+			}
+
+			if len(updates) == 0 {
+				return fmt.Errorf("no updates provided. Use flags --timezone, --plan-time, or --insight-time")
+			}
+
+			resp, err := client.Request("POST", "/api/profile/preferences", updates)
+			if err != nil {
+				return err
+			}
+
+			if asJSON {
+				fmt.Printf("{\"success\": true, \"message\": \"%s\"}\n", resp.Message)
+				return nil
+			}
+
+			fmt.Println("✅ Preferences updated successfully.")
+			return nil
+		},
+	}
+
+	cmd.Flags().StringVar(&timezone, "timezone", "", "Timezone (e.g., Europe/Vienna)")
+	cmd.Flags().StringVar(&planTime, "plan-time", "", "Daily plan delivery time (e.g., 19:30)")
+	cmd.Flags().StringVar(&insightTime, "insight-time", "", "Weekly insight delivery time (e.g., Sunday 18:00)")
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
 
 	return cmd
