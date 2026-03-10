@@ -12,10 +12,11 @@ import (
 var (
 	cfgFile     string
 	serverURL   string
+	apiKey      string
 	contextName string
 	rootCfg     *config.Config
 	resolvedCtx config.Context
-	Version     = "0.1.1"
+	Version     = "0.1.2"
 )
 
 var rootCmd = &cobra.Command{
@@ -47,7 +48,9 @@ var rootCmd = &cobra.Command{
 			resolvedCtx.ServerURL = serverURL
 		}
 
-		if envKey := os.Getenv("FLEXCLI_API_KEY"); envKey != "" {
+		if apiKey != "" {
+			resolvedCtx.APIKey = apiKey
+		} else if envKey := os.Getenv("FLEXCLI_API_KEY"); envKey != "" {
 			resolvedCtx.APIKey = envKey
 		}
 
@@ -57,7 +60,7 @@ var rootCmd = &cobra.Command{
 				return fmt.Errorf("no server URL configured. Run 'config' or use --server")
 			}
 			if resolvedCtx.APIKey == "" {
-				return fmt.Errorf("no API key configured. Run 'config' or use FLEXCLI_API_KEY")
+				return fmt.Errorf("no API key configured. Run 'config' or use FLEXCLI_API_KEY or --key")
 			}
 		}
 
@@ -68,6 +71,7 @@ var rootCmd = &cobra.Command{
 func main() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.flexcli.json)")
 	rootCmd.PersistentFlags().StringVar(&serverURL, "server", "", "FlexCoach server URL override")
+	rootCmd.PersistentFlags().StringVar(&apiKey, "key", "", "FlexCoach API key override")
 	rootCmd.PersistentFlags().StringVar(&contextName, "context", "", "Use specific context from config")
 
 	rootCmd.AddCommand(commands.NewConfigCmd(&cfgFile, &rootCfg))
