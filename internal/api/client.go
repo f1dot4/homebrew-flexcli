@@ -12,6 +12,7 @@ import (
 type Client struct {
 	BaseURL string
 	APIKey  string
+	IsAdmin bool
 	HTTP    *http.Client
 }
 
@@ -48,7 +49,11 @@ func (c *Client) Request(method, path string, body interface{}) (*APIResponse, e
 		return nil, err
 	}
 
-	req.Header.Set("X-API-Key", c.APIKey)
+	if c.IsAdmin {
+		req.Header.Set("X-Admin-Key", c.APIKey)
+	} else {
+		req.Header.Set("X-API-Key", c.APIKey)
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := c.HTTP.Do(req)
