@@ -1,16 +1,20 @@
 VERSION ?= $(shell git describe --tags --always --dirty)
 LDFLAGS := -X main.Version=$(VERSION)
 
-.PHONY: build clean release
+.PHONY: build clean release docs
 
 build:
 	mkdir -p bin
 	GOOS=darwin GOARCH=arm64 go build -ldflags "$(LDFLAGS)" -o bin/flexcli-mac ./cmd/flexcli/
 	GOOS=linux GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/flexcli-linux ./cmd/flexcli/
+	cp bin/flexcli-mac flexcli
+
+docs: build
+	python3 ../scripts/generate_cli_docs.py
 
 clean:
 	rm -rf bin/
-
+	rm -f flexcli
 release:
 	@if [ -z "$(v)" ]; then echo "Usage: make release v=0.1.x"; exit 1; fi
 	@echo "Releasing v$(v)..."

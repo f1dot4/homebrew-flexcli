@@ -37,7 +37,7 @@ func LoadConfig(path string) (*Config, error) {
 				Contexts: make(map[string]Context),
 			}, nil
 		}
-		return nil, err
+		return nil, fmt.Errorf("failed to read config file: %w", err)
 	}
 
 	// Try to unmarshal into new format
@@ -49,7 +49,8 @@ func LoadConfig(path string) (*Config, error) {
 	// Migration logic: handle old single-object format
 	var tempMap map[string]interface{}
 	if err := json.Unmarshal(data, &tempMap); err != nil {
-		return &Config{Contexts: make(map[string]Context)}, nil
+		// If we're here, the file exists but it's not valid JSON at all
+		return nil, fmt.Errorf("malformed config file (%s): invalid JSON syntax. Please check for missing commas or quotes", filepath.Base(path))
 	}
 
 	if _, ok := tempMap["server_url"]; ok {
@@ -59,7 +60,7 @@ func LoadConfig(path string) (*Config, error) {
 			Contexts: map[string]Context{
 				"default": {
 					ServerURL: fmt.Sprintf("%v", tempMap["server_url"]),
-					APIKey:         fmt.Sprintf("%v", tempMap["api_key"]),
+					APIKey:    fmt.Sprintf("%v", tempMap["api_key"]),
 				},
 			},
 		}
@@ -70,7 +71,6 @@ func LoadConfig(path string) (*Config, error) {
 		Contexts: make(map[string]Context),
 	}, nil
 }
-
 func SaveConfig(path string, cfg *Config) error {
 	if path == "" {
 		path = GetDefaultConfigPath()
