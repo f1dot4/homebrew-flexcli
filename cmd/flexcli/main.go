@@ -16,7 +16,7 @@ var (
 	contextName string
 	rootCfg     *config.Config
 	resolvedCtx config.Context
-	Version     = "0.1.8"
+	Version     = "0.1.9"
 )
 
 var rootCmd = &cobra.Command{
@@ -81,7 +81,8 @@ func main() {
 	rootCmd.AddCommand(commands.NewPlanCmd(&rootCfg, &resolvedCtx))
 	rootCmd.AddCommand(commands.NewAdminCmd(&rootCfg, &resolvedCtx))
 
-	if err := rootCmd.Execute(); err != nil {		fmt.Fprintln(os.Stderr, err)
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }

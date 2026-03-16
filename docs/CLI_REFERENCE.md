@@ -1,0 +1,1396 @@
+# FlexCLI Reference
+
+This document is auto-generated. Do not edit manually.
+
+### `flexcli`
+
+```
+FlexCLI - FlexCoach Command Line Interface
+
+Usage:
+  flexcli [command]
+
+Available Commands:
+  admin       System administration commands
+  completion  Generate the autocompletion script for the specified shell
+  config      Configure CLI settings for an environment
+  connect     Manage device connections and system status
+  context     Manage environments (contexts)
+  help        Help about any command
+  plan        Manage training plans
+  profile     User Profile Hub
+
+Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+  -h, --help             help for flexcli
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+  -v, --version          version for flexcli
+
+Use "flexcli [command] --help" for more information about a command.
+```
+
+### `flexcli admin`
+
+```
+System administration commands
+
+Usage:
+  flexcli admin [command]
+
+Available Commands:
+  backup      Manage system backups
+  settings    Manage global system settings
+  status      Get system-wide status and health
+  sync-all    Trigger background sync for all users
+  users       List all user profiles
+
+Flags:
+  -h, --help   help for admin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli admin [command] --help" for more information about a command.
+```
+
+### `flexcli admin backup`
+
+```
+Manage system backups
+
+Usage:
+  flexcli admin backup [command]
+
+Available Commands:
+  config      List backup configurations
+  create      Trigger immediate backup
+  list        List backup history
+  set-config  Update a backup configuration
+
+Flags:
+  -h, --help   help for backup
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli admin backup [command] --help" for more information about a command.
+```
+
+### `flexcli admin backup config`
+
+```
+List backup configurations
+
+Usage:
+  flexcli admin backup config [flags]
+
+Flags:
+  -h, --help   help for config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin backup create`
+
+```
+Trigger immediate backup
+
+Usage:
+  flexcli admin backup create [flags]
+
+Flags:
+  -h, --help   help for create
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin backup list`
+
+```
+List backup history
+
+Usage:
+  flexcli admin backup list [flags]
+
+Flags:
+  -h, --help   help for list
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin backup set-config`
+
+```
+Update a backup configuration
+
+Usage:
+  flexcli admin backup set-config [key] [value] [flags]
+
+Flags:
+  -h, --help   help for set-config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin settings`
+
+```
+Manage global system settings
+
+Usage:
+  flexcli admin settings [command]
+
+Available Commands:
+  list        List all global settings
+  set         Update a global setting
+
+Flags:
+  -h, --help   help for settings
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli admin settings [command] --help" for more information about a command.
+```
+
+### `flexcli admin settings list`
+
+```
+List all global settings
+
+Usage:
+  flexcli admin settings list [flags]
+
+Flags:
+  -h, --help   help for list
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin settings set`
+
+```
+Update a global setting
+
+Usage:
+  flexcli admin settings set [key] [value] [flags]
+
+Flags:
+  -h, --help   help for set
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin status`
+
+```
+Get system-wide status and health
+
+Usage:
+  flexcli admin status [flags]
+
+Flags:
+  -h, --help   help for status
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin sync-all`
+
+```
+Trigger background sync for all users
+
+Usage:
+  flexcli admin sync-all [flags]
+
+Flags:
+  -h, --help            help for sync-all
+      --source string   Specific sync source (garmin, withings)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin users`
+
+```
+List all user profiles
+
+Usage:
+  flexcli admin users [flags]
+
+Flags:
+  -h, --help   help for users
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli config`
+
+```
+Configure CLI settings for an environment
+
+Usage:
+  flexcli config [flags]
+
+Flags:
+  -h, --help            help for config
+      --key string      API Key
+      --name string     Context name (default "default")
+      --server string   FlexCoach server URL
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+```
+
+### `flexcli connect`
+
+```
+Manage device connections and system status
+
+Usage:
+  flexcli connect [command]
+
+Available Commands:
+  garmin      Manage Garmin connection and settings
+  status      Get system status
+  sync        Manually synchronize health and activity data
+  withings    Manage Withings connection and settings
+
+Flags:
+  -h, --help   help for connect
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli connect [command] --help" for more information about a command.
+```
+
+### `flexcli connect garmin`
+
+```
+Manage Garmin connection and settings
+
+Usage:
+  flexcli connect garmin [command]
+
+Available Commands:
+  config      Manage garmin expert settings
+
+Flags:
+  -h, --help   help for garmin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli connect garmin [command] --help" for more information about a command.
+```
+
+### `flexcli connect garmin config`
+
+```
+Manage garmin expert settings
+
+Usage:
+  flexcli connect garmin config [command]
+
+Available Commands:
+  get         Get expert settings
+  set         Update expert settings
+
+Flags:
+  -h, --help   help for config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli connect garmin config [command] --help" for more information about a command.
+```
+
+### `flexcli connect garmin config get`
+
+```
+Get expert settings
+
+Usage:
+  flexcli connect garmin config get [flags]
+
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli connect garmin config set`
+
+```
+Update expert settings
+
+Usage:
+  flexcli connect garmin config set [flags]
+
+Flags:
+  -h, --help                    help for set
+      --interval int            Sync interval in hours
+      --lookback-manual int     Days to look back for manual sync
+      --lookback-schedule int   Days to look back for scheduled sync
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli connect status`
+
+```
+Get system status
+
+Usage:
+  flexcli connect status [flags]
+
+Flags:
+  -h, --help   help for status
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli connect sync`
+
+```
+Manually synchronize health and activity data
+
+Usage:
+  flexcli connect sync [command]
+
+Available Commands:
+  garmin      Sync data from Garmin Connect
+  withings    Sync data from Withings
+
+Flags:
+  -h, --help   help for sync
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli connect sync [command] --help" for more information about a command.
+```
+
+### `flexcli connect sync garmin`
+
+```
+Sync data from Garmin Connect
+
+Usage:
+  flexcli connect sync garmin [flags]
+
+Flags:
+  -h, --help   help for garmin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli connect sync withings`
+
+```
+Sync data from Withings
+
+Usage:
+  flexcli connect sync withings [flags]
+
+Flags:
+  -h, --help   help for withings
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli connect withings`
+
+```
+Manage Withings connection and settings
+
+Usage:
+  flexcli connect withings [command]
+
+Available Commands:
+  config      Manage withings expert settings
+
+Flags:
+  -h, --help   help for withings
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli connect withings [command] --help" for more information about a command.
+```
+
+### `flexcli connect withings config`
+
+```
+Manage withings expert settings
+
+Usage:
+  flexcli connect withings config [command]
+
+Available Commands:
+  get         Get expert settings
+  set         Update expert settings
+
+Flags:
+  -h, --help   help for config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli connect withings config [command] --help" for more information about a command.
+```
+
+### `flexcli connect withings config get`
+
+```
+Get expert settings
+
+Usage:
+  flexcli connect withings config get [flags]
+
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli connect withings config set`
+
+```
+Update expert settings
+
+Usage:
+  flexcli connect withings config set [flags]
+
+Flags:
+  -h, --help           help for set
+      --interval int   Sync interval in hours
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli context`
+
+```
+Manage environments (contexts)
+
+Usage:
+  flexcli context [command]
+
+Available Commands:
+  delete      Remove a context
+  list        List all contexts
+  use         Switch the active context
+
+Flags:
+  -h, --help   help for context
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli context [command] --help" for more information about a command.
+```
+
+### `flexcli context delete`
+
+```
+Remove a context
+
+Usage:
+  flexcli context delete [name] [flags]
+
+Flags:
+  -h, --help   help for delete
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli context list`
+
+```
+List all contexts
+
+Usage:
+  flexcli context list [flags]
+
+Flags:
+  -h, --help   help for list
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli context use`
+
+```
+Switch the active context
+
+Usage:
+  flexcli context use [name] [flags]
+
+Flags:
+  -h, --help   help for use
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli plan`
+
+```
+Manage training plans
+
+Usage:
+  flexcli plan [command]
+
+Available Commands:
+  activate    Manually activate a training plan
+  generate    Generate today's plan (or meso/macro plan)
+  get         Get today's plan
+  list        List all training plans
+  modify      Modify today's plan
+  skip        Skip today's plan
+
+Flags:
+  -h, --help   help for plan
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli plan [command] --help" for more information about a command.
+```
+
+### `flexcli plan activate`
+
+```
+Manually activate a training plan
+
+Usage:
+  flexcli plan activate [plan-id] [flags]
+
+Flags:
+  -h, --help   help for activate
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli plan generate`
+
+```
+Generate today's plan (or meso/macro plan)
+
+Usage:
+  flexcli plan generate [flags]
+
+Flags:
+  -h, --help                  help for generate
+  -i, --instructions string   Optional instructions for generation
+      --json                  Output in JSON format
+      --macro                 Generate a macro (4-week) plan
+      --meso                  Generate a meso (weekly) plan
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli plan get`
+
+```
+Get today's plan
+
+Usage:
+  flexcli plan get [flags]
+
+Flags:
+  -h, --help   help for get
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli plan list`
+
+```
+List all training plans
+
+Usage:
+  flexcli plan list [flags]
+
+Flags:
+  -h, --help            help for list
+      --json            Output in JSON format
+  -s, --status string   Filter by status (active, scheduled, inactive)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli plan modify`
+
+```
+Modify today's plan
+
+Usage:
+  flexcli plan modify [flags]
+
+Flags:
+  -h, --help                  help for modify
+  -i, --instructions string   Required instructions for modification
+      --json                  Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli plan skip`
+
+```
+Skip today's plan
+
+Usage:
+  flexcli plan skip [flags]
+
+Flags:
+  -h, --help            help for skip
+      --json            Output in JSON format
+      --reason string   Reason for skipping (default "other")
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile`
+
+```
+User Profile Hub
+
+Usage:
+  flexcli profile [command]
+
+Available Commands:
+  body        Body metrics and thresholds
+  constraint  Manage physical constraints
+  delete      Permanently delete user profile and all data
+  get         View full profile
+  goal        Manage training goals
+  insights    View latest AI coaching insights
+  preferences Manage user preferences (timezone, plan time, insight time)
+  report      View training reports
+  stats       View training statistics and reports
+
+Flags:
+  -h, --help   help for profile
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile [command] --help" for more information about a command.
+```
+
+### `flexcli profile body`
+
+```
+Body metrics and thresholds
+
+Usage:
+  flexcli profile body [command]
+
+Available Commands:
+  threshold   Manage training thresholds
+  vitals      Manage body vitals (weight, height, sex, birthdate)
+
+Flags:
+  -h, --help   help for body
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile body [command] --help" for more information about a command.
+```
+
+### `flexcli profile body threshold`
+
+```
+Manage training thresholds
+
+Usage:
+  flexcli profile body threshold [command]
+
+Available Commands:
+  get         Get current thresholds
+  set         Set thresholds
+
+Flags:
+  -h, --help   help for threshold
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile body threshold [command] --help" for more information about a command.
+```
+
+### `flexcli profile body threshold get`
+
+```
+Get current thresholds
+
+Usage:
+  flexcli profile body threshold get [flags]
+
+Flags:
+  -h, --help   help for get
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile body threshold set`
+
+```
+Set thresholds
+
+Usage:
+  flexcli profile body threshold set [flags]
+
+Flags:
+      --cycling-ftp int       Cycling FTP (W)
+      --cycling-lthr int      Cycling LTHR (bpm)
+      --cycling-pace string   Cycling Pace (e.g. 1:20/km)
+  -h, --help                  help for set
+      --json                  Output in JSON format
+      --running-ftp int       Running FTP (W)
+      --running-lthr int      Running LTHR (bpm)
+      --running-pace string   Running Pace (e.g. 4:30/km)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile body vitals`
+
+```
+Manage body vitals (weight, height, sex, birthdate)
+
+Usage:
+  flexcli profile body vitals [command]
+
+Available Commands:
+  get         View current body vitals
+  set         Update body vitals
+
+Flags:
+  -h, --help   help for vitals
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile body vitals [command] --help" for more information about a command.
+```
+
+### `flexcli profile body vitals get`
+
+```
+View current body vitals
+
+Usage:
+  flexcli profile body vitals get [flags]
+
+Flags:
+  -h, --help   help for get
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile body vitals set`
+
+```
+Update body vitals
+
+Usage:
+  flexcli profile body vitals set [flags]
+
+Flags:
+      --birthdate string   Birthdate (YYYY-MM-DD)
+      --height float       Height in cm
+  -h, --help               help for set
+      --json               Output in JSON format
+      --sex string         Sex (male/female/other)
+      --weight float       Weight in kg
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile constraint`
+
+```
+Manage physical constraints
+
+Usage:
+  flexcli profile constraint [command]
+
+Available Commands:
+  add         Add a new physical constraint
+  delete      Delete a constraint by index
+  list        List all constraints
+
+Flags:
+  -h, --help   help for constraint
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile constraint [command] --help" for more information about a command.
+```
+
+### `flexcli profile constraint add`
+
+```
+Add a new physical constraint
+
+Usage:
+  flexcli profile constraint add [text] [flags]
+
+Flags:
+  -h, --help   help for add
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile constraint delete`
+
+```
+Delete a constraint by index
+
+Usage:
+  flexcli profile constraint delete [index] [flags]
+
+Flags:
+  -h, --help   help for delete
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile constraint list`
+
+```
+List all constraints
+
+Usage:
+  flexcli profile constraint list [flags]
+
+Flags:
+  -h, --help   help for list
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile delete`
+
+```
+Permanently delete user profile and all data
+
+Usage:
+  flexcli profile delete [flags]
+
+Flags:
+      --force   Skip confirmation prompt
+  -h, --help    help for delete
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile get`
+
+```
+View full profile
+
+Usage:
+  flexcli profile get [flags]
+
+Flags:
+  -h, --help   help for get
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile goal`
+
+```
+Manage training goals
+
+Usage:
+  flexcli profile goal [command]
+
+Available Commands:
+  add         Add a new performance goal
+  delete      Delete a goal
+  list        List active and pending goals
+  suggest     Suggest measurable targets for a qualitative goal using AI
+
+Flags:
+  -h, --help   help for goal
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile goal [command] --help" for more information about a command.
+```
+
+### `flexcli profile goal add`
+
+```
+Add a new performance goal
+
+Usage:
+  flexcli profile goal add [name] [flags]
+
+Flags:
+      --description string   Goal description
+  -h, --help                 help for add
+      --json                 Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile goal delete`
+
+```
+Delete a goal
+
+Usage:
+  flexcli profile goal delete [id] [flags]
+
+Flags:
+  -h, --help   help for delete
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile goal list`
+
+```
+List active and pending goals
+
+Usage:
+  flexcli profile goal list [flags]
+
+Flags:
+  -h, --help   help for list
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile goal suggest`
+
+```
+Suggest measurable targets for a qualitative goal using AI
+
+Usage:
+  flexcli profile goal suggest [goal description] [flags]
+
+Flags:
+  -h, --help   help for suggest
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile insights`
+
+```
+View latest AI coaching insights
+
+Usage:
+  flexcli profile insights [flags]
+
+Flags:
+      --force   Force regeneration of insights
+  -h, --help    help for insights
+      --json    Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile preferences`
+
+```
+Manage user preferences (timezone, plan time, insight time)
+
+Usage:
+  flexcli profile preferences [command]
+
+Available Commands:
+  get         View current preferences
+  set         Update user preferences
+
+Flags:
+  -h, --help   help for preferences
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile preferences [command] --help" for more information about a command.
+```
+
+### `flexcli profile preferences get`
+
+```
+View current preferences
+
+Usage:
+  flexcli profile preferences get [flags]
+
+Flags:
+  -h, --help   help for get
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile preferences set`
+
+```
+Update user preferences
+
+Usage:
+  flexcli profile preferences set [flags]
+
+Flags:
+  -h, --help                  help for set
+      --insight-time string   Weekly insight delivery time (e.g., Sunday 18:00)
+      --json                  Output in JSON format
+      --plan-time string      Daily plan delivery time (e.g., 19:30)
+      --timezone string       Timezone (e.g., Europe/Vienna)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile report`
+
+```
+View training reports
+
+Usage:
+  flexcli profile report [command]
+
+Available Commands:
+  list        List recent training reports
+  show        Show detailed training report
+
+Flags:
+  -h, --help   help for report
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile report [command] --help" for more information about a command.
+```
+
+### `flexcli profile report list`
+
+```
+List recent training reports
+
+Usage:
+  flexcli profile report list [flags]
+
+Flags:
+  -h, --help   help for list
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile report show`
+
+```
+Show detailed training report
+
+Usage:
+  flexcli profile report show [report-id] [flags]
+
+Flags:
+  -h, --help   help for show
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile stats`
+
+```
+View training statistics and reports
+
+Usage:
+  flexcli profile stats [command]
+
+Available Commands:
+  dashboard   View training dashboard
+
+Flags:
+  -h, --help   help for stats
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile stats [command] --help" for more information about a command.
+```
+
+### `flexcli profile stats dashboard`
+
+```
+View training dashboard
+
+Usage:
+  flexcli profile stats dashboard [flags]
+
+Flags:
+  -h, --help   help for dashboard
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+

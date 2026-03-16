@@ -37,7 +37,8 @@ release: test docs
 	@git commit -m "chore: release v$(v)"
 	@git tag v$(v)
 	@echo "Release v$(v) committed and tagged locally."
-	@echo "Note: docs/CLI_REFERENCE.md was updated in the parent repo."
+	@echo "Note: docs/CLI_REFERENCE.md was updated."
+
 	@echo "CRITICAL: GitHub-generated archives may have different SHAs than local git archive."
 	@echo "Run: git push origin main && git push origin v$(v)"
 	@echo "Then verify/update SHA in Formula/flexcli.rb if brew upgrade fails."
