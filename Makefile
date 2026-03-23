@@ -24,21 +24,27 @@ release: test docs
 	@echo "Releasing v$(v)..."
 	@# Update version in main.go
 	@sed -i '' 's/Version     = ".*"/Version     = "$(v)"/' cmd/flexcli/main.go
-	@# Update version in Formula
+	@# Update version in Formula (placeholder SHA for now)
 	@sed -i '' 's|url ".*tags/v.*.tar.gz"|url "https://github.com/f1dot4/homebrew-flexcli/archive/refs/tags/v$(v).tar.gz"|' Formula/flexcli.rb
+	@sed -i '' 's/sha256 ".*"/sha256 "PLACEHOLDER"/' Formula/flexcli.rb
 	@# Rebuild to ensure binary matches and docs are fresh
 	@$(MAKE) build
-	@# Create temporary tarball to calculate SHA256 (local approximation for now)
-	@git archive --prefix=homebrew-flexcli-$(v)/ --format=tar.gz HEAD -o /tmp/flexcli-v$(v).tar.gz
-	@SHA=$$(shasum -a 256 /tmp/flexcli-v$(v).tar.gz | cut -d' ' -f1); \
-	sed -i '' "s/sha256 \".*\"/sha256 \"$$SHA\"/" Formula/flexcli.rb
-	@rm /tmp/flexcli-v$(v).tar.gz
 	@git add -f cmd/flexcli/main.go Formula/flexcli.rb bin/
 	@git commit -m "chore: release v$(v)"
 	@git tag v$(v)
-	@echo "Release v$(v) committed and tagged locally."
-	@echo "Note: docs/CLI_REFERENCE.md was updated."
-
-	@echo "CRITICAL: GitHub-generated archives may have different SHAs than local git archive."
-	@echo "Run: git push origin main && git push origin v$(v)"
-	@echo "Then verify/update SHA in Formula/flexcli.rb if brew upgrade fails."
+	@echo "Pushing tag to GitHub to generate archive..."
+	@git push origin main
+	@git push origin v$(v)
+	@echo "Waiting for GitHub to generate the archive..."
+	@sleep 5
+	@echo "Downloading GitHub-generated tarball to get real SHA256..."
+	@curl -sL https://github.com/f1dot4/homebrew-flexcli/archive/refs/tags/v$(v).tar.gz \
+		-o /tmp/flexcli-v$(v)-github.tar.gz
+	@SHA=$$(shasum -a 256 /tmp/flexcli-v$(v)-github.tar.gz | cut -d' ' -f1); \
+	echo "Real SHA256: $$SHA"; \
+	sed -i '' "s/sha256 \"PLACEHOLDER\"/sha256 \"$$SHA\"/" Formula/flexcli.rb
+	@rm /tmp/flexcli-v$(v)-github.tar.gz
+	@git add Formula/flexcli.rb
+	@git commit -m "fix: correct sha256 for v$(v)"
+	@git push origin main
+	@echo "Release v$(v) complete. brew upgrade flexcli will work immediately."
