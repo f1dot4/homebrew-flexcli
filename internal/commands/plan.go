@@ -267,36 +267,40 @@ func newPlanGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.
 }
 
 func newPlanSkipCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	var reason string
-	var asJSON bool
+        var reason string
+        var asJSON bool
 
-	cmd := &cobra.Command{
-		Use:   "skip",
-		Short: "Skip today's plan",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+        cmd := &cobra.Command{
+                Use:   "skip [plan-id]",
+                Short: "Skip today's plan (or a specific plan by ID)",
+                Args:  cobra.MaximumNArgs(1),
+                RunE: func(cmd *cobra.Command, args []string) error {
+                        client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
-			path := fmt.Sprintf("/api/plan/skip?reason=%s", reason)
-			resp, err := client.Request("POST", path, nil)
-			if err != nil {
-				return err
-			}
+                        path := fmt.Sprintf("/api/plan/skip?reason=%s", reason)
+                        if len(args) > 0 {
+                                path = fmt.Sprintf("%s&plan_id=%s", path, args[0])
+                        }
 
-			if asJSON {
-				fmt.Printf("{\"success\": true, \"message\": \"%s\"}\n", resp.Message)
-				return nil
-			}
+                        resp, err := client.Request("POST", path, nil)
+                        if err != nil {
+                                return err
+                        }
 
-			fmt.Println(resp.Message)
-			return nil
-		},
-	}
+                        if asJSON {
+                                fmt.Printf("{\"success\": true, \"message\": \"%s\"}\n", resp.Message)
+                                return nil
+                        }
 
-	cmd.Flags().StringVar(&reason, "reason", "other", "Reason for skipping")
-	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
-	return cmd
+                        fmt.Println(resp.Message)
+                        return nil
+                },
+        }
+
+        cmd.Flags().StringVar(&reason, "reason", "other", "Reason for skipping")
+        cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+        return cmd
 }
-
 func newPlanActivateCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	var asJSON bool
 
