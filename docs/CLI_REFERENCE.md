@@ -659,7 +659,7 @@ Available Commands:
   get         Get today's plan
   list        List all training plans
   modify      Modify today's plan
-  skip        Skip today's plan
+  skip        Skip today's plan (or a specific plan by ID)
 
 Flags:
   -h, --help   help for plan
@@ -776,10 +776,10 @@ Global Flags:
 ### `flexcli plan skip`
 
 ```
-Skip today's plan
+Skip today's plan (or a specific plan by ID)
 
 Usage:
-  flexcli plan skip [flags]
+  flexcli plan skip [plan-id] [flags]
 
 Flags:
   -h, --help            help for skip
