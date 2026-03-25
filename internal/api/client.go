@@ -20,6 +20,7 @@ type APIResponse struct {
 	Success    bool            `json:"success"`
 	Status     string          `json:"status,omitempty"`
 	Message    string          `json:"message,omitempty"`
+	Detail     string          `json:"detail,omitempty"` // FastAPI HTTPException format
 	Data       json.RawMessage `json:"data,omitempty"`
 	Plan       json.RawMessage `json:"plan,omitempty"`       // Legacy, keeping for now
 	Thresholds json.RawMessage `json:"thresholds,omitempty"` // Legacy
@@ -71,6 +72,9 @@ func (c *Client) Request(method, path string, body interface{}) (*APIResponse, e
 		json.NewDecoder(resp.Body).Decode(&errResp)
 		if errResp.Message != "" {
 			return nil, fmt.Errorf("API error (%d): %s", resp.StatusCode, errResp.Message)
+		}
+		if errResp.Detail != "" {
+			return nil, fmt.Errorf("API error (%d): %s", resp.StatusCode, errResp.Detail)
 		}
 		return nil, fmt.Errorf("API error (%d)", resp.StatusCode)
 	}

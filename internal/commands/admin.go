@@ -308,8 +308,32 @@ func newAdminSettingsCmd(ctx *config.Context) *cobra.Command {
 		},
 	}
 
+	mergeStrategiesCmd := &cobra.Command{
+		Use:   "merge-strategies",
+		Short: "Get a one-time URL to the health metrics merge strategy config UI",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(ctx.ServerURL, ctx.APIKey)
+			client.IsAdmin = true
+
+			resp, err := client.Request("GET", "/api/admin/settings/merge-strategies/link", nil)
+			if err != nil {
+				return err
+			}
+
+			var data map[string]interface{}
+			if err := json.Unmarshal(resp.Data, &data); err != nil {
+				return err
+			}
+
+			fmt.Printf("Health metrics config URL (expires in %v min):\n%v\n",
+				data["expires_in_minutes"], data["url"])
+			return nil
+		},
+	}
+
 	settingsCmd.AddCommand(listCmd)
 	settingsCmd.AddCommand(setCmd)
+	settingsCmd.AddCommand(mergeStrategiesCmd)
 
 	return settingsCmd
 }
