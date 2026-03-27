@@ -165,8 +165,9 @@ Usage:
   flexcli admin settings [command]
 
 Available Commands:
-  list        List all global settings
-  set         Update a global setting
+  list             List all global settings
+  merge-strategies Get a one-time URL to the health metrics merge strategy config UI
+  set              Update a global setting
 
 Flags:
   -h, --help   help for settings
@@ -190,6 +191,24 @@ Usage:
 
 Flags:
   -h, --help   help for list
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli admin settings merge-strategies`
+
+```
+Get a one-time URL to the health metrics merge strategy config UI
+
+Usage:
+  flexcli admin settings merge-strategies [flags]
+
+Flags:
+  -h, --help   help for merge-strategies
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
