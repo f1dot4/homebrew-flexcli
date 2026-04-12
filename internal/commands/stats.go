@@ -122,7 +122,7 @@ func newStatsHealthTrendsCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 				fmt   string
 			}{
 				{"weight_kg", "Weight kg", "%.1f"},
-				{"body_fat_percent", "Fat %%", "%.1f"},
+				{"body_fat_percent", "Fat %", "%.1f"},
 				{"muscle_mass_kg", "Muscle kg", "%.1f"},
 				{"resting_heart_rate", "RHR bpm", "%.0f"},
 				{"hrv_score", "HRV ms", "%.0f"},
@@ -163,7 +163,7 @@ func newStatsHealthTrendsCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 					}
 					suffix := ""
 					if ctype == "pct" {
-						suffix = "%%"
+						suffix = "%"
 					}
 					if v > -0.05 && v < 0.05 {
 						return "0.0" + suffix
