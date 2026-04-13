@@ -321,7 +321,6 @@ Usage:
 Available Commands:
   garmin      Manage Garmin connection and settings
   status      Get system status
-  sync        Manually synchronize health and activity data
   withings    Manage Withings connection and settings
 
 Flags:
@@ -433,66 +432,6 @@ Usage:
 Flags:
   -h, --help   help for status
       --json   Output in JSON format
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
-```
-
-### `flexcli connect sync`
-
-```
-Manually synchronize health and activity data
-
-Usage:
-  flexcli connect sync [command]
-
-Available Commands:
-  garmin      Sync data from Garmin Connect
-  withings    Sync data from Withings
-
-Flags:
-  -h, --help   help for sync
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
-
-Use "flexcli connect sync [command] --help" for more information about a command.
-```
-
-### `flexcli connect sync garmin`
-
-```
-Sync data from Garmin Connect
-
-Usage:
-  flexcli connect sync garmin [flags]
-
-Flags:
-  -h, --help   help for garmin
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
-```
-
-### `flexcli connect sync withings`
-
-```
-Sync data from Withings
-
-Usage:
-  flexcli connect sync withings [flags]
-
-Flags:
-  -h, --help   help for withings
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
@@ -823,6 +762,7 @@ Usage:
 Available Commands:
   body        Body metrics and thresholds
   constraint  Manage physical constraints
+  data        Sync & data: manual sync, activities, health metrics
   delete      Permanently delete user profile and all data
   get         View full profile
   goal        Manage training goals
@@ -1074,6 +1014,282 @@ Usage:
 Flags:
   -h, --help   help for list
       --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data`
+
+```
+Sync & data: manual sync, activities, health metrics
+
+Usage:
+  flexcli profile data [command]
+
+Available Commands:
+  activity     Manage Garmin activities (alias: act): list, download, upload, delete
+  healthmetric View imported health metrics (alias: hm): list, show, delete
+  sync         Manually trigger Garmin or Withings synchronization
+
+Flags:
+  -h, --help   help for data
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile data [command] --help" for more information about a command.
+```
+
+### `flexcli profile data activity`
+
+```
+Manage Garmin activities (alias: act): list, download, upload, delete
+
+Usage:
+  flexcli profile data activity [command]
+
+Aliases:
+  activity, act
+
+Available Commands:
+  delete      Delete an activity from Garmin Connect (currently disabled)
+  download    Download an activity's original FIT file from Garmin Connect
+  list        List synced activities with their Garmin activity IDs
+  upload      Upload a FIT/GPX/TCX file to Garmin Connect
+
+Flags:
+  -h, --help   help for activity
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile data activity [command] --help" for more information about a command.
+```
+
+### `flexcli profile data activity delete`
+
+```
+Delete an activity from Garmin Connect (currently disabled)
+
+Usage:
+  flexcli profile data activity delete <activity_id> [flags]
+
+Flags:
+  -h, --help   help for delete
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data activity download`
+
+```
+Download an activity's original FIT file from Garmin Connect
+
+Usage:
+  flexcli profile data activity download <activity_id> [flags]
+
+Flags:
+  -h, --help            help for download
+  -o, --output string   Output file path (default: <activity_id>.zip)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data activity list`
+
+```
+List synced activities with their Garmin activity IDs
+
+Usage:
+  flexcli profile data activity list [flags]
+
+Flags:
+  -h, --help            help for list
+      --json            Output as JSON
+      --page int        Page number (default 1)
+      --page-size int   Number of activities per page (default 20)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data activity upload`
+
+```
+Upload a FIT/GPX/TCX file to Garmin Connect
+
+Usage:
+  flexcli profile data activity upload <file> [flags]
+
+Flags:
+  -h, --help   help for upload
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data healthmetric`
+
+```
+View imported health metrics (alias: hm): list, show, delete
+
+Usage:
+  flexcli profile data healthmetric [command]
+
+Aliases:
+  healthmetric, hm
+
+Available Commands:
+  delete      Delete a health metric (currently disabled)
+  list        List imported health metrics (paginated)
+  show        Show aggregated health metric for a specific date (YYYY-MM-DD)
+
+Flags:
+  -h, --help   help for healthmetric
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile data healthmetric [command] --help" for more information about a command.
+```
+
+### `flexcli profile data healthmetric delete`
+
+```
+Delete a health metric (currently disabled)
+
+Usage:
+  flexcli profile data healthmetric delete <id> [flags]
+
+Flags:
+  -h, --help   help for delete
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data healthmetric list`
+
+```
+List imported health metrics (paginated)
+
+Usage:
+  flexcli profile data healthmetric list [flags]
+
+Flags:
+  -h, --help            help for list
+      --json            Output as JSON
+      --page int        Page number (default 1)
+      --page-size int   Number of metrics per page (default 20)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data healthmetric show`
+
+```
+Show aggregated health metric for a specific date (YYYY-MM-DD)
+
+Usage:
+  flexcli profile data healthmetric show <date> [flags]
+
+Flags:
+  -h, --help   help for show
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data sync`
+
+```
+Manually trigger Garmin or Withings synchronization
+
+Usage:
+  flexcli profile data sync [command]
+
+Available Commands:
+  garmin      Sync data from Garmin Connect
+  withings    Sync data from Withings
+
+Flags:
+  -h, --help   help for sync
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile data sync [command] --help" for more information about a command.
+```
+
+### `flexcli profile data sync garmin`
+
+```
+Sync data from Garmin Connect
+
+Usage:
+  flexcli profile data sync garmin [flags]
+
+Flags:
+  -h, --help   help for garmin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data sync withings`
+
+```
+Sync data from Withings
+
+Usage:
+  flexcli profile data sync withings [flags]
+
+Flags:
+  -h, --help   help for withings
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
