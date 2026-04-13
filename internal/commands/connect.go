@@ -12,7 +12,6 @@ func NewConnectCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.
 	}
 
 	cmd.AddCommand(NewStatusCmd(rootCfg, resolvedCtx))
-	cmd.AddCommand(NewSyncCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewGarminConnectionCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewWithingsConnectionCmd(rootCfg, resolvedCtx))
 
