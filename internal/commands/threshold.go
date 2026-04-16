@@ -3,11 +3,10 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 	"time"
 
-	"github.com/f1dot4/flexcoach/flexcli/internal/api"
-	"github.com/f1dot4/flexcoach/flexcli/internal/config"
+	"github.com/f1dot4/flexcli/internal/api"
+	"github.com/f1dot4/flexcli/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -129,10 +128,7 @@ func newThresholdGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 				formatValue(thresholds["cycling_threshold_pace"], thresholds["effective_cycling_threshold_pace"], ""),
 				getHint("cycling_threshold_pace", thresholds["is_cycling_pace_learned"], thresholds["is_cycling_pace_derived"]))
 
-			hints := []string{}
-			output := fmt.Sprintf("%v", thresholds) // Just to check for hint chars in output string
 			// We can do it more reliably by checking the hints we actually used
-			hasLearned := strings.Contains(output, "true") // Simplified check for flags
 			
 			// Always show legend if metrics exist
 			fmt.Println("\nLegend:")
