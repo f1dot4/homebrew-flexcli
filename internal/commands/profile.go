@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"text/tabwriter"
 
 	"github.com/f1dot4/flexcli/internal/api"
 	"github.com/f1dot4/flexcli/internal/config"
@@ -271,7 +272,7 @@ func newPreferencesGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
-			resp, err := client.Request("GET", "/api/profile", nil)
+			resp, err := client.Request("GET", "/api/profile/preferences/effective", nil)
 			if err != nil {
 				return err
 			}
@@ -281,15 +282,18 @@ func newPreferencesGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 				return nil
 			}
 
-			var data map[string]interface{}
-			if err := json.Unmarshal(resp.Data, &data); err != nil {
+			var settings []map[string]interface{}
+			if err := json.Unmarshal(resp.Data, &settings); err != nil {
 				return err
 			}
 
 			fmt.Println("⚙️ Current Preferences")
-			fmt.Printf("  • Timezone:     %v\n", data["timezone"])
-			fmt.Printf("  • Plan Time:    %v\n", data["daily_plan_time"])
-			fmt.Printf("  • Insight Time: %v\n", data["weekly_insight_time"])
+			w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+			fmt.Fprintln(w, "KEY\tVALUE\tSOURCE\tDESCRIPTION")
+			for _, s := range settings {
+				fmt.Fprintf(w, "%v\t%v\t%v\t%v\n", s["key"], s["value"], s["source"], s["description"])
+			}
+			w.Flush()
 			return nil
 		},
 	}
@@ -378,7 +382,7 @@ func newProfileInsightsCmd(rootCfg **config.Config, resolvedCtx *config.Context)
 			}
 
 			fmt.Println("🤖 AI Coaching Insights")
-			
+
 			insight, _ := data["insight"].(string)
 			cached, _ := data["cached"].(bool)
 			createdAt, _ := data["created_at"].(string)

@@ -270,13 +270,13 @@ func newAdminSettingsCmd(ctx *config.Context) *cobra.Command {
 			}
 
 			w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-			fmt.Fprintln(w, "KEY\tVALUE\tDESCRIPTION")
+			fmt.Fprintln(w, "KEY\tVALUE\tSOURCE\tDESCRIPTION")
 			for _, s := range settings {
 				// Filter out backup settings from the general list
 				if category, ok := s["category"].(string); ok && category == "backup" {
 					continue
 				}
-				fmt.Fprintf(w, "%v\t%v\t%v\n", s["key"], s["value"], s["description"])
+				fmt.Fprintf(w, "%v\t%v\t%v\t%v\n", s["key"], s["value"], s["source"], s["description"])
 			}
 			w.Flush()
 			return nil
