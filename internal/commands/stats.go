@@ -137,7 +137,7 @@ func newStatsHealthTrendsCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 				{"sleep_hours", "Sleep h", "%.1f"},
 				{"avg_stress_sleep", "Stress Slp", "%.1f"},
 				{"avg_stress_pre_sleep_2h", "PreSlp Stress", "%.1f"},
-				{"overnight_hrv_avg", "HRV Avg", "%.0f"},
+				{"overnight_hrv_avg", "HRV Avg ms", "%.0f"},
 				{"overnight_hrv_5min_high", "HRV 5m High", "%.0f"},
 				{"overnight_hrv_weekly_avg", "HRV Week Avg", "%.0f"},
 				{"systolic_avg", "Systolic", "%.0f"},
