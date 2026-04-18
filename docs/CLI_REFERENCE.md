@@ -1032,6 +1032,7 @@ Usage:
 
 Available Commands:
   activity     Manage Garmin activities (alias: act): list, download, upload, delete
+  fitness      View imported fitness data: personal records
   healthmetric View imported health metrics (alias: hm): list, show, delete
   sync         Manually trigger Garmin or Withings synchronization
 
@@ -1163,6 +1164,48 @@ Usage:
 
 Flags:
   -h, --help   help for upload
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data fitness`
+
+```
+View imported fitness data: personal records
+
+Usage:
+  flexcli profile data fitness [command]
+
+Available Commands:
+  records     List all personal records (PRs) from Garmin
+
+Flags:
+  -h, --help   help for fitness
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile data fitness [command] --help" for more information about a command.
+```
+
+### `flexcli profile data fitness records`
+
+```
+List all personal records (PRs) from Garmin
+
+Usage:
+  flexcli profile data fitness records [flags]
+
+Flags:
+  -h, --help   help for records
+      --json   Output as JSON
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
