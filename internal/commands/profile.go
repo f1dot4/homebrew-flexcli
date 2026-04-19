@@ -303,53 +303,66 @@ func newPreferencesGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 }
 
 func newPreferencesSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	var timezone, planTime, insightTime string
-	var asJSON bool
+        var timezone, planTime, insightTime string
+        var asJSON bool
 
-	cmd := &cobra.Command{
-		Use:   "set",
-		Short: "Update user preferences",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+        cmd := &cobra.Command{
+                Use:   "set [KEY=VALUE...]",
+                Short: "Update user preferences (flags or KEY=VALUE pairs)",
+                Long: `Update user preferences. 
+Basic settings can be set via flags (--timezone, --plan-time, --insight-time).
+Expert settings and basic settings can also be set via KEY=VALUE positional arguments.
+Example: flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=2 timezone=Europe/Vienna`,
+                RunE: func(cmd *cobra.Command, args []string) error {
+                        client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
-			updates := make(map[string]interface{})
-			if cmd.Flags().Changed("timezone") {
-				updates["timezone"] = timezone
-			}
-			if cmd.Flags().Changed("plan-time") {
-				updates["daily_plan_time"] = planTime
-			}
-			if cmd.Flags().Changed("insight-time") {
-				updates["weekly_insight_time"] = insightTime
-			}
+                        updates := make(map[string]interface{})
 
-			if len(updates) == 0 {
-				return fmt.Errorf("no updates provided. Use flags --timezone, --plan-time, or --insight-time")
-			}
+                        // Parse positional arguments KEY=VALUE
+                        for _, arg := range args {
+                                parts := strings.SplitN(arg, "=", 2)
+                                if len(parts) != 2 {
+                                        return fmt.Errorf("invalid argument format '%s', expected KEY=VALUE", arg)
+                                }
+                                updates[parts[0]] = parts[1]
+                        }
 
-			resp, err := client.Request("POST", "/api/profile/preferences", updates)
-			if err != nil {
-				return err
-			}
+                        if cmd.Flags().Changed("timezone") {
+                                updates["timezone"] = timezone
+                        }
+                        if cmd.Flags().Changed("plan-time") {
+                                updates["daily_plan_time"] = planTime
+                        }
+                        if cmd.Flags().Changed("insight-time") {
+                                updates["weekly_insight_time"] = insightTime
+                        }
 
-			if asJSON {
-				fmt.Printf("{\"success\": true, \"message\": \"%s\"}\n", resp.Message)
-				return nil
-			}
+                        if len(updates) == 0 {
+                                return fmt.Errorf("no updates provided. Use flags --timezone, --plan-time, or KEY=VALUE pairs")
+                        }
 
-			fmt.Println("✅ Preferences updated successfully.")
-			return nil
-		},
-	}
+                        resp, err := client.Request("POST", "/api/profile/preferences", updates)
+                        if err != nil {
+                                return err
+                        }
 
-	cmd.Flags().StringVar(&timezone, "timezone", "", "Timezone (e.g., Europe/Vienna)")
-	cmd.Flags().StringVar(&planTime, "plan-time", "", "Daily plan delivery time (e.g., 19:30)")
-	cmd.Flags().StringVar(&insightTime, "insight-time", "", "Weekly insight delivery time (e.g., Sunday 18:00)")
-	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+                        if asJSON {
+                                fmt.Printf("{\"success\": true, \"message\": \"%s\"}\n", resp.Message)
+                                return nil
+                        }
 
-	return cmd
+                        fmt.Println("✅ Preferences updated successfully.")
+                        return nil
+                },
+        }
+
+        cmd.Flags().StringVar(&timezone, "timezone", "", "Timezone (e.g., Europe/Vienna)")
+        cmd.Flags().StringVar(&planTime, "plan-time", "", "Daily plan delivery time (e.g., 19:30)")
+        cmd.Flags().StringVar(&insightTime, "insight-time", "", "Weekly insight delivery time (e.g., Sunday 18:00)")
+        cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+
+        return cmd
 }
-
 func newProfileInsightsCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	var force bool
 	var asJSON bool
