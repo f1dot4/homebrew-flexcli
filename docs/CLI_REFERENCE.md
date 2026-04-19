@@ -1531,7 +1531,7 @@ Usage:
 
 Available Commands:
   get         View current preferences
-  set         Update user preferences
+  set         Update user preferences (flags or KEY=VALUE pairs)
 
 Flags:
   -h, --help   help for preferences
@@ -1567,10 +1567,13 @@ Global Flags:
 ### `flexcli profile preferences set`
 
 ```
-Update user preferences
+Update user preferences. 
+Basic settings can be set via flags (--timezone, --plan-time, --insight-time).
+Expert settings and basic settings can also be set via KEY=VALUE positional arguments.
+Example: flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=2 timezone=Europe/Vienna
 
 Usage:
-  flexcli profile preferences set [flags]
+  flexcli profile preferences set [KEY=VALUE...] [flags]
 
 Flags:
   -h, --help                  help for set
