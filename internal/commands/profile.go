@@ -303,14 +303,12 @@ func newPreferencesGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 }
 
 func newPreferencesSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-        var timezone, planTime, insightTime string
         var asJSON bool
 
         cmd := &cobra.Command{
                 Use:   "set [KEY=VALUE...]",
-                Short: "Update user preferences (flags or KEY=VALUE pairs)",
+                Short: "Update user preferences using KEY=VALUE pairs",
                 Long: `Update user preferences. 
-Basic settings can be set via flags (--timezone, --plan-time, --insight-time).
 Expert settings and basic settings can also be set via KEY=VALUE positional arguments. Use KEY= to reset a setting to its system default.
 Example: flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=2 timezone=Europe/Vienna
 Example (reset): flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=`,
@@ -328,18 +326,9 @@ Example (reset): flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=`,
                                 updates[parts[0]] = parts[1]
                         }
 
-                        if cmd.Flags().Changed("timezone") {
-                                updates["timezone"] = timezone
-                        }
-                        if cmd.Flags().Changed("plan-time") {
-                                updates["daily_plan_time"] = planTime
-                        }
-                        if cmd.Flags().Changed("insight-time") {
-                                updates["weekly_insight_time"] = insightTime
-                        }
 
                         if len(updates) == 0 {
-                                return fmt.Errorf("no updates provided. Use flags --timezone, --plan-time, or KEY=VALUE pairs")
+                                return fmt.Errorf("no updates provided. Use KEY=VALUE pairs")
                         }
 
                         resp, err := client.Request("POST", "/api/profile/preferences", updates)
@@ -357,9 +346,6 @@ Example (reset): flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=`,
                 },
         }
 
-        cmd.Flags().StringVar(&timezone, "timezone", "", "Timezone (e.g., Europe/Vienna)")
-        cmd.Flags().StringVar(&planTime, "plan-time", "", "Daily plan delivery time (e.g., 19:30)")
-        cmd.Flags().StringVar(&insightTime, "insight-time", "", "Weekly insight delivery time (e.g., Sunday 18:00)")
         cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
 
         return cmd
