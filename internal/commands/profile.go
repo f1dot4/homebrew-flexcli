@@ -311,8 +311,9 @@ func newPreferencesSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
                 Short: "Update user preferences (flags or KEY=VALUE pairs)",
                 Long: `Update user preferences. 
 Basic settings can be set via flags (--timezone, --plan-time, --insight-time).
-Expert settings and basic settings can also be set via KEY=VALUE positional arguments.
-Example: flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=2 timezone=Europe/Vienna`,
+Expert settings and basic settings can also be set via KEY=VALUE positional arguments. Use KEY= to reset a setting to its system default.
+Example: flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=2 timezone=Europe/Vienna
+Example (reset): flexcli profile preferences set WITHINGS_SYNC_INTERVAL_HOURS=`,
                 RunE: func(cmd *cobra.Command, args []string) error {
                         client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
