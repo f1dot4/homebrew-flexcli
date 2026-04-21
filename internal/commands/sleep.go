@@ -178,12 +178,18 @@ func NewSleepListCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobr
 func NewSleepReportCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	var asJSON bool
 
+	var forceRegen bool
+
 	cmd := &cobra.Command{
 		Use:   "report",
-		Short: "Generate a sleep investigation report",
+		Short: "Show today's sleep investigation report (cached), or regenerate with --force",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-			resp, err := client.Request("GET", "/api/reports/sleep-investigation", nil)
+			endpoint := "/api/reports/sleep-investigation"
+			if forceRegen {
+				endpoint += "?force=true"
+			}
+			resp, err := client.Request("GET", endpoint, nil)
 			if err != nil {
 				return err
 			}
@@ -230,5 +236,6 @@ func NewSleepReportCmd(rootCfg **config.Config, resolvedCtx *config.Context) *co
 	}
 
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+	cmd.Flags().BoolVar(&forceRegen, "force", false, "Regenerate report even if one exists for today")
 	return cmd
 }
