@@ -284,9 +284,10 @@ func newPreferencesGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 
 			var settings []map[string]interface{}
 			if err := json.Unmarshal(resp.Data, &settings); err != nil {
-				return err
+			        // If Data unmarshal fails, maybe it's the whole response being passed?
+			        // Let's try to unmarshal the whole thing as a fallback, but Request already decoded it.
+			        return fmt.Errorf("failed to parse settings data: %w (raw: %s)", err, string(resp.Data))
 			}
-
 			fmt.Println("⚙️ Current Preferences")
 			w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 			fmt.Fprintln(w, "KEY\tVALUE\tSOURCE\tDESCRIPTION")
