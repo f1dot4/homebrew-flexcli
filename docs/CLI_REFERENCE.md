@@ -1640,7 +1640,7 @@ Usage:
 
 Available Commands:
   get         View current preferences
-  language    Set preferred AI response language (e.g. Deutsch, Français)
+  language    Set preferred AI response language
   set         Update user preferences using KEY=VALUE pairs
 
 Flags:
@@ -1677,13 +1677,14 @@ Global Flags:
 ### `flexcli profile preferences expert language`
 
 ```
-Set preferred AI response language (e.g. Deutsch, Français)
+Supported: English, Deutsch, Français, Español, Italiano
 
 Usage:
   flexcli profile preferences expert language [lang] [flags]
 
 Flags:
   -h, --help   help for language
+      --json   Output in JSON format
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
