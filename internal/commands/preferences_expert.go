@@ -112,12 +112,28 @@ Example (reset): flexcli profile preferences expert set WITHINGS_SYNC_INTERVAL_H
 }
 
 func newPreferencesLanguageCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	return &cobra.Command{
+	var asJSON bool
+	cmd := &cobra.Command{
 		Use:   "language [lang]",
-		Short: "Set preferred AI response language (e.g. Deutsch, Français)",
+		Short: "Set preferred AI response language",
+		Long:  "Supported: English, Deutsch, Français, Español, Italiano",
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fmt.Println("Language preference will be available in a future update.")
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			resp, err := client.Request("POST", "/api/profile/preferences", map[string]interface{}{
+				"language": args[0],
+			})
+			if err != nil {
+				return err
+			}
+			if asJSON {
+				fmt.Printf("{\"success\": true, \"message\": \"%s\"}\n", resp.Message)
+				return nil
+			}
+			fmt.Printf("✅ AI language set to %s\n", args[0])
 			return nil
 		},
 	}
+	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+	return cmd
 }
