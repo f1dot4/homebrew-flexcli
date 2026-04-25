@@ -210,26 +210,54 @@ func NewSleepReportCmd(rootCfg **config.Config, resolvedCtx *config.Context) *co
 			}
 
 			ai := report["ai_analysis"].(map[string]interface{})
-			
+
 			fmt.Println("🌙 SLEEP INVESTIGATION REPORT")
 			fmt.Println(strings.Repeat("=", 30))
-			fmt.Printf("\nASSESSMENT:\n%v\n", ai["sleep_quality_assessment"])
-			fmt.Printf("\nREGULARITY (SRI):\n%v\n", ai["sleep_regularity_assessment"])
-			
+
+			// Use robust access for all fields
+			printField := func(label, key string) {
+				val, ok := ai[key]
+				if !ok || val == nil {
+					val = "N/A"
+				}
+				fmt.Printf("\n%s:\n%v\n", label, val)
+			}
+
+			printField("ASSESSMENT", "sleep_quality_assessment")
+			printField("REGULARITY (SRI)", "sleep_regularity_assessment")
+
 			fmt.Println("\nTOP DRIVERS:")
 			if drivers, ok := ai["top_drivers"].([]interface{}); ok {
 				for _, d := range drivers {
 					driver := d.(map[string]interface{})
+					name := driver["name"]
+					if name == nil {
+						name = "Unknown"
+					}
+
+					// Robust direction parsing (handle 'tau' alias)
+					direction := driver["direction"]
+					if direction == nil {
+						direction = driver["tau"]
+					}
+					if direction == nil {
+						direction = "N/A"
+					}
+
+					confidence := driver["confidence"]
+					if confidence == nil {
+						confidence = "N/A"
+					}
+
 					fmt.Printf("  • %-15s: %-10s (Confidence: %s)\n",
-						driver["name"], driver["direction"], driver["confidence"])
+						name, direction, confidence)
 				}
 			} else {
 				fmt.Println("  No significant drivers identified yet.")
 			}
-			
-			fmt.Printf("\nSUGGESTED EXPERIMENT:\n%v\n", ai["experiment_suggestion"])
-			
-			fmt.Printf("\nNOTE: %v\n", ai["wearable_caveat_note"])
+
+			printField("SUGGESTED EXPERIMENT", "experiment_suggestion")
+			printField("NOTE", "wearable_caveat_note")
 
 			return nil
 		},
