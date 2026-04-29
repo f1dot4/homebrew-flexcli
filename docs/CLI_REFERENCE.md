@@ -766,7 +766,7 @@ Available Commands:
   delete      Permanently delete user profile and all data
   get         View full profile
   goal        Manage training goals
-  insights    View latest AI coaching insights
+  insights    View AI insights (coach or sleep)
   preferences Manage preferences (expert settings, custom list)
   stats       View training statistics and reports
 
@@ -1504,14 +1504,58 @@ Global Flags:
 ### `flexcli profile insights`
 
 ```
+View AI insights (coach or sleep)
+
+Usage:
+  flexcli profile insights [command]
+
+Available Commands:
+  coach       View latest AI coaching insights
+  sleep       Show today's sleep investigation report (cached), or regenerate with --force
+
+Flags:
+  -h, --help   help for insights
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+
+Use "flexcli profile insights [command] --help" for more information about a command.
+```
+
+### `flexcli profile insights coach`
+
+```
 View latest AI coaching insights
 
 Usage:
-  flexcli profile insights [flags]
+  flexcli profile insights coach [flags]
 
 Flags:
       --force   Force regeneration of insights
-  -h, --help    help for insights
+  -h, --help    help for coach
+      --json    Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile insights sleep`
+
+```
+Show today's sleep investigation report (cached), or regenerate with --force
+
+Usage:
+  flexcli profile insights sleep [flags]
+
+Flags:
+      --force   Regenerate report even if one exists for today
+  -h, --help    help for sleep
       --json    Output in JSON format
 
 Global Flags:
@@ -1707,7 +1751,7 @@ Available Commands:
   dashboard    View training dashboard
   healthtrends View health trends (7d vs 30d)
   report       View training reports
-  sleep        Manage sleep logs and investigation reports
+  sleep        Manage sleep logs
 
 Flags:
   -h, --help   help for stats
@@ -1828,7 +1872,7 @@ Global Flags:
 ### `flexcli profile stats sleep`
 
 ```
-Manage sleep logs and investigation reports
+Manage sleep logs
 
 Usage:
   flexcli profile stats sleep [command]
@@ -1837,7 +1881,6 @@ Available Commands:
   get         Get a sleep log for a specific date
   list        List recent sleep logs
   log         Submit a daily sleep log
-  report      Show today's sleep investigation report (cached), or regenerate with --force
 
 Flags:
   -h, --help   help for sleep
@@ -1906,26 +1949,6 @@ Flags:
       --meal              Had a heavy meal after 7 PM
       --notes string      Optional notes
       --restedness int    Subjective restedness (1-5) (default 3)
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
-```
-
-### `flexcli profile stats sleep report`
-
-```
-Show today's sleep investigation report (cached), or regenerate with --force
-
-Usage:
-  flexcli profile stats sleep report [flags]
-
-Flags:
-      --force   Regenerate report even if one exists for today
-  -h, --help    help for report
-      --json    Output in JSON format
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
