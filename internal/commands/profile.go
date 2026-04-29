@@ -265,12 +265,23 @@ func newVitalsSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobr
 
 
 func newProfileInsightsCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "insights",
+		Short: "View AI insights (coach or sleep)",
+	}
 
+	cmd.AddCommand(newProfileInsightsCoachCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newProfileInsightsSleepCmd(rootCfg, resolvedCtx))
+
+	return cmd
+}
+
+func newProfileInsightsCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	var force bool
 	var asJSON bool
 
 	cmd := &cobra.Command{
-		Use:   "insights",
+		Use:   "coach",
 		Short: "View latest AI coaching insights",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
@@ -291,8 +302,7 @@ func newProfileInsightsCmd(rootCfg **config.Config, resolvedCtx *config.Context)
 			}
 
 			var data map[string]interface{}
-			if err := json.Unmarshal(resp.Data, &data);
-			err != nil {
+			if err := json.Unmarshal(resp.Data, &data); err != nil {
 				return err
 			}
 
@@ -317,5 +327,95 @@ func newProfileInsightsCmd(rootCfg **config.Config, resolvedCtx *config.Context)
 	cmd.Flags().BoolVar(&force, "force", false, "Force regeneration of insights")
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
 
+	return cmd
+}
+
+func newProfileInsightsSleepCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var asJSON bool
+	var forceRegen bool
+
+	cmd := &cobra.Command{
+		Use:   "sleep",
+		Short: "Show today's sleep investigation report (cached), or regenerate with --force",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			endpoint := "/api/reports/sleep-investigation"
+			if forceRegen {
+				endpoint += "?force=true"
+			}
+			resp, err := client.Request("GET", endpoint, nil)
+			if err != nil {
+				return err
+			}
+
+			if asJSON {
+				fmt.Println(string(resp.Data))
+				return nil
+			}
+
+			var data map[string]interface{}
+			if err := json.Unmarshal(resp.Data, &data); err != nil {
+				return err
+			}
+
+			report, ok := data["report"].(map[string]interface{})
+			if !ok {
+				return fmt.Errorf("failed to parse report data")
+			}
+
+			ai := report["ai_analysis"].(map[string]interface{})
+
+			fmt.Println("🌙 SLEEP INVESTIGATION REPORT")
+			fmt.Println(strings.Repeat("=", 30))
+
+			printField := func(label, key string) {
+				val, ok := ai[key]
+				if !ok || val == nil {
+					val = "N/A"
+				}
+				fmt.Printf("\n%s:\n%v\n", label, val)
+			}
+
+			printField("ASSESSMENT", "sleep_quality_assessment")
+			printField("REGULARITY (SRI)", "sleep_regularity_assessment")
+
+			fmt.Println("\nTOP DRIVERS:")
+			if drivers, ok := ai["top_drivers"].([]interface{}); ok {
+				for _, d := range drivers {
+					driver := d.(map[string]interface{})
+					name := driver["name"]
+					if name == nil {
+						name = "Unknown"
+					}
+
+					direction := driver["direction"]
+					if direction == nil {
+						direction = driver["tau"]
+					}
+					if direction == nil {
+						direction = "N/A"
+					}
+
+					confidence := driver["confidence"]
+					if confidence == nil {
+						confidence = "N/A"
+					}
+
+					fmt.Printf("  • %-15s: %-10s (Confidence: %s)\n",
+						name, direction, confidence)
+				}
+			} else {
+				fmt.Println("  No significant drivers identified yet.")
+			}
+
+			printField("SUGGESTED EXPERIMENT", "experiment_suggestion")
+			printField("NOTE", "wearable_caveat_note")
+
+			return nil
+		},
+	}
+
+	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+	cmd.Flags().BoolVar(&forceRegen, "force", false, "Regenerate report even if one exists for today")
 	return cmd
 }

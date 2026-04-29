@@ -13,13 +13,12 @@ import (
 func NewSleepCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "sleep",
-		Short: "Manage sleep logs and investigation reports",
+		Short: "Manage sleep logs",
 	}
 
 	cmd.AddCommand(NewSleepLogCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewSleepGetCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(NewSleepListCmd(rootCfg, resolvedCtx))
-	cmd.AddCommand(NewSleepReportCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -175,95 +174,3 @@ func NewSleepListCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobr
 	return cmd
 }
 
-func NewSleepReportCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	var asJSON bool
-
-	var forceRegen bool
-
-	cmd := &cobra.Command{
-		Use:   "report",
-		Short: "Show today's sleep investigation report (cached), or regenerate with --force",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-			endpoint := "/api/reports/sleep-investigation"
-			if forceRegen {
-				endpoint += "?force=true"
-			}
-			resp, err := client.Request("GET", endpoint, nil)
-			if err != nil {
-				return err
-			}
-
-			if asJSON {
-				fmt.Println(string(resp.Data))
-				return nil
-			}
-
-			var data map[string]interface{}
-			if err := json.Unmarshal(resp.Data, &data); err != nil {
-				return err
-			}
-
-			report, ok := data["report"].(map[string]interface{})
-			if !ok {
-				return fmt.Errorf("failed to parse report data")
-			}
-
-			ai := report["ai_analysis"].(map[string]interface{})
-
-			fmt.Println("🌙 SLEEP INVESTIGATION REPORT")
-			fmt.Println(strings.Repeat("=", 30))
-
-			// Use robust access for all fields
-			printField := func(label, key string) {
-				val, ok := ai[key]
-				if !ok || val == nil {
-					val = "N/A"
-				}
-				fmt.Printf("\n%s:\n%v\n", label, val)
-			}
-
-			printField("ASSESSMENT", "sleep_quality_assessment")
-			printField("REGULARITY (SRI)", "sleep_regularity_assessment")
-
-			fmt.Println("\nTOP DRIVERS:")
-			if drivers, ok := ai["top_drivers"].([]interface{}); ok {
-				for _, d := range drivers {
-					driver := d.(map[string]interface{})
-					name := driver["name"]
-					if name == nil {
-						name = "Unknown"
-					}
-
-					// Robust direction parsing (handle 'tau' alias)
-					direction := driver["direction"]
-					if direction == nil {
-						direction = driver["tau"]
-					}
-					if direction == nil {
-						direction = "N/A"
-					}
-
-					confidence := driver["confidence"]
-					if confidence == nil {
-						confidence = "N/A"
-					}
-
-					fmt.Printf("  • %-15s: %-10s (Confidence: %s)\n",
-						name, direction, confidence)
-				}
-			} else {
-				fmt.Println("  No significant drivers identified yet.")
-			}
-
-			printField("SUGGESTED EXPERIMENT", "experiment_suggestion")
-			printField("NOTE", "wearable_caveat_note")
-
-			return nil
-		},
-	}
-
-	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
-	cmd.Flags().BoolVar(&forceRegen, "force", false, "Regenerate report even if one exists for today")
-	return cmd
-}
