@@ -1511,7 +1511,7 @@ Usage:
 
 Available Commands:
   coach       View latest AI coaching insights
-  sleep       Show today's sleep investigation report (cached), or regenerate with --force
+  sleep       View latest sleep investigation insights
 
 Flags:
   -h, --help   help for insights
@@ -1548,7 +1548,7 @@ Global Flags:
 ### `flexcli profile insights sleep`
 
 ```
-Show today's sleep investigation report (cached), or regenerate with --force
+View latest sleep investigation insights
 
 Usage:
   flexcli profile insights sleep [flags]

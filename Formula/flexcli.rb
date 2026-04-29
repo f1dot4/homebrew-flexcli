@@ -1,8 +1,8 @@
 class Flexcli < Formula
   desc "Management CLI for FlexCoach AI fitness platform"
   homepage "https://github.com/f1dot4/homebrew-flexcli"
-  url "https://github.com/f1dot4/homebrew-flexcli/archive/refs/tags/v0.2.25.tar.gz"
-  sha256 "54f1ced536e807456a06605ace2a4ab477acf9dcce69318280fe8ca6f932aacc"
+  url "https://github.com/f1dot4/homebrew-flexcli/archive/refs/tags/v0.2.26.tar.gz"
+  sha256 "PLACEHOLDER"
   license "MIT"
 
   depends_on "go" => :build
