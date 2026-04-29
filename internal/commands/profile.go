@@ -336,7 +336,7 @@ func newProfileInsightsSleepCmd(rootCfg **config.Config, resolvedCtx *config.Con
 
 	cmd := &cobra.Command{
 		Use:   "sleep",
-		Short: "Show today's sleep investigation report (cached), or regenerate with --force",
+		Short: "View latest sleep investigation insights",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 			endpoint := "/api/reports/sleep-investigation"
@@ -366,6 +366,15 @@ func newProfileInsightsSleepCmd(rootCfg **config.Config, resolvedCtx *config.Con
 			ai := report["ai_analysis"].(map[string]interface{})
 
 			fmt.Println("🌙 SLEEP INVESTIGATION REPORT")
+
+			cached, _ := data["cached"].(bool)
+			createdAt, _ := report["created_at"].(string)
+			if cached {
+				fmt.Printf("   (Cached from %v)\n", createdAt)
+			} else {
+				fmt.Printf("   (Generated at %v)\n", createdAt)
+			}
+
 			fmt.Println(strings.Repeat("=", 30))
 
 			printField := func(label, key string) {
