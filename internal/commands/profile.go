@@ -309,14 +309,9 @@ func newProfileInsightsCoachCmd(rootCfg **config.Config, resolvedCtx *config.Con
 			fmt.Println("🤖 AI Coaching Insights")
 
 			insight, _ := data["insight"].(string)
-			cached, _ := data["cached"].(bool)
 			createdAt, _ := data["created_at"].(string)
 
-			if cached {
-				fmt.Printf("   (Cached from %v)\n", createdAt)
-			} else {
-				fmt.Printf("   (Generated at %v)\n", createdAt)
-			}
+			fmt.Printf("   (Cached from %v)\n", createdAt)
 			fmt.Println()
 			fmt.Printf("%v\n", insight)
 
@@ -367,13 +362,8 @@ func newProfileInsightsSleepCmd(rootCfg **config.Config, resolvedCtx *config.Con
 
 			fmt.Println("🌙 SLEEP INVESTIGATION REPORT")
 
-			cached, _ := data["cached"].(bool)
 			createdAt, _ := report["created_at"].(string)
-			if cached {
-				fmt.Printf("   (Cached from %v)\n", createdAt)
-			} else {
-				fmt.Printf("   (Generated at %v)\n", createdAt)
-			}
+			fmt.Printf("   (Cached from %v)\n", createdAt)
 
 			fmt.Println(strings.Repeat("=", 30))
 
