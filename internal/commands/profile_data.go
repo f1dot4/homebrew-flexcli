@@ -222,7 +222,9 @@ func newDataActivityCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 
 	cmd.AddCommand(newDataActivityListCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityDownloadCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataActivityDownloadBulkCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityUploadCmd(rootCfg, resolvedCtx))
+
 	cmd.AddCommand(newDataActivityDeleteCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityRenameCmd(rootCfg, resolvedCtx))
 
@@ -297,36 +299,125 @@ func newDataActivityListCmd(rootCfg **config.Config, resolvedCtx *config.Context
 }
 
 func newDataActivityDownloadCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-        var output string
+	var output string
+	var format string
 
-        cmd := &cobra.Command{
-                Use:   "download [activity_id]",
-                Short: "Download an activity's original FIT file from Garmin Connect (defaults to 'latest')",
-                Args:  cobra.MaximumNArgs(1),
-                RunE: func(cmd *cobra.Command, args []string) error {
-                        activityID := "latest"
-                        if len(args) > 0 {
-                                activityID = args[0]
-                        }
-                        client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+	cmd := &cobra.Command{
+		Use:   "download [activity_id]",
+		Short: "Download an activity file from Garmin Connect (defaults to 'latest')",
+		Args:  cobra.MaximumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			activityID := "latest"
+			if len(args) > 0 {
+				activityID = args[0]
+			}
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
-                        if output == "" {
-                                output = activityID + ".zip"
-                        }
+			if output == "" {
+				ext := format
+				if format == "fit" {
+					ext = "zip"
+				}
+				output = activityID + "." + ext
+			}
 
-                        path := fmt.Sprintf("/api/activity/%s/download", activityID)
-                        if err := client.DownloadFile(path, output); err != nil {
-                                return fmt.Errorf("download failed: %w", err)
-                        }
+			path := fmt.Sprintf("/api/activity/%s/download?format=%s", activityID, format)
+			if err := client.DownloadFile(path, output); err != nil {
+				return fmt.Errorf("download failed: %w", err)
+			}
 
-                        fmt.Printf("Downloaded activity %s to %s\n", activityID, output)
-                        return nil
-                },
-        }
+			fmt.Printf("Downloaded activity %s to %s\n", activityID, output)
+			return nil
+		},
+	}
 
-        cmd.Flags().StringVarP(&output, "output", "o", "", "Output file path (default: <activity_id>.zip)")
-        return cmd
+	cmd.Flags().StringVarP(&output, "output", "o", "", "Output file path (default: <activity_id>.<ext>)")
+	cmd.Flags().StringVarP(&format, "format", "f", "fit", "File format (fit, gpx, tcx, csv, kml)")
+	return cmd
 }
+func newDataActivityDownloadBulkCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var output string
+	var format string
+	var year int
+	var month int
+
+	cmd := &cobra.Command{
+		Use:   "download-bulk",
+		Short: "Download multiple activities in a ZIP bundle",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			if year == 0 {
+				return fmt.Errorf("year is required")
+			}
+
+			path := fmt.Sprintf("/api/activity/download/bulk/prepare?year=%d&format=%s", year, format)
+			if month > 0 {
+				path += fmt.Sprintf("&month=%d", month)
+			}
+
+			events, err := client.GetSSE(path)
+			if err != nil {
+				return err
+			}
+
+			var token string
+			var finalErr error
+
+			for event := range events {
+				var data map[string]interface{}
+				if err := json.Unmarshal([]byte(event.Data), &data); err != nil {
+					continue
+				}
+
+				status, _ := data["status"].(string)
+				switch status {
+				case "progress":
+					msg, _ := data["message"].(string)
+					fmt.Printf("📦 %s\n", msg)
+				case "complete":
+					token, _ = data["token"].(string)
+					fmt.Println("✅ Bulk preparation complete.")
+				case "error":
+					msg, _ := data["message"].(string)
+					finalErr = fmt.Errorf("bulk preparation failed: %s", msg)
+				}
+			}
+
+			if finalErr != nil {
+				return finalErr
+			}
+
+			if token == "" {
+				return fmt.Errorf("no download token received")
+			}
+
+			if output == "" {
+				output = fmt.Sprintf("activities_%d.zip", year)
+				if month > 0 {
+					output = fmt.Sprintf("activities_%d_%02d.zip", year, month)
+				}
+			}
+
+			fmt.Printf("Downloading bundle to %s...\n", output)
+			downloadPath := fmt.Sprintf("/api/activity/download/bulk/%s", token)
+			if err := client.DownloadFile(downloadPath, output); err != nil {
+				return fmt.Errorf("download failed: %w", err)
+			}
+
+			fmt.Printf("✅ Bulk download saved to %s\n", output)
+			return nil
+		},
+	}
+
+	cmd.Flags().IntVarP(&year, "year", "y", 0, "Year to download activities for (required)")
+	cmd.Flags().IntVarP(&month, "month", "m", 0, "Month to download (1-12, optional)")
+	cmd.Flags().StringVarP(&output, "output", "o", "", "Output ZIP file path")
+	cmd.Flags().StringVarP(&format, "format", "f", "fit", "File format (fit, gpx, tcx, csv, kml)")
+
+	return cmd
+}
+
 func newDataActivityUploadCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	return &cobra.Command{
 		Use:   "upload <file>",

@@ -96,6 +96,63 @@ func (c *Client) Request(method, path string, body interface{}) (*APIResponse, e
 	return &apiResp, nil
 }
 
+// GetSSE performs a GET request and returns a channel for SSE events.
+func (c *Client) GetSSE(path string) (<-chan SSEEvent, error) {
+	url := fmt.Sprintf("%s%s", c.BaseURL, path)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if c.IsAdmin {
+		req.Header.Set("X-Admin-Key", c.APIKey)
+	} else {
+		req.Header.Set("X-API-Key", c.APIKey)
+	}
+	req.Header.Set("Accept", "text/event-stream")
+
+	// Use a fresh client with no timeout for streaming
+	streamingClient := &http.Client{Timeout: 0}
+	resp, err := streamingClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		defer resp.Body.Close()
+		return nil, fmt.Errorf("failed to start stream: %s", resp.Status)
+	}
+
+	events := make(chan SSEEvent, 16)
+
+	go func() {
+		defer resp.Body.Close()
+		defer close(events)
+
+		scanner := bufio.NewScanner(resp.Body)
+		var currentEvent SSEEvent
+
+		for scanner.Scan() {
+			line := scanner.Text()
+			if line == "" {
+				if currentEvent.Data != "" || currentEvent.Event != "" {
+					events <- currentEvent
+					currentEvent = SSEEvent{}
+				}
+				continue
+			}
+
+			if strings.HasPrefix(line, "event: ") {
+				currentEvent.Event = strings.TrimPrefix(line, "event: ")
+			} else if strings.HasPrefix(line, "data: ") {
+				currentEvent.Data = strings.TrimPrefix(line, "data: ")
+			}
+		}
+	}()
+
+	return events, nil
+}
+
 // PostSSE performs a POST request and returns a channel for SSE events.
 func (c *Client) PostSSE(path string) (<-chan SSEEvent, error) {
 	url := fmt.Sprintf("%s%s", c.BaseURL, path)
