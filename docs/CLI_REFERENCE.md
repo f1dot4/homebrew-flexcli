@@ -1060,11 +1060,12 @@ Aliases:
   activity, act
 
 Available Commands:
-  delete      Delete an activity from Garmin Connect (defaults to 'latest', currently disabled)
-  download    Download an activity's original FIT file from Garmin Connect (defaults to 'latest')
-  list        List synced activities with their Garmin activity IDs
-  rename      Rename an activity in Garmin Connect (defaults to 'latest')
-  upload      Upload a FIT/GPX/TCX file to Garmin Connect
+  delete        Delete an activity from Garmin Connect (defaults to 'latest', currently disabled)
+  download      Download an activity file from Garmin Connect (defaults to 'latest')
+  download-bulk Download multiple activities in a ZIP bundle
+  list          List synced activities with their Garmin activity IDs
+  rename        Rename an activity in Garmin Connect (defaults to 'latest')
+  upload        Upload a FIT/GPX/TCX file to Garmin Connect
 
 Flags:
   -h, --help   help for activity
@@ -1099,14 +1100,37 @@ Global Flags:
 ### `flexcli profile data activity download`
 
 ```
-Download an activity's original FIT file from Garmin Connect (defaults to 'latest')
+Download an activity file from Garmin Connect (defaults to 'latest')
 
 Usage:
   flexcli profile data activity download [activity_id] [flags]
 
 Flags:
+  -f, --format string   File format (fit, gpx, tcx, csv, kml) (default "fit")
   -h, --help            help for download
-  -o, --output string   Output file path (default: <activity_id>.zip)
+  -o, --output string   Output file path (default: <activity_id>.<ext>)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile data activity download-bulk`
+
+```
+Download multiple activities in a ZIP bundle
+
+Usage:
+  flexcli profile data activity download-bulk [flags]
+
+Flags:
+  -f, --format string   File format (fit, gpx, tcx, csv, kml) (default "fit")
+  -h, --help            help for download-bulk
+  -m, --month int       Month to download (1-12, optional)
+  -o, --output string   Output ZIP file path
+  -y, --year int        Year to download activities for (required)
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
