@@ -12,7 +12,7 @@ download_and_extract() {
   local year=$1
   local month=$2
   local tmpzip
-  tmpzip=$(mktemp /tmp/activities-XXXXXX.zip)
+  tmpzip=$(mktemp /tmp/activities-XXXXXX)
 
   echo "[$(date)] Downloading $year/$month (format: $FORMAT)..."
   if flexcli profile data activity download-bulk \

@@ -2,6 +2,7 @@ VERSION ?= $(shell git describe --tags --always --dirty)
 LDFLAGS := -X main.Version=$(VERSION)
 GPG_KEY_ID ?= 3005BD255C306C4E
 DOCKER_IMAGE ?= ghcr.io/f1dot4/flexcli
+CONTAINER_TOOL ?= podman
 
 .PHONY: build clean release deb publish-apt docker-build docker-push docs test setup-apt
 
@@ -25,12 +26,12 @@ publish-apt:
 
 docker-build:
 	@if [ -z "$(v)" ]; then echo "Usage: make docker-build v=0.1.x"; exit 1; fi
-	docker build --platform linux/amd64 -t $(DOCKER_IMAGE):$(v) -t $(DOCKER_IMAGE):latest .
+	$(CONTAINER_TOOL) build --platform linux/amd64 -t $(DOCKER_IMAGE):$(v) -t $(DOCKER_IMAGE):latest .
 
 docker-push:
 	@if [ -z "$(v)" ]; then echo "Usage: make docker-push v=0.1.x"; exit 1; fi
-	docker push $(DOCKER_IMAGE):$(v)
-	docker push $(DOCKER_IMAGE):latest
+	$(CONTAINER_TOOL) push $(DOCKER_IMAGE):$(v)
+	$(CONTAINER_TOOL) push $(DOCKER_IMAGE):latest
 
 docs: build
 	python3 ../scripts/generate_cli_docs.py

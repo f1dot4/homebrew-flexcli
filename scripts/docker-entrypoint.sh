@@ -12,6 +12,6 @@ echo "$SCHEDULE /usr/local/bin/import-activities >> /proc/1/fd/1 2>> /proc/1/fd/
 
 # Run once immediately on startup so the first import doesn't wait until 3am
 echo "Running initial import..."
-/usr/local/bin/import-activities
+/usr/local/bin/import-activities || echo "Initial import failed, will retry on schedule"
 
 exec crond -f -l 2
