@@ -12,7 +12,10 @@ WATCHED="${FLEXCLI_WATCHED_DIR:-/watched}"
 tmpzip=$(mktemp /tmp/activities-XXXXXX)
 
 echo "[$(date)] Downloading $YEAR/$MONTH/$DAY (format: $FORMAT)..."
-if flexcli profile data activity download-bulk \
+if flexcli \
+    --server "$FLEXCLI_SERVER" \
+    --key "$FLEXCLI_API_KEY" \
+    profile data activity download-bulk \
     --format "$FORMAT" \
     --year "$YEAR" \
     --month "$MONTH" \
