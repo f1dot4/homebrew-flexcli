@@ -3,7 +3,7 @@
 # Logs are forwarded to stdout/stderr for Docker to capture.
 set -e
 
-SCHEDULE="${FLEXCLI_IMPORT_SCHEDULE:-0 3 * * *}"
+SCHEDULE="${FLEXCLI_IMPORT_SCHEDULE:-0 */2 * * *}"
 
 echo "Scheduling activity import: $SCHEDULE"
 
