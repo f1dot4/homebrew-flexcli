@@ -85,7 +85,4 @@ release: test docs
 	@git push origin main
 	@# Publish apt repo to gh-pages
 	@GPG_KEY_ID=$(GPG_KEY_ID) bash scripts/publish-apt.sh bin/flexcli_$(v)_amd64.deb $(v)
-	@# Build and push Docker image
-	@$(MAKE) docker-build v=$(v)
-	@$(MAKE) docker-push v=$(v)
-	@echo "Release v$(v) complete. brew upgrade flexcli, apt upgrade flexcli, and docker pull will all work."
+	@echo "Release v$(v) complete. brew upgrade flexcli, apt upgrade flexcli will work. Docker image will be published by GitHub Actions."
