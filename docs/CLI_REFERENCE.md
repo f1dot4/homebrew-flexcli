@@ -1126,6 +1126,7 @@ Usage:
   flexcli profile data activity download-bulk [flags]
 
 Flags:
+  -d, --day int         Day to download (1-31, optional)
   -f, --format string   File format (fit, gpx, tcx, csv, kml) (default "fit")
   -h, --help            help for download-bulk
   -m, --month int       Month to download (1-12, optional)
