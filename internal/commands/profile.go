@@ -352,14 +352,20 @@ func newProfileInsightsDocCmd(rootCfg **config.Config, resolvedCtx *config.Conte
 				return err
 			}
 
-			if asJSON {
-				fmt.Println(string(resp.Data))
-				return nil
-			}
-
 			var data map[string]interface{}
 			if err := json.Unmarshal(resp.Data, &data); err != nil {
 				return err
+			}
+
+			if asJSON {
+				// For 'insights doc', we only want the focused analysis in JSON, not the metrics table
+				focused := map[string]interface{}{
+					"health_analysis":    data["health_analysis"],
+					"health_analysis_at": data["health_analysis_at"],
+				}
+				focusedJSON, _ := json.MarshalIndent(focused, "", "  ")
+				fmt.Println(string(focusedJSON))
+				return nil
 			}
 
 			analysis, ok := data["health_analysis"].(string)
