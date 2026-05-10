@@ -766,7 +766,7 @@ Available Commands:
   delete      Permanently delete user profile and all data
   get         View full profile
   goal        Manage training goals
-  insights    View AI insights (coach or sleep)
+  insights    View AI insights (coach, sleep or doc)
   preferences Manage preferences (expert settings, custom list)
   stats       View training statistics and reports
 
@@ -1529,13 +1529,14 @@ Global Flags:
 ### `flexcli profile insights`
 
 ```
-View AI insights (coach or sleep)
+View AI insights (coach, sleep or doc)
 
 Usage:
   flexcli profile insights [command]
 
 Available Commands:
   coach       View latest AI coaching insights
+  doc         View latest health analysis from 'The Doc'
   sleep       View latest sleep investigation insights
 
 Flags:
@@ -1562,6 +1563,27 @@ Flags:
       --force   Force regeneration of insights
   -h, --help    help for coach
       --json    Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override
+      --server string    FlexCoach server URL override
+```
+
+### `flexcli profile insights doc`
+
+```
+View latest health analysis from 'The Doc'
+
+Usage:
+  flexcli profile insights doc [flags]
+
+Aliases:
+  doc, health
+
+Flags:
+  -h, --help   help for doc
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
