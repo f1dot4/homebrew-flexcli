@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/f1dot4/flexcli/internal/api"
 	"github.com/f1dot4/flexcli/internal/config"
@@ -188,6 +189,21 @@ func newStatsHealthTrendsCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 			fmt.Println(strings.Repeat("─", wMetric+wNow+w7+w30+3))
 			for _, r := range rows {
 				fmt.Printf("%-*s %*s %*s %*s\n", wMetric, r.label, wNow, r.now, w7, r.c7, w30, r.c30)
+			}
+
+			// Add "The Doc's" latest health analysis if available
+			if analysis, ok := data["health_analysis"].(string); ok {
+				header := "The Doc's Analysis"
+				if analysisAt, ok := data["health_analysis_at"].(string); ok {
+					// Attempt to parse and format timestamp (usually ISO format from FastAPI)
+					if t, err := time.Parse(time.RFC3339, analysisAt); err == nil {
+						header = fmt.Sprintf("%s (Cached from %s)", header, t.Format("2006-01-02 15:04"))
+					} else {
+						// Fallback if not RFC3339
+						header = fmt.Sprintf("%s (Cached from %s)", header, analysisAt)
+					}
+				}
+				fmt.Printf("\n🩺 %s:\n%s\n", header, analysis)
 			}
 
 			return nil

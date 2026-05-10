@@ -270,11 +270,12 @@ func newVitalsSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobr
 func newProfileInsightsCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "insights",
-		Short: "View AI insights (coach or sleep)",
+		Short: "View AI insights (coach, sleep or doc)",
 	}
 
 	cmd.AddCommand(newProfileInsightsCoachCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newProfileInsightsSleepCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newProfileInsightsDocCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -324,6 +325,21 @@ func newProfileInsightsCoachCmd(rootCfg **config.Config, resolvedCtx *config.Con
 
 	cmd.Flags().BoolVar(&force, "force", false, "Force regeneration of insights")
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+
+	return cmd
+}
+
+func newProfileInsightsDocCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:     "doc",
+		Aliases: []string{"health"},
+		Short:   "View latest health analysis from 'The Doc'",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// Doc analysis is now part of health-trends
+			healthCmd := newStatsHealthTrendsCmd(rootCfg, resolvedCtx)
+			return healthCmd.RunE(cmd, args)
+		},
+	}
 
 	return cmd
 }
