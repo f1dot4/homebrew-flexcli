@@ -235,14 +235,26 @@ func newDataActivityListCmd(rootCfg **config.Config, resolvedCtx *config.Context
 	var page int
 	var pageSize int
 	var asJSON bool
+	var startDate string
+	var endDate string
 
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List synced activities with their Garmin activity IDs",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateDateFlag(startDate, "--start-date"); err != nil {
+				return err
+			}
+			if err := validateDateFlag(endDate, "--end-date"); err != nil {
+				return err
+			}
+
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
 			path := fmt.Sprintf("/api/activities?page=%d&page_size=%d", page, pageSize)
+			if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
+				path += "&" + dateQuery
+			}
 			resp, err := client.Request("GET", path, nil)
 			if err != nil {
 				return err
@@ -295,6 +307,8 @@ func newDataActivityListCmd(rootCfg **config.Config, resolvedCtx *config.Context
 	cmd.Flags().IntVar(&page, "page", 1, "Page number")
 	cmd.Flags().IntVar(&pageSize, "page-size", 20, "Number of activities per page")
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output as JSON")
+	cmd.Flags().StringVar(&startDate, "start-date", "", "Only include activities on or after this date (YYYY-MM-DD)")
+	cmd.Flags().StringVar(&endDate, "end-date", "", "Only include activities on or before this date (YYYY-MM-DD)")
 	return cmd
 }
 
@@ -492,14 +506,26 @@ func newDataHealthMetricListCmd(rootCfg **config.Config, resolvedCtx *config.Con
 	var page int
 	var pageSize int
 	var asJSON bool
+	var startDate string
+	var endDate string
 
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List imported health metrics (paginated)",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateDateFlag(startDate, "--start-date"); err != nil {
+				return err
+			}
+			if err := validateDateFlag(endDate, "--end-date"); err != nil {
+				return err
+			}
+
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
 			path := fmt.Sprintf("/api/healthmetrics?page=%d&page_size=%d", page, pageSize)
+			if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
+				path += "&" + dateQuery
+			}
 			resp, err := client.Request("GET", path, nil)
 			if err != nil {
 				return err
@@ -586,6 +612,8 @@ func newDataHealthMetricListCmd(rootCfg **config.Config, resolvedCtx *config.Con
 	cmd.Flags().IntVar(&page, "page", 1, "Page number")
 	cmd.Flags().IntVar(&pageSize, "page-size", 20, "Number of metrics per page")
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output as JSON")
+	cmd.Flags().StringVar(&startDate, "start-date", "", "Only include metrics on or after this date (YYYY-MM-DD)")
+	cmd.Flags().StringVar(&endDate, "end-date", "", "Only include metrics on or before this date (YYYY-MM-DD)")
 	return cmd
 }
 

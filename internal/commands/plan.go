@@ -75,14 +75,29 @@ func newPlanGenerateCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 func newPlanListCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	var asJSON bool
 	var statusFilter string
+	var startDate string
+	var endDate string
 
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List all training plans",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateDateFlag(startDate, "--start-date"); err != nil {
+				return err
+			}
+			if err := validateDateFlag(endDate, "--end-date"); err != nil {
+				return err
+			}
+
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
-			resp, err := client.Request("GET", "/api/plans", nil)
+			path := "/api/plans"
+			query := buildDateRangeQuery(startDate, endDate)
+			if query != "" {
+				path += "?" + query
+			}
+
+			resp, err := client.Request("GET", path, nil)
 			if err != nil {
 				return err
 			}
@@ -150,6 +165,8 @@ func newPlanListCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra
 
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
 	cmd.Flags().StringVarP(&statusFilter, "status", "s", "", "Filter by status (active, scheduled, inactive)")
+	cmd.Flags().StringVar(&startDate, "start-date", "", "Only include plans on or after this date (YYYY-MM-DD)")
+	cmd.Flags().StringVar(&endDate, "end-date", "", "Only include plans on or before this date (YYYY-MM-DD)")
 	return cmd
 }
 

@@ -700,9 +700,11 @@ Usage:
   flexcli plan list [flags]
 
 Flags:
-  -h, --help            help for list
-      --json            Output in JSON format
-  -s, --status string   Filter by status (active, scheduled, inactive)
+      --end-date string     Only include plans on or before this date (YYYY-MM-DD)
+  -h, --help                help for list
+      --json                Output in JSON format
+      --start-date string   Only include plans on or after this date (YYYY-MM-DD)
+  -s, --status string       Filter by status (active, scheduled, inactive)
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
@@ -1149,10 +1151,12 @@ Usage:
   flexcli profile data activity list [flags]
 
 Flags:
-  -h, --help            help for list
-      --json            Output as JSON
-      --page int        Page number (default 1)
-      --page-size int   Number of activities per page (default 20)
+      --end-date string     Only include activities on or before this date (YYYY-MM-DD)
+  -h, --help                help for list
+      --json                Output as JSON
+      --page int            Page number (default 1)
+      --page-size int       Number of activities per page (default 20)
+      --start-date string   Only include activities on or after this date (YYYY-MM-DD)
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
@@ -1294,10 +1298,12 @@ Usage:
   flexcli profile data healthmetric list [flags]
 
 Flags:
-  -h, --help            help for list
-      --json            Output as JSON
-      --page int        Page number (default 1)
-      --page-size int   Number of metrics per page (default 20)
+      --end-date string     Only include metrics on or before this date (YYYY-MM-DD)
+  -h, --help                help for list
+      --json                Output as JSON
+      --page int            Page number (default 1)
+      --page-size int       Number of metrics per page (default 20)
+      --start-date string   Only include metrics on or after this date (YYYY-MM-DD)
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
