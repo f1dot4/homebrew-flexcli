@@ -8,27 +8,27 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: FlexCLI apt repository
-Date: Tue, 25 Aug 2026 20:06:44 UTC
+Date: Tue, 25 Aug 2026 21:07:58 UTC
 MD5Sum:
- 35c25bb09c0724a5a3cb2929370c876a 647 main/binary-amd64/Packages
- 17cc5d2e9728f58d125a8d69039a62b9 475 main/binary-amd64/Packages.gz
+ d5d8021a4b15def80e53cfc3294acd57 648 main/binary-amd64/Packages
+ 4e2f8e58a5a9ba94d2306e196f59812a 474 main/binary-amd64/Packages.gz
 SHA256:
- acf871942e8b47403ebb24c7c8cb386463b156934bc891d8d3beaf4d3c65b398 647 main/binary-amd64/Packages
- 7e0b805d33dd472b0897d751fc8d932c4cd380026a770e1d01bbdc036bbeb4a0 475 main/binary-amd64/Packages.gz
+ d0ac24ec4d7b88bbd86ac6063df69bb1f3ffc121a9c63df91630af185df6368e 648 main/binary-amd64/Packages
+ db6ef8e6a796ee06f874325eefc5f3e96640f2fe195d43cb376671f91a31eb2e 474 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAEBCAA5FiEEOlCCEdUk2VcLbMypMAW9JVwwbE4FAmqN9dQbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMCwzAAoJEDAFvSVcMGxOqeMP/2ub5tckwJGuR50REerk
-Znh9rTrxKt/szVOo/Kka1zYgLp/ZpFtVDFCXwNvG5Yr2pvX8D0vt/6oEtJ/2ky53
-8v2DfzgL3L0/kpd3NsWl0GpDyYoNQNV/i9C/cFWI/OAEVQuJcr+ub0zhL8M4Fryk
-lwZLMHly/wlfa7Mo8o3qxVY/HL4ZmVB2ZCOYkqIKO5sc7WA9qZEl+xJSwXOIyCu0
-l9GgOe9SXAqjQ7/VOkgK1NNmVYGMWolX2OewR5la65ZHvCboSgc7FaK+3bWB3/qQ
-0Rqxsax3Nzx7ROJh2j9q+m8995MM6ZA86AOazxtudwi+Iwvecb+mHW3YyUYDfiQc
-se4rCHUo5TArUtMJxmNhemhYCARXiH3Xw46gQj1pq0v0+YDio3q94nE8JrPH1HhT
-yE8y1dwodoZHsytQ5kZTmz4yr3zk8c46c0HNNjQee6BDFwri/NmNz0nyYITrXDm8
-hFNb641Ynuw2jE5E/zAHD9h/ablnAZ8gC5LfSX/2EqkoLE0MVbWC5ADeO2r77Sqb
-SsJO5XV6Ne52KBkFgwpjT5gVFzJJvuhiNN4kUfPLujZFkBzfb60VmJ19hXEQAjwh
-Bv7CrXQD7WyuAfo36T1r32Le68sMGWylWGEwlHcqPMqK9R24ndvTMpw+tOHgdpw8
-BrpCh9rgftByxKHrUjZEfIiE
-=tLSd
+iQJPBAEBCAA5FiEEOlCCEdUk2VcLbMypMAW9JVwwbE4FAmqOBC4bFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMCwzAAoJEDAFvSVcMGxO/DMQAKl5MoRtMTMZE0bnxB9O
+p4KJYC29ler5dlHXjve8utonwcAj47Qxtxi+88MrBTL5bURTHMFIeXCgLJeuh8Yb
+thvKPTUnXt7ptx2giYsh3+VdTFGw7EdYmAyQswwjmNTyZZtHAAxAJ/M6/NCCbY1b
+YOMgSYHz+3EYPvc1W2WMBUnDJzfBofGWoKl23i02ApUboHv9qa0WGLcjhjsakage
+FF8TKfC+KPiwcghgHdcRbBwzmiAtus7DycfwLCncbu8YyVP4Gb4T1Gk1kkOIRdI7
+jeGFCLBE4TszztTZQq0rdXF0/MIv3O3JltB5OPb3Vu+Xrmuim4kM8jBLHxtqhWpq
+alIxqWc8RgvT2Bv8ll9TQ+dLzu7b/ao3kKSChOZv+Q/NB1YXmu6EyFRi/qOs8FW7
++WXUw+POKa4Mnlaa/878JRjjFkhhY9Z19y2ij1Nr7ZsG7LoE3oe1XwqUYOuPL12T
+mdpsVleSiqV0XZDvRsZs07h2Tf5nU+u8iF0YfkH9xmozwz8ph8s61G4zmQz1t/js
+sWSPJj/4BzQ/9FFr/vx/YrfRSldu+FvgERtyLo3lp3xJLCicoJrSWxD+S3P3wXEl
+lXrv7YxrI3BJzZR0FQcJcru4r04wRlMLZHRFPLFBJ7Dqg7ecEdgXAx3OIZdYHtHv
+jFsQZxSSVY6AoN+UgYs/N+uu
+=lcRO
 -----END PGP SIGNATURE-----
