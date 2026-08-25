@@ -24,8 +24,8 @@ Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
   -h, --help             help for flexcli
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
   -v, --version          version for flexcli
 
 Use "flexcli [command] --help" for more information about a command.
@@ -52,8 +52,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli admin [command] --help" for more information about a command.
 ```
@@ -78,8 +78,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli admin backup [command] --help" for more information about a command.
 ```
@@ -98,8 +98,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin backup create`
@@ -116,8 +116,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin backup list`
@@ -134,8 +134,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin backup set-config`
@@ -152,8 +152,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin settings`
@@ -175,8 +175,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli admin settings [command] --help" for more information about a command.
 ```
@@ -195,8 +195,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin settings merge-strategies`
@@ -213,8 +213,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin settings set`
@@ -231,8 +231,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin status`
@@ -250,8 +250,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin sync-all`
@@ -269,8 +269,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli admin users`
@@ -287,8 +287,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli config`
@@ -329,8 +329,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli connect [command] --help" for more information about a command.
 ```
@@ -352,8 +352,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli connect garmin [command] --help" for more information about a command.
 ```
@@ -376,8 +376,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli connect garmin config [command] --help" for more information about a command.
 ```
@@ -396,8 +396,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli connect garmin config set`
@@ -417,8 +417,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli connect status`
@@ -436,8 +436,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli connect withings`
@@ -457,8 +457,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli connect withings [command] --help" for more information about a command.
 ```
@@ -481,8 +481,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli connect withings config [command] --help" for more information about a command.
 ```
@@ -501,8 +501,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli connect withings config set`
@@ -520,8 +520,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli context`
@@ -543,8 +543,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli context [command] --help" for more information about a command.
 ```
@@ -563,8 +563,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli context list`
@@ -581,8 +581,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli context use`
@@ -599,8 +599,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli plan`
@@ -625,8 +625,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli plan [command] --help" for more information about a command.
 ```
@@ -646,8 +646,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli plan generate`
@@ -668,8 +668,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli plan get`
@@ -687,8 +687,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli plan list`
@@ -707,8 +707,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli plan modify`
@@ -727,8 +727,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli plan skip`
@@ -747,8 +747,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile`
@@ -776,8 +776,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile [command] --help" for more information about a command.
 ```
@@ -800,8 +800,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile body [command] --help" for more information about a command.
 ```
@@ -824,8 +824,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile body threshold [command] --help" for more information about a command.
 ```
@@ -845,8 +845,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile body threshold set`
@@ -870,8 +870,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile body vitals`
@@ -892,8 +892,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile body vitals [command] --help" for more information about a command.
 ```
@@ -913,8 +913,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile body vitals set`
@@ -936,8 +936,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile constraint`
@@ -959,8 +959,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile constraint [command] --help" for more information about a command.
 ```
@@ -980,8 +980,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile constraint delete`
@@ -999,8 +999,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile constraint list`
@@ -1018,8 +1018,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data`
@@ -1042,8 +1042,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data [command] --help" for more information about a command.
 ```
@@ -1073,8 +1073,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data activity [command] --help" for more information about a command.
 ```
@@ -1093,8 +1093,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data activity download`
@@ -1113,8 +1113,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data activity download-bulk`
@@ -1136,8 +1136,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data activity list`
@@ -1157,8 +1157,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data activity rename`
@@ -1175,8 +1175,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data activity upload`
@@ -1193,8 +1193,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data fitness`
@@ -1214,8 +1214,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data fitness [command] --help" for more information about a command.
 ```
@@ -1235,8 +1235,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data healthmetric`
@@ -1261,8 +1261,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data healthmetric [command] --help" for more information about a command.
 ```
@@ -1281,8 +1281,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data healthmetric list`
@@ -1302,8 +1302,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data healthmetric show`
@@ -1321,8 +1321,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data sync`
@@ -1343,8 +1343,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data sync [command] --help" for more information about a command.
 ```
@@ -1363,8 +1363,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data sync withings`
@@ -1381,8 +1381,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile delete`
@@ -1400,8 +1400,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile get`
@@ -1419,8 +1419,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile goal`
@@ -1443,8 +1443,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile goal [command] --help" for more information about a command.
 ```
@@ -1465,8 +1465,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile goal delete`
@@ -1484,8 +1484,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile goal list`
@@ -1503,8 +1503,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile goal suggest`
@@ -1522,8 +1522,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile insights`
@@ -1545,8 +1545,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile insights [command] --help" for more information about a command.
 ```
@@ -1567,8 +1567,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile insights doc`
@@ -1590,8 +1590,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile insights sleep`
@@ -1610,8 +1610,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile preferences`
@@ -1635,8 +1635,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile preferences [command] --help" for more information about a command.
 ```
@@ -1660,8 +1660,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile preferences custom [command] --help" for more information about a command.
 ```
@@ -1681,8 +1681,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile preferences custom list`
@@ -1700,8 +1700,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile preferences custom remove`
@@ -1719,8 +1719,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile preferences expert`
@@ -1741,8 +1741,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile preferences expert [command] --help" for more information about a command.
 ```
@@ -1762,8 +1762,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile preferences expert set`
@@ -1784,8 +1784,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats`
@@ -1808,8 +1808,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile stats [command] --help" for more information about a command.
 ```
@@ -1829,8 +1829,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats healthtrends`
@@ -1853,8 +1853,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats report`
@@ -1875,8 +1875,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile stats report [command] --help" for more information about a command.
 ```
@@ -1896,8 +1896,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats report show`
@@ -1915,8 +1915,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats sleep`
@@ -1938,8 +1938,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile stats sleep [command] --help" for more information about a command.
 ```
@@ -1959,8 +1959,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats sleep list`
@@ -1979,8 +1979,8 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats sleep log`
@@ -2003,7 +2003,7 @@ Flags:
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
       --context string   Use specific context from config
-      --key string       FlexCoach API key override
-      --server string    FlexCoach server URL override
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
