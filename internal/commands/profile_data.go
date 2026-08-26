@@ -538,17 +538,20 @@ func newDataHealthMetricListCmd(rootCfg **config.Config, resolvedCtx *config.Con
 
 			var data struct {
 				Metrics []struct {
-					ID                int      `json:"id"`
-					Date              string   `json:"date"`
-					Source            string   `json:"source"`
-					WeightKg          *float64 `json:"weight_kg"`
-					RestingHeartRate  *int     `json:"resting_heart_rate"`
-					HRVScore          *float64 `json:"hrv_score"`
-					SleepHours        *float64 `json:"sleep_hours"`
-					CyclingFTP        *float64 `json:"cycling_ftp"`
-					CyclingLTHR       *float64 `json:"cycling_lthr"`
-					RunningFTP        *float64 `json:"running_ftp"`
-					RunningLTHR       *float64 `json:"running_lthr"`
+					ID               int      `json:"id"`
+					Date             string   `json:"date"`
+					Source           string   `json:"source"`
+					WeightKg         *float64 `json:"weight_kg"`
+					RestingHeartRate *int     `json:"resting_heart_rate"`
+					HRVScore         *float64 `json:"hrv_score"`
+					SleepHours       *float64 `json:"sleep_hours"`
+					CyclingFTP       *float64 `json:"cycling_ftp"`
+					CyclingLTHR      *float64 `json:"cycling_lthr"`
+					RunningFTP       *float64 `json:"running_ftp"`
+					RunningLTHR      *float64 `json:"running_lthr"`
+					ActiveCalories   *int     `json:"active_calories"`
+					PassiveCalories  *int     `json:"passive_calories"`
+					TotalCalories    *int     `json:"total_calories"`
 				} `json:"metrics"`
 				TotalEntries int `json:"total_entries"`
 				TotalPages   int `json:"total_pages"`
@@ -564,10 +567,10 @@ func newDataHealthMetricListCmd(rootCfg **config.Config, resolvedCtx *config.Con
 			}
 
 			fmt.Printf("Health metrics (page %d/%d, %d total):\n\n", data.CurrentPage, data.TotalPages, data.TotalEntries)
-			fmt.Printf("  %-12s  %-10s  %8s  %5s  %5s  %5s  %6s  %6s  %6s  %6s\n",
-				"DATE", "SOURCE", "WEIGHT", "RHR", "HRV", "SLEEP", "C-FTP", "C-LTHR", "R-FTP", "R-LTHR")
-			fmt.Printf("  %-12s  %-10s  %8s  %5s  %5s  %5s  %6s  %6s  %6s  %6s\n",
-				"──────────", "──────────", "────────", "─────", "─────", "─────", "──────", "──────", "──────", "──────")
+			fmt.Printf("  %-12s  %-10s  %8s  %5s  %5s  %5s  %6s  %6s  %6s  %6s  %6s  %6s  %6s\n",
+				"DATE", "SOURCE", "WEIGHT", "RHR", "HRV", "SLEEP", "C-FTP", "C-LTHR", "R-FTP", "R-LTHR", "ACAL", "PCAL", "TCAL")
+			fmt.Printf("  %-12s  %-10s  %8s  %5s  %5s  %5s  %6s  %6s  %6s  %6s  %6s  %6s  %6s\n",
+				"──────────", "──────────", "────────", "─────", "─────", "─────", "──────", "──────", "──────", "──────", "──────", "──────", "──────")
 			for _, m := range data.Metrics {
 				weight := "  -"
 				if m.WeightKg != nil {
@@ -601,8 +604,20 @@ func newDataHealthMetricListCmd(rootCfg **config.Config, resolvedCtx *config.Con
 				if m.RunningLTHR != nil {
 					rlthr = fmt.Sprintf("%6.0f", *m.RunningLTHR)
 				}
-				fmt.Printf("  %-12s  %-10s  %8s  %5s  %5s  %5s  %6s  %6s  %6s  %6s\n",
-					m.Date, m.Source, weight, rhr, hrv, sleep, cftp, clthr, rftp, rlthr)
+				acal := "  -"
+				if m.ActiveCalories != nil {
+					acal = fmt.Sprintf("%6d", *m.ActiveCalories)
+				}
+				pcal := "  -"
+				if m.PassiveCalories != nil {
+					pcal = fmt.Sprintf("%6d", *m.PassiveCalories)
+				}
+				tcal := "  -"
+				if m.TotalCalories != nil {
+					tcal = fmt.Sprintf("%6d", *m.TotalCalories)
+				}
+				fmt.Printf("  %-12s  %-10s  %8s  %5s  %5s  %5s  %6s  %6s  %6s  %6s  %6s  %6s  %6s\n",
+					m.Date, m.Source, weight, rhr, hrv, sleep, cftp, clthr, rftp, rlthr, acal, pcal, tcal)
 			}
 
 			return nil
