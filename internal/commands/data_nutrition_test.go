@@ -1,0 +1,124 @@
+package commands
+
+import (
+	"testing"
+
+	"github.com/f1dot4/flexcli/internal/config"
+)
+
+func TestParseNutritionTime(t *testing.T) {
+	// Empty string defaults to current timestamp
+	nowStr, err := parseNutritionTime("")
+	if err != nil {
+		t.Fatalf("expected no error for empty time, got: %v", err)
+	}
+	if len(nowStr) != 19 {
+		t.Errorf("expected 19-char ISO timestamp, got: %q", nowStr)
+	}
+
+	// YYYY-MM-DD
+	dStr, err := parseNutritionTime("2026-08-27")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if dStr != "2026-08-27T00:00:00" {
+		t.Errorf("expected 2026-08-27T00:00:00, got %q", dStr)
+	}
+
+	// YYYY-MM-DD HH:MM
+	dtStr, err := parseNutritionTime("2026-08-27 13:02")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if dtStr != "2026-08-27T13:02:00" {
+		t.Errorf("expected 2026-08-27T13:02:00, got %q", dtStr)
+	}
+
+	// Invalid format
+	_, err = parseNutritionTime("invalid-time")
+	if err == nil {
+		t.Fatalf("expected error for invalid time format, got nil")
+	}
+}
+
+func TestNewDataNutritionCmdTree(t *testing.T) {
+	var cfg *config.Config
+	ctx := &config.Context{
+		ServerURL: "http://localhost:8000",
+		APIKey:    "test-key",
+	}
+
+	cmd := newDataNutritionCmd(&cfg, ctx)
+	if cmd.Use != "nutrition" {
+		t.Errorf("expected Use 'nutrition', got %q", cmd.Use)
+	}
+	if len(cmd.Aliases) != 1 || cmd.Aliases[0] != "nut" {
+		t.Errorf("expected alias 'nut', got %v", cmd.Aliases)
+	}
+
+	subCommands := cmd.Commands()
+	if len(subCommands) != 2 {
+		t.Fatalf("expected 2 subcommands, got %d", len(subCommands))
+	}
+
+	names := map[string]bool{}
+	for _, sub := range subCommands {
+		names[sub.Use] = true
+	}
+	if !names["log"] || !names["list"] {
+		t.Errorf("expected subcommands 'log' and 'list', got %v", names)
+	}
+}
+
+func TestRenderNutritionList(t *testing.T) {
+	jsonData := []byte(`{
+		"entries": [
+			{
+				"id": "e1",
+				"user_id": "u1",
+				"logged_at": "2026-08-27T08:15:00",
+				"name": "Oatmeal + berries",
+				"meal_type": "breakfast",
+				"calories": 420,
+				"carbs_g": 65.0,
+				"protein_g": 12.0,
+				"fat_g": 8.0,
+				"sugar_g": 18.0,
+				"sodium_mg": 150,
+				"fiber_g": 9.0
+			}
+		],
+		"daily_totals": [
+			{
+				"date": "2026-08-27",
+				"calories": 420,
+				"carbs_g": 65.0,
+				"protein_g": 12.0,
+				"fat_g": 8.0,
+				"sugar_g": 18.0,
+				"sodium_mg": 150,
+				"fiber_g": 9.0
+			},
+			{
+				"date": "2026-08-26",
+				"calories": 0,
+				"carbs_g": 0.0,
+				"protein_g": 0.0,
+				"fat_g": 0.0,
+				"sugar_g": 0.0,
+				"sodium_mg": 0,
+				"fiber_g": 0.0
+			}
+		]
+	}`)
+
+	err := renderNutritionList(jsonData)
+	if err != nil {
+		t.Fatalf("expected no error rendering nutrition list, got: %v", err)
+	}
+
+	err = renderNutritionList([]byte(`invalid json`))
+	if err == nil {
+		t.Fatalf("expected error for invalid json, got nil")
+	}
+}
