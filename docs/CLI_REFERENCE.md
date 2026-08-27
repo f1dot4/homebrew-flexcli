@@ -1108,6 +1108,7 @@ Available Commands:
   activity     Manage Garmin activities (alias: act): list, download, upload, delete
   fitness      View imported fitness data: personal records
   healthmetric View imported health metrics (alias: hm): list, show, delete
+  nutrition    Manage nutrition logs (alias: nut): log, list
   sync         Manually trigger Garmin or Withings synchronization
 
 Flags:
@@ -1395,6 +1396,84 @@ Usage:
 Flags:
   -h, --help   help for show
       --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data nutrition`
+
+```
+Manage nutrition logs (alias: nut): log, list
+
+Usage:
+  flexcli profile data nutrition [command]
+
+Aliases:
+  nutrition, nut
+
+Available Commands:
+  list        List nutrition entries and daily totals
+  log         Log a food/nutrition entry
+
+Flags:
+  -h, --help   help for nutrition
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile data nutrition [command] --help" for more information about a command.
+```
+
+### `flexcli profile data nutrition list`
+
+```
+List nutrition entries and daily totals
+
+Usage:
+  flexcli profile data nutrition list [flags]
+
+Flags:
+  -d, --days int            Number of days to list up to today
+      --end-date string     Only include entries on or before this date (YYYY-MM-DD)
+  -h, --help                help for list
+      --json                Output as JSON
+      --start-date string   Only include entries on or after this date (YYYY-MM-DD)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data nutrition log`
+
+```
+Log a food/nutrition entry
+
+Usage:
+  flexcli profile data nutrition log [flags]
+
+Flags:
+      --calories int    Calories (kcal)
+      --carbs float     Carbohydrates (g)
+      --fat float       Fat (g)
+      --fiber float     Fiber (g)
+  -h, --help            help for log
+      --meal string     Meal type (breakfast, lunch, dinner, snack)
+      --name string     Name of the food item or meal
+      --notes string    Optional notes
+      --protein float   Protein (g)
+      --sodium int      Sodium (mg)
+      --sugar float     Sugar (g)
+      --time string     Time of entry (YYYY-MM-DD or YYYY-MM-DD HH:MM, default: now)
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
