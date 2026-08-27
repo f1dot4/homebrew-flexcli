@@ -22,6 +22,7 @@ func NewAdminCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Co
 	adminCmd.AddCommand(newAdminBackupCmd(resolvedCtx))
 	adminCmd.AddCommand(newAdminSyncAllCmd(resolvedCtx))
 	adminCmd.AddCommand(newAdminSettingsCmd(resolvedCtx))
+	adminCmd.AddCommand(newAdminHealthMetricCmd(resolvedCtx))
 
 	return adminCmd
 }
@@ -336,4 +337,76 @@ func newAdminSettingsCmd(ctx *config.Context) *cobra.Command {
 	settingsCmd.AddCommand(mergeStrategiesCmd)
 
 	return settingsCmd
+}
+
+func newAdminHealthMetricCmd(ctx *config.Context) *cobra.Command {
+	healthMetricCmd := &cobra.Command{
+		Use:   "health-metric",
+		Short: "Correct or delete a single raw health metric reading",
+	}
+
+	var correctSource, correctUnit string
+	correctCmd := &cobra.Command{
+		Use:   "correct <user_id> <date> <metric_name> <value>",
+		Short: "Overwrite one raw health metric reading and re-aggregate that day",
+		Args:  cobra.ExactArgs(4),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(ctx.ServerURL, ctx.APIKey)
+			client.IsAdmin = true
+
+			userID, metricDate, metricName, value := args[0], args[1], args[2], args[3]
+
+			body := map[string]interface{}{
+				"value": value,
+			}
+			if correctUnit != "" {
+				body["unit"] = correctUnit
+			}
+
+			path := fmt.Sprintf(
+				"/api/admin/health-metrics/%s/%s/%s?source=%s",
+				userID, metricDate, metricName, correctSource,
+			)
+			resp, err := client.Request("PUT", path, body)
+			if err != nil {
+				return err
+			}
+
+			fmt.Println(resp.Message)
+			return nil
+		},
+	}
+	correctCmd.Flags().StringVar(&correctSource, "source", "withings", "Reading source (withings, garmin, manual, telegram)")
+	correctCmd.Flags().StringVar(&correctUnit, "unit", "", "Unit for the corrected value")
+
+	var deleteSource string
+	deleteCmd := &cobra.Command{
+		Use:   "delete <user_id> <date> <metric_name>",
+		Short: "Delete one raw health metric reading and re-aggregate that day",
+		Args:  cobra.ExactArgs(3),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(ctx.ServerURL, ctx.APIKey)
+			client.IsAdmin = true
+
+			userID, metricDate, metricName := args[0], args[1], args[2]
+
+			path := fmt.Sprintf(
+				"/api/admin/health-metrics/%s/%s/%s?source=%s",
+				userID, metricDate, metricName, deleteSource,
+			)
+			resp, err := client.Request("DELETE", path, nil)
+			if err != nil {
+				return err
+			}
+
+			fmt.Println(resp.Message)
+			return nil
+		},
+	}
+	deleteCmd.Flags().StringVar(&deleteSource, "source", "withings", "Reading source (withings, garmin, manual, telegram)")
+
+	healthMetricCmd.AddCommand(correctCmd)
+	healthMetricCmd.AddCommand(deleteCmd)
+
+	return healthMetricCmd
 }
