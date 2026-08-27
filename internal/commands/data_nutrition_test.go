@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/f1dot4/flexcli/internal/config"
@@ -99,6 +100,24 @@ func TestNewDataNutritionDeleteCmd(t *testing.T) {
 	}
 	if err := delCmd.Args(delCmd, []string{"id1"}); err != nil {
 		t.Errorf("expected nil error for 1 arg, got %v", err)
+	}
+}
+
+func TestNewDataNutritionLogCmd_EmptyFlagsRejected(t *testing.T) {
+	var cfg *config.Config
+	ctx := &config.Context{
+		ServerURL: "http://localhost:8000",
+		APIKey:    "test-key",
+	}
+
+	logCmd := newDataNutritionLogCmd(&cfg, ctx)
+	// Running with no flags should return an error
+	err := logCmd.RunE(logCmd, []string{})
+	if err == nil {
+		t.Fatalf("expected error when running nutrition log with no content flags, got nil")
+	}
+	if !strings.Contains(err.Error(), "at least one parameter must be provided") {
+		t.Errorf("expected error message to mention at least one parameter, got: %v", err)
 	}
 }
 

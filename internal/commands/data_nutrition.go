@@ -49,7 +49,26 @@ func newDataNutritionLogCmd(rootCfg **config.Config, resolvedCtx *config.Context
 		Use:   "log",
 		Short: "Log a food/nutrition entry",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			name = strings.TrimSpace(name)
 			meal = strings.ToLower(strings.TrimSpace(meal))
+			notes = strings.TrimSpace(notes)
+
+			hasContent := cmd.Flags().Changed("calories") ||
+				cmd.Flags().Changed("carbs") ||
+				cmd.Flags().Changed("protein") ||
+				cmd.Flags().Changed("fat") ||
+				cmd.Flags().Changed("sugar") ||
+				cmd.Flags().Changed("sodium") ||
+				cmd.Flags().Changed("fiber") ||
+				name != "" ||
+				meal != "" ||
+				notes != ""
+
+			if !hasContent {
+				_ = cmd.Usage()
+				return fmt.Errorf("at least one parameter must be provided (e.g. --name, --meal, --calories, --carbs)")
+			}
+
 			if meal != "" {
 				validMeals := map[string]bool{
 					"breakfast": true,
