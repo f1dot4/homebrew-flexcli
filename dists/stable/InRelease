@@ -8,27 +8,27 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: FlexCLI apt repository
-Date: Thu, 27 Aug 2026 20:49:25 UTC
+Date: Thu, 27 Aug 2026 21:48:36 UTC
 MD5Sum:
- 6c98515fc80b80ffe8bc46209e942139 648 main/binary-amd64/Packages
- 851746fec6099812d2d4e301e2963c76 475 main/binary-amd64/Packages.gz
+ 7c4ab1cf22b4c5ada27025cb2629fb62 648 main/binary-amd64/Packages
+ d2475ab86616002e4fedf3196ae6f5d8 476 main/binary-amd64/Packages.gz
 SHA256:
- bfbf01c73b7fcc18a9444a3533c06292190fd1eeceeb103c7c1662ae73d5e924 648 main/binary-amd64/Packages
- 2fc40e4bb0aec8502f1c2f025615315db85cb6e8088cba349ba8258552e64034 475 main/binary-amd64/Packages.gz
+ 15827570f6ea0421c72b73680c6361610b6c1bdfeaea06c1b6d4b77fd56a867d 648 main/binary-amd64/Packages
+ 56a8e2eca9dbede234b181730505829fba0804be96d341f0b58bbd55282c6730 476 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAEBCAA5FiEEOlCCEdUk2VcLbMypMAW9JVwwbE4FAmqQotUbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMCwzAAoJEDAFvSVcMGxOEucQAJFiGpfb6YVT+tSFAcSh
-a/TFl3jZ8VaVvCKM/2urk/1uqL+3cEaS8owSJCYV6BqnxkP7SH4uwnJwgFpnNluz
-7vE/MK/dugYqUVmxemdjIxYurFMCs4ie5sbNvrf0z+/y7hzUYtYP3xha/MLZW2hN
-J6yRjOc6k7XHNV2fxacaPgxnkUR/zj0DotflySwp2SEi5I9Z9pPaW5v62YxcwhH1
-t9q+QugsMDZptZiXoR4jksSfwyu9/0tb8YJIVq7BxKWSmVzo6bYutE6mpAR9f0HX
-+Ikin+5OXaVo01qIlf6Z3HGnKYi/ruDYszbjM2oobnl4TTXL4CuTD4DJN+WJa9yW
-5+l3Lg8N7VjK1nN1Oe+75X+y5oG7dpemNsoKCvhaTsUuFoU3kJBzg59hibEFpgmH
-qsr8vNoLkGScioBpdesVtF/cSo+9tx9IXeizacAXdTOPK7+78PmZfv61riGDMD/y
-mfka6GX8ntyIO4P6pBbnaYRLFJ6tNhW++S0xEuUmTIh8B45AE4cOa8fD9PUhypYN
-8qI+5RgCwr8duX4aRYZN2KqknMydEofkW/LvrhK8Ci1VYSWntjpc1eDmbu0ee6Id
-Dr6Y223LRerrVzeZWVEd1RQJPUWC9w3Geg3lO3PPd+ArxTjESkYm9dDjjGoRd9i3
-WjuXaWGlS2bb1wvEacKpU/xZ
-=5GyO
+iQJPBAEBCAA5FiEEOlCCEdUk2VcLbMypMAW9JVwwbE4FAmqQsLQbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMCwzAAoJEDAFvSVcMGxOnqEQAJtJRTBRA5bcRJy2DiCa
+kBKSey2hsnVA+9k8+90f6q7JGO0vKJ1ElYPRiMTDvoInHM+FVPHOVp8rYNghgCZZ
+bdR3Jwjo3czbzBWXNk+NlfACNiKb+aXHLtTrMLr2nulLYDp1nZiVLLpuYmrs3gti
+FjjnvB3i/BczvrRYkkN8oCeYvKbV2iIFy9hDuO1CgzC6EDqU+eBt0gEUDZga+Mal
+114TXR0yioTf0U59v1lJ99l+4E8IboFe6vzXaGGZtUCyC9+dmWqn6+LDvg2Loxbw
+kfSLa0phre/dSFQfLXNx4ICnskJu4DXfTSaZeA06Ts7qwdl1RW5dQ4yg0zaCS/HY
+wpifAxXc6gTn6lHJRG8ekdnOWbdt3toxYaZJ3V2QTjPKrO1fTX7lkR1FFKqMcf8F
+WL69EdDjoBPtG2u6drhkFeBiUauh73D1eltXdyF8OHT8b9Daw7Kz4Rd8tR92Rvkn
+pK1Ca7Db7TvzUr8pDOifeQLLCNOjhmQc/7E/RL4b/LGX+WD7a4XThiGto4QGLey0
+DWh9WVc7kkZKVyrfbYjrTL9k63ucIHH1hoq5XmuUup+FkRSyvPOAYXKDpo4j3DK8
+TNjWGY0Kqsr2ZpDJLrXzwuRXA7XtbvrD7lx4agK1UcWHK9YvHrc2jRafy5ucD8Aj
+nc7zaf0ZENqDYPrsbYKRaYdn
+=e2fj
 -----END PGP SIGNATURE-----
