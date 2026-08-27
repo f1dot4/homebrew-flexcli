@@ -1108,7 +1108,7 @@ Available Commands:
   activity     Manage Garmin activities (alias: act): list, download, upload, delete
   fitness      View imported fitness data: personal records
   healthmetric View imported health metrics (alias: hm): list, show, delete
-  nutrition    Manage nutrition logs (alias: nut): log, list
+  nutrition    Manage nutrition logs (alias: nut): log, list, delete
   sync         Manually trigger Garmin or Withings synchronization
 
 Flags:
@@ -1407,7 +1407,7 @@ Global Flags:
 ### `flexcli profile data nutrition`
 
 ```
-Manage nutrition logs (alias: nut): log, list
+Manage nutrition logs (alias: nut): log, list, delete
 
 Usage:
   flexcli profile data nutrition [command]
@@ -1416,6 +1416,7 @@ Aliases:
   nutrition, nut
 
 Available Commands:
+  delete      Delete a nutrition log entry
   list        List nutrition entries and daily totals
   log         Log a food/nutrition entry
 
@@ -1429,6 +1430,24 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data nutrition [command] --help" for more information about a command.
+```
+
+### `flexcli profile data nutrition delete`
+
+```
+Delete a nutrition log entry
+
+Usage:
+  flexcli profile data nutrition delete <id> [flags]
+
+Flags:
+  -h, --help   help for delete
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data nutrition list`
