@@ -7,6 +7,14 @@ This document is auto-generated. Do not edit manually.
 ```
 FlexCLI - FlexCoach Command Line Interface
 
+Configuration precedence (highest to lowest):
+  1. Command-line flags (--server, --key)
+  2. Environment variables (FLEXCLI_SERVER_URL, FLEXCLI_API_KEY)
+  3. Config file context (--config file, or $HOME/.flexcli.json if --config is not set)
+
+Note: --config only selects which file is read; it does not itself take part in the
+server/key precedence above.
+
 Usage:
   flexcli [command]
 
@@ -40,11 +48,12 @@ Usage:
   flexcli admin [command]
 
 Available Commands:
-  backup      Manage system backups
-  settings    Manage global system settings
-  status      Get system-wide status and health
-  sync-all    Trigger background sync for all users
-  users       List all user profiles
+  backup        Manage system backups
+  health-metric Correct or delete a single raw health metric reading
+  settings      Manage global system settings
+  status        Get system-wide status and health
+  sync-all      Trigger background sync for all users
+  users         List all user profiles
 
 Flags:
   -h, --help   help for admin
@@ -148,6 +157,69 @@ Usage:
 
 Flags:
   -h, --help   help for set-config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli admin health-metric`
+
+```
+Correct or delete a single raw health metric reading
+
+Usage:
+  flexcli admin health-metric [command]
+
+Available Commands:
+  correct     Overwrite one raw health metric reading and re-aggregate that day
+  delete      Delete one raw health metric reading and re-aggregate that day
+
+Flags:
+  -h, --help   help for health-metric
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli admin health-metric [command] --help" for more information about a command.
+```
+
+### `flexcli admin health-metric correct`
+
+```
+Overwrite one raw health metric reading and re-aggregate that day
+
+Usage:
+  flexcli admin health-metric correct <user_id> <date> <metric_name> <value> [flags]
+
+Flags:
+  -h, --help            help for correct
+      --source string   Reading source (withings, garmin, manual, telegram) (default "withings")
+      --unit string     Unit for the corrected value
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli admin health-metric delete`
+
+```
+Delete one raw health metric reading and re-aggregate that day
+
+Usage:
+  flexcli admin health-metric delete <user_id> <date> <metric_name> [flags]
+
+Flags:
+  -h, --help            help for delete
+      --source string   Reading source (withings, garmin, manual, telegram) (default "withings")
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
