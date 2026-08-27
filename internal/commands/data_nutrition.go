@@ -19,11 +19,12 @@ func newDataNutritionCmd(rootCfg **config.Config, resolvedCtx *config.Context) *
 	cmd := &cobra.Command{
 		Use:     "nutrition",
 		Aliases: []string{"nut"},
-		Short:   "Manage nutrition logs (alias: nut): log, list",
+		Short:   "Manage nutrition logs (alias: nut): log, list, delete",
 	}
 
 	cmd.AddCommand(newDataNutritionLogCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataNutritionListCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataNutritionDeleteCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -201,6 +202,42 @@ func newDataNutritionListCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 	return cmd
 }
 
+func newDataNutritionDeleteCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var hard bool
+
+	cmd := &cobra.Command{
+		Use:   "delete <id>",
+		Short: "Delete a nutrition log entry",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id := args[0]
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			path := fmt.Sprintf("/api/nutrition-log/%s", id)
+			if hard {
+				path += "?hard=true"
+			}
+
+			resp, err := client.Request("DELETE", path, nil)
+			if err != nil {
+				return err
+			}
+
+			if resp.Success {
+				fmt.Println("✅ Nutrition entry deleted successfully.")
+			} else {
+				fmt.Printf("❌ Failed to delete nutrition entry: %s\n", resp.Message)
+			}
+			return nil
+		},
+	}
+
+	cmd.Flags().BoolVar(&hard, "hard", false, "Permanently delete entry from database")
+	_ = cmd.Flags().MarkHidden("hard")
+
+	return cmd
+}
+
 type nutritionEntryDTO struct {
 	ID       string   `json:"id"`
 	UserID   string   `json:"user_id"`
@@ -264,10 +301,10 @@ func renderDayBlock(day string, entries []nutritionEntryDTO, total nutritionDail
 		return
 	}
 
-	fmt.Printf("  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
-		"TIME", "NAME", "MEAL", "CAL", "CARB", "PROT", "FAT", "SUGAR", "SODIUM", "FIBER")
-	fmt.Printf("  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
-		"─────", "─────────────────", "─────────", "───", "─────", "─────", "─────", "─────", "──────", "─────")
+	fmt.Printf("  %-36s  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
+		"ID", "TIME", "NAME", "MEAL", "CAL", "CARB", "PROT", "FAT", "SUGAR", "SODIUM", "FIBER")
+	fmt.Printf("  %-36s  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
+		"────────────────────────────────────", "─────", "─────────────────", "─────────", "───", "─────", "─────", "─────", "─────", "──────", "─────")
 
 	for _, e := range entries {
 		timeStr := ""
@@ -311,12 +348,12 @@ func renderDayBlock(day string, entries []nutritionEntryDTO, total nutritionDail
 			fibStr = fmt.Sprintf("%5.1fg", *e.FiberG)
 		}
 
-		fmt.Printf("  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
-			timeStr, nameStr, mealStr, calStr, carbStr, protStr, fatStr, sugStr, sodStr, fibStr)
+		fmt.Printf("  %-36s  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
+			e.ID, timeStr, nameStr, mealStr, calStr, carbStr, protStr, fatStr, sugStr, sodStr, fibStr)
 	}
 
-	fmt.Printf("  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
-		"─────", "─────────────────", "─────────", "───", "─────", "─────", "─────", "─────", "──────", "─────")
-	fmt.Printf("  %-5s  %-17s  %-9s  %4d  %5.1fg  %5.1fg  %5.1fg  %5.1fg  %5dmg  %5.1fg\n",
-		"", "", "TOTAL", total.Calories, total.CarbsG, total.ProteinG, total.FatG, total.SugarG, total.SodiumMg, total.FiberG)
+	fmt.Printf("  %-36s  %-5s  %-17s  %-9s  %4s  %6s  %5s  %5s  %5s  %6s  %5s\n",
+		"────────────────────────────────────", "─────", "─────────────────", "─────────", "───", "─────", "─────", "─────", "─────", "──────", "─────")
+	fmt.Printf("  %-36s  %-5s  %-17s  %-9s  %4d  %5.1fg  %5.1fg  %5.1fg  %5.1fg  %5dmg  %5.1fg\n",
+		"", "", "", "TOTAL", total.Calories, total.CarbsG, total.ProteinG, total.FatG, total.SugarG, total.SodiumMg, total.FiberG)
 }

@@ -57,16 +57,48 @@ func TestNewDataNutritionCmdTree(t *testing.T) {
 	}
 
 	subCommands := cmd.Commands()
-	if len(subCommands) != 2 {
-		t.Fatalf("expected 2 subcommands, got %d", len(subCommands))
+	if len(subCommands) != 3 {
+		t.Fatalf("expected 3 subcommands, got %d", len(subCommands))
 	}
 
 	names := map[string]bool{}
 	for _, sub := range subCommands {
 		names[sub.Use] = true
 	}
-	if !names["log"] || !names["list"] {
-		t.Errorf("expected subcommands 'log' and 'list', got %v", names)
+	if !names["log"] || !names["list"] || !names["delete <id>"] {
+		t.Errorf("expected subcommands 'log', 'list', and 'delete <id>', got %v", names)
+	}
+}
+
+func TestNewDataNutritionDeleteCmd(t *testing.T) {
+	var cfg *config.Config
+	ctx := &config.Context{
+		ServerURL: "http://localhost:8000",
+		APIKey:    "test-key",
+	}
+
+	delCmd := newDataNutritionDeleteCmd(&cfg, ctx)
+	if delCmd.Use != "delete <id>" {
+		t.Errorf("expected Use 'delete <id>', got %q", delCmd.Use)
+	}
+
+	flag := delCmd.Flags().Lookup("hard")
+	if flag == nil {
+		t.Fatalf("expected flag 'hard' to exist")
+	}
+	if !flag.Hidden {
+		t.Errorf("expected flag 'hard' to be hidden")
+	}
+
+	// Verify exact args = 1
+	if err := delCmd.Args(delCmd, []string{}); err == nil {
+		t.Errorf("expected error for 0 args, got nil")
+	}
+	if err := delCmd.Args(delCmd, []string{"id1", "id2"}); err == nil {
+		t.Errorf("expected error for 2 args, got nil")
+	}
+	if err := delCmd.Args(delCmd, []string{"id1"}); err != nil {
+		t.Errorf("expected nil error for 1 arg, got %v", err)
 	}
 }
 
