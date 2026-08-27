@@ -22,6 +22,15 @@ var (
 var rootCmd = &cobra.Command{
 	Use:     "flexcli",
 	Short:   "FlexCLI - FlexCoach Command Line Interface",
+	Long: `FlexCLI - FlexCoach Command Line Interface
+
+Configuration precedence (highest to lowest):
+  1. Command-line flags (--server, --key)
+  2. Environment variables (FLEXCLI_SERVER_URL, FLEXCLI_API_KEY)
+  3. Config file context (--config file, or $HOME/.flexcli.json if --config is not set)
+
+Note: --config only selects which file is read; it does not itself take part in the
+server/key precedence above.`,
 	Version: Version,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		// 1. Load config
