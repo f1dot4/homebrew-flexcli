@@ -154,3 +154,42 @@ func TestRenderNutritionList(t *testing.T) {
 		t.Fatalf("expected error for invalid json, got nil")
 	}
 }
+
+func TestRenderNutritionList_StringNumbers(t *testing.T) {
+	// Pydantic Decimal serialization produces strings in JSON mode
+	jsonData := []byte(`{
+		"entries": [
+			{
+				"id": "e1",
+				"user_id": "u1",
+				"logged_at": "2026-08-27T08:15:00",
+				"name": "Oatmeal",
+				"meal_type": "breakfast",
+				"calories": 420,
+				"carbs_g": "65.0",
+				"protein_g": "12.0",
+				"fat_g": "8.0",
+				"sugar_g": "18.0",
+				"sodium_mg": 150,
+				"fiber_g": "9.0"
+			}
+		],
+		"daily_totals": [
+			{
+				"date": "2026-08-27",
+				"calories": 420,
+				"carbs_g": "65.0",
+				"protein_g": "12.0",
+				"fat_g": "8.0",
+				"sugar_g": "18.0",
+				"sodium_mg": 150,
+				"fiber_g": "9.0"
+			}
+		]
+	}`)
+
+	err := renderNutritionList(jsonData)
+	if err != nil {
+		t.Fatalf("expected no error rendering nutrition list with string floats, got: %v", err)
+	}
+}

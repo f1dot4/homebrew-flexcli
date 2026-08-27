@@ -3,6 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -238,31 +239,47 @@ func newDataNutritionDeleteCmd(rootCfg **config.Config, resolvedCtx *config.Cont
 	return cmd
 }
 
+type flexFloat float64
+
+func (f *flexFloat) UnmarshalJSON(data []byte) error {
+	str := string(data)
+	if str == "null" || str == `""` {
+		return nil
+	}
+	str = strings.Trim(str, `"`)
+	val, err := strconv.ParseFloat(str, 64)
+	if err != nil {
+		return err
+	}
+	*f = flexFloat(val)
+	return nil
+}
+
 type nutritionEntryDTO struct {
-	ID       string   `json:"id"`
-	UserID   string   `json:"user_id"`
-	LoggedAt string   `json:"logged_at"`
-	Name     *string  `json:"name"`
-	MealType *string  `json:"meal_type"`
-	Calories *int     `json:"calories"`
-	CarbsG   *float64 `json:"carbs_g"`
-	ProteinG *float64 `json:"protein_g"`
-	FatG     *float64 `json:"fat_g"`
-	SugarG   *float64 `json:"sugar_g"`
-	SodiumMg *int     `json:"sodium_mg"`
-	FiberG   *float64 `json:"fiber_g"`
-	Notes    *string  `json:"notes"`
+	ID       string     `json:"id"`
+	UserID   string     `json:"user_id"`
+	LoggedAt string     `json:"logged_at"`
+	Name     *string    `json:"name"`
+	MealType *string    `json:"meal_type"`
+	Calories *int       `json:"calories"`
+	CarbsG   *flexFloat `json:"carbs_g"`
+	ProteinG *flexFloat `json:"protein_g"`
+	FatG     *flexFloat `json:"fat_g"`
+	SugarG   *flexFloat `json:"sugar_g"`
+	SodiumMg *int       `json:"sodium_mg"`
+	FiberG   *flexFloat `json:"fiber_g"`
+	Notes    *string    `json:"notes"`
 }
 
 type nutritionDailyTotalDTO struct {
-	Date     string  `json:"date"`
-	Calories int     `json:"calories"`
-	CarbsG   float64 `json:"carbs_g"`
-	ProteinG float64 `json:"protein_g"`
-	FatG     float64 `json:"fat_g"`
-	SugarG   float64 `json:"sugar_g"`
-	SodiumMg int     `json:"sodium_mg"`
-	FiberG   float64 `json:"fiber_g"`
+	Date     string    `json:"date"`
+	Calories int       `json:"calories"`
+	CarbsG   flexFloat `json:"carbs_g"`
+	ProteinG flexFloat `json:"protein_g"`
+	FatG     flexFloat `json:"fat_g"`
+	SugarG   flexFloat `json:"sugar_g"`
+	SodiumMg int       `json:"sodium_mg"`
+	FiberG   flexFloat `json:"fiber_g"`
 }
 
 func renderNutritionList(dataBytes []byte) error {
