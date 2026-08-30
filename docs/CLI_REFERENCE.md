@@ -1105,7 +1105,7 @@ Usage:
   flexcli profile data [command]
 
 Available Commands:
-  activity     Manage Garmin activities (alias: act): list, download, upload, delete
+  activity     Manage Garmin activities (alias: act): list, show, download, upload, delete
   fitness      View imported fitness data: personal records
   healthmetric View imported health metrics (alias: hm): list, show, delete
   nutrition    Manage nutrition logs (alias: nut): log, list, delete
@@ -1126,7 +1126,7 @@ Use "flexcli profile data [command] --help" for more information about a command
 ### `flexcli profile data activity`
 
 ```
-Manage Garmin activities (alias: act): list, download, upload, delete
+Manage Garmin activities (alias: act): list, show, download, upload, delete
 
 Usage:
   flexcli profile data activity [command]
@@ -1140,6 +1140,7 @@ Available Commands:
   download-bulk Download multiple activities in a ZIP bundle
   list          List synced activities with their Garmin activity IDs
   rename        Rename an activity in Garmin Connect (defaults to 'latest')
+  show          Show details for a specific activity (defaults to 'latest')
   upload        Upload a FIT/GPX/TCX file to Garmin Connect
 
 Flags:
@@ -1256,6 +1257,25 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
+### `flexcli profile data activity show`
+
+```
+Show details for a specific activity (defaults to 'latest')
+
+Usage:
+  flexcli profile data activity show [activity_id] [flags]
+
+Flags:
+  -h, --help   help for show
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
 ### `flexcli profile data activity upload`
 
 ```
@@ -1330,7 +1350,7 @@ Aliases:
 Available Commands:
   delete      Delete a health metric (currently disabled)
   list        List imported health metrics (paginated)
-  show        Show aggregated health metric for a specific date (YYYY-MM-DD)
+  show        Show aggregated health metric for a specific date (YYYY-MM-DD, defaults to today)
 
 Flags:
   -h, --help   help for healthmetric
@@ -1388,10 +1408,10 @@ Global Flags:
 ### `flexcli profile data healthmetric show`
 
 ```
-Show aggregated health metric for a specific date (YYYY-MM-DD)
+Show aggregated health metric for a specific date (YYYY-MM-DD, defaults to today)
 
 Usage:
-  flexcli profile data healthmetric show <date> [flags]
+  flexcli profile data healthmetric show [date] [flags]
 
 Flags:
   -h, --help   help for show
