@@ -3,6 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/f1dot4/flexcli/internal/api"
 	"github.com/f1dot4/flexcli/internal/config"
@@ -161,11 +162,17 @@ func newDataHealthMetricShowCmd(rootCfg **config.Config, resolvedCtx *config.Con
 	var asJSON bool
 
 	cmd := &cobra.Command{
-		Use:   "show <date>",
-		Short: "Show aggregated health metric for a specific date (YYYY-MM-DD)",
-		Args:  cobra.ExactArgs(1),
+		Use:   "show [date]",
+		Short: "Show aggregated health metric for a specific date (YYYY-MM-DD, defaults to today)",
+		Args:  cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			date := args[0]
+			date := time.Now().Format("2006-01-02")
+			if len(args) > 0 {
+				date = args[0]
+			}
+			if date == "today" {
+				date = time.Now().Format("2006-01-02")
+			}
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
 			resp, err := client.Request("GET", "/api/healthmetric/"+date, nil)

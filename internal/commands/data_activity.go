@@ -20,10 +20,11 @@ func newDataActivityCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 	cmd := &cobra.Command{
 		Use:     "activity",
 		Aliases: []string{"act"},
-		Short:   "Manage Garmin activities (alias: act): list, download, upload, delete",
+		Short:   "Manage Garmin activities (alias: act): list, show, download, upload, delete",
 	}
 
 	cmd.AddCommand(newDataActivityListCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataActivityShowCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityDownloadCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityDownloadBulkCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityUploadCmd(rootCfg, resolvedCtx))
@@ -112,6 +113,50 @@ func newDataActivityListCmd(rootCfg **config.Config, resolvedCtx *config.Context
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output as JSON")
 	cmd.Flags().StringVar(&startDate, "start-date", "", "Only include activities on or after this date (YYYY-MM-DD)")
 	cmd.Flags().StringVar(&endDate, "end-date", "", "Only include activities on or before this date (YYYY-MM-DD)")
+	return cmd
+}
+
+func newDataActivityShowCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var asJSON bool
+
+	cmd := &cobra.Command{
+		Use:   "show [activity_id]",
+		Short: "Show details for a specific activity (defaults to 'latest')",
+		Args:  cobra.MaximumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			activityID := "latest"
+			if len(args) > 0 {
+				activityID = args[0]
+			}
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			resp, err := client.Request("GET", "/api/activity/"+activityID, nil)
+			if err != nil {
+				return err
+			}
+
+			if asJSON {
+				fmt.Println(string(resp.Data))
+				return nil
+			}
+
+			var activity map[string]interface{}
+			if err := json.Unmarshal(resp.Data, &activity); err != nil {
+				return fmt.Errorf("failed to parse response: %w", err)
+			}
+
+			fmt.Printf("Activity %s\n", activityID)
+			for k, v := range activity {
+				if v == nil {
+					continue
+				}
+				fmt.Printf("  • %-28s %v\n", k+":", v)
+			}
+			return nil
+		},
+	}
+
+	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
 	return cmd
 }
 
