@@ -1107,6 +1107,7 @@ Usage:
 Available Commands:
   activity     Manage Garmin activities (alias: act): list, show, download, upload, delete
   fitness      View imported fitness data: personal records
+  garmin       Garmin gamification, equipment, goals, workouts, and devices
   healthmetric View imported health metrics (alias: hm): list, show, delete
   nutrition    Manage nutrition logs (alias: nut): log, list, delete
   sync         Manually trigger Garmin or Withings synchronization
@@ -1327,6 +1328,148 @@ Usage:
 
 Flags:
   -h, --help   help for records
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin`
+
+```
+Garmin gamification, equipment, goals, workouts, and devices
+
+Usage:
+  flexcli profile data garmin [command]
+
+Available Commands:
+  badges      List all earned and available Garmin badges
+  challenges  List all Garmin challenges
+  devices     List all registered Garmin devices
+  gear        List all Garmin gear (shoes, bikes, etc.)
+  goals       List all Garmin training goals
+  workouts    List all Garmin scheduled workouts
+
+Flags:
+  -h, --help   help for garmin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile data garmin [command] --help" for more information about a command.
+```
+
+### `flexcli profile data garmin badges`
+
+```
+List all earned and available Garmin badges
+
+Usage:
+  flexcli profile data garmin badges [flags]
+
+Flags:
+  -h, --help   help for badges
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin challenges`
+
+```
+List all Garmin challenges
+
+Usage:
+  flexcli profile data garmin challenges [flags]
+
+Flags:
+  -h, --help   help for challenges
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin devices`
+
+```
+List all registered Garmin devices
+
+Usage:
+  flexcli profile data garmin devices [flags]
+
+Flags:
+  -h, --help   help for devices
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin gear`
+
+```
+List all Garmin gear (shoes, bikes, etc.)
+
+Usage:
+  flexcli profile data garmin gear [flags]
+
+Flags:
+  -h, --help   help for gear
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin goals`
+
+```
+List all Garmin training goals
+
+Usage:
+  flexcli profile data garmin goals [flags]
+
+Flags:
+  -h, --help   help for goals
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin workouts`
+
+```
+List all Garmin scheduled workouts
+
+Usage:
+  flexcli profile data garmin workouts [flags]
+
+Flags:
+  -h, --help   help for workouts
       --json   Output as JSON
 
 Global Flags:
