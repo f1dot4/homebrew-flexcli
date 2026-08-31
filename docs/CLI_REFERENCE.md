@@ -1142,7 +1142,6 @@ Available Commands:
   list          List synced activities with their Garmin activity IDs
   rename        Rename an activity in Garmin Connect (defaults to 'latest')
   show          Show details for a specific activity (defaults to 'latest')
-  sync          Sync activity weather, splits, HR zones, and exercise sets now (normally daily)
   upload        Upload a FIT/GPX/TCX file to Garmin Connect
 
 Flags:
@@ -1270,24 +1269,6 @@ Usage:
 Flags:
   -h, --help   help for show
       --json   Output in JSON format
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
-### `flexcli profile data activity sync`
-
-```
-Sync activity weather, splits, HR zones, and exercise sets now (normally daily)
-
-Usage:
-  flexcli profile data activity sync [flags]
-
-Flags:
-  -h, --help   help for sync
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
