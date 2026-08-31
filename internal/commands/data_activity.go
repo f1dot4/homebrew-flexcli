@@ -31,30 +31,8 @@ func newDataActivityCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 
 	cmd.AddCommand(newDataActivityDeleteCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityRenameCmd(rootCfg, resolvedCtx))
-	cmd.AddCommand(newDataActivitySyncCmd(rootCfg, resolvedCtx))
 
 	return cmd
-}
-
-func newDataActivitySyncCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	return &cobra.Command{
-		Use:   "sync",
-		Short: "Sync activity weather, splits, HR zones, and exercise sets now (normally daily)",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-			resp, err := client.Request("POST", "/api/sync/activity-enrichment", nil)
-			if err != nil {
-				return err
-			}
-			if resp.Success {
-				fmt.Printf("✅ Activity enrichment sync complete: %s\n", string(resp.Data))
-			} else {
-				fmt.Printf("❌ Activity enrichment sync failed: %s\n", resp.Message)
-				return fmt.Errorf("sync failed")
-			}
-			return nil
-		},
-	}
 }
 
 func newDataActivityListCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
@@ -178,6 +156,7 @@ func newDataActivityShowCmd(rootCfg **config.Config, resolvedCtx *config.Context
 			printActivityWeather(client, activityID)
 			printActivitySplits(client, activityID)
 			printActivityHRZones(client, activityID)
+			printActivityExerciseSets(client, activityID)
 
 			return nil
 		},
@@ -237,6 +216,24 @@ func printActivityHRZones(client *api.Client, activityID string) {
 	for _, z := range zones {
 		fmt.Printf("  %-6v  %10v  %10v  %10v\n",
 			z["zone_number"], z["zone_low_bpm"], z["zone_high_bpm"], z["duration_s"])
+	}
+}
+
+// printActivityExerciseSets fetches and prints the activity's strength training exercise sets, if any.
+func printActivityExerciseSets(client *api.Client, activityID string) {
+	resp, err := client.Request("GET", "/api/activity/"+activityID+"/exercise-sets", nil)
+	if err != nil {
+		return
+	}
+	var sets []map[string]interface{}
+	if err := json.Unmarshal(resp.Data, &sets); err != nil || len(sets) == 0 {
+		return
+	}
+	fmt.Println("\nExercise Sets:")
+	fmt.Printf("  %-6s  %-24s  %6s  %8s  %10s\n", "#", "EXERCISE", "REPS", "WEIGHT", "DUR (s)")
+	for _, s := range sets {
+		fmt.Printf("  %-6v  %-24v  %6v  %8v  %10v\n",
+			s["set_number"], s["exercise_name"], s["reps"], s["weight_kg"], s["duration_s"])
 	}
 }
 
