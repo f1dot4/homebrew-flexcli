@@ -1142,6 +1142,7 @@ Available Commands:
   list          List synced activities with their Garmin activity IDs
   rename        Rename an activity in Garmin Connect (defaults to 'latest')
   show          Show details for a specific activity (defaults to 'latest')
+  sync          Sync activity weather, splits, HR zones, and exercise sets now (normally daily)
   upload        Upload a FIT/GPX/TCX file to Garmin Connect
 
 Flags:
@@ -1277,6 +1278,24 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
+### `flexcli profile data activity sync`
+
+```
+Sync activity weather, splits, HR zones, and exercise sets now (normally daily)
+
+Usage:
+  flexcli profile data activity sync [flags]
+
+Flags:
+  -h, --help   help for sync
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
 ### `flexcli profile data activity upload`
 
 ```
@@ -1351,6 +1370,7 @@ Available Commands:
   devices     List all registered Garmin devices
   gear        List all Garmin gear (shoes, bikes, etc.)
   goals       List all Garmin training goals
+  sync        Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)
   workouts    List all Garmin scheduled workouts
 
 Flags:
@@ -1452,6 +1472,24 @@ Usage:
 Flags:
   -h, --help   help for goals
       --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data garmin sync`
+
+```
+Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)
+
+Usage:
+  flexcli profile data garmin sync [flags]
+
+Flags:
+  -h, --help   help for sync
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
@@ -1673,10 +1711,8 @@ Usage:
   flexcli profile data sync [command]
 
 Available Commands:
-  activity-enrichment Sync Garmin activity weather, splits, HR zones, and exercise sets now (normally weekly)
-  gamification        Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)
-  garmin              Sync data from Garmin Connect
-  withings            Sync data from Withings
+  garmin      Sync data from Garmin Connect
+  withings    Sync data from Withings
 
 Flags:
   -h, --help   help for sync
@@ -1688,42 +1724,6 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data sync [command] --help" for more information about a command.
-```
-
-### `flexcli profile data sync activity-enrichment`
-
-```
-Sync Garmin activity weather, splits, HR zones, and exercise sets now (normally weekly)
-
-Usage:
-  flexcli profile data sync activity-enrichment [flags]
-
-Flags:
-  -h, --help   help for activity-enrichment
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
-### `flexcli profile data sync gamification`
-
-```
-Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)
-
-Usage:
-  flexcli profile data sync gamification [flags]
-
-Flags:
-  -h, --help   help for gamification
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data sync garmin`
