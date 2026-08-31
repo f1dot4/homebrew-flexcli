@@ -21,6 +21,8 @@ func newDataSyncCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra
 
 	cmd.AddCommand(newDataSyncGarminCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataSyncWithingsCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataSyncGamificationCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataSyncActivityEnrichmentCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -65,6 +67,48 @@ func newDataSyncGarminCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 				return fmt.Errorf("sync failed")
 			}
 
+			return nil
+		},
+	}
+}
+
+func newDataSyncGamificationCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	return &cobra.Command{
+		Use:   "gamification",
+		Short: "Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			resp, err := client.Request("POST", "/api/sync/gamification", nil)
+			if err != nil {
+				return err
+			}
+			if resp.Success {
+				fmt.Printf("✅ Gamification sync complete: %s\n", string(resp.Data))
+			} else {
+				fmt.Printf("❌ Gamification sync failed: %s\n", resp.Message)
+				return fmt.Errorf("sync failed")
+			}
+			return nil
+		},
+	}
+}
+
+func newDataSyncActivityEnrichmentCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	return &cobra.Command{
+		Use:   "activity-enrichment",
+		Short: "Sync Garmin activity weather, splits, HR zones, and exercise sets now (normally weekly)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			resp, err := client.Request("POST", "/api/sync/activity-enrichment", nil)
+			if err != nil {
+				return err
+			}
+			if resp.Success {
+				fmt.Printf("✅ Activity enrichment sync complete: %s\n", string(resp.Data))
+			} else {
+				fmt.Printf("❌ Activity enrichment sync failed: %s\n", resp.Message)
+				return fmt.Errorf("sync failed")
+			}
 			return nil
 		},
 	}
