@@ -31,8 +31,30 @@ func newDataActivityCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 
 	cmd.AddCommand(newDataActivityDeleteCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityRenameCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataActivitySyncCmd(rootCfg, resolvedCtx))
 
 	return cmd
+}
+
+func newDataActivitySyncCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	return &cobra.Command{
+		Use:   "sync",
+		Short: "Sync activity weather, splits, HR zones, and exercise sets now (normally daily)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			resp, err := client.Request("POST", "/api/sync/activity-enrichment", nil)
+			if err != nil {
+				return err
+			}
+			if resp.Success {
+				fmt.Printf("✅ Activity enrichment sync complete: %s\n", string(resp.Data))
+			} else {
+				fmt.Printf("❌ Activity enrichment sync failed: %s\n", resp.Message)
+				return fmt.Errorf("sync failed")
+			}
+			return nil
+		},
+	}
 }
 
 func newDataActivityListCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {

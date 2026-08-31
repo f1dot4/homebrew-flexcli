@@ -21,8 +21,30 @@ func NewGarminCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.C
 	cmd.AddCommand(newGarminGoalsCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newGarminWorkoutsCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newGarminDevicesCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newGarminSyncCmd(rootCfg, resolvedCtx))
 
 	return cmd
+}
+
+func newGarminSyncCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	return &cobra.Command{
+		Use:   "sync",
+		Short: "Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			resp, err := client.Request("POST", "/api/sync/gamification", nil)
+			if err != nil {
+				return err
+			}
+			if resp.Success {
+				fmt.Printf("✅ Gamification sync complete: %s\n", string(resp.Data))
+			} else {
+				fmt.Printf("❌ Gamification sync failed: %s\n", resp.Message)
+				return fmt.Errorf("sync failed")
+			}
+			return nil
+		},
+	}
 }
 
 func newGarminBadgesCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
