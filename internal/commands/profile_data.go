@@ -18,6 +18,7 @@ func NewProfileDataCmd(rootCfg **config.Config, resolvedCtx *config.Context) *co
 	cmd.AddCommand(newDataHealthMetricCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataFitnessCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataNutritionCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(NewGarminCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
