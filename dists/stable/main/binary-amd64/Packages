@@ -1,16 +1,16 @@
 Package: flexcli
-Version: 0.2.56
+Version: 0.2.57
 Architecture: amd64
 Maintainer: Lukas Leidinger <lukas.leidinger@willhaben.at>
-Installed-Size: 10904
+Installed-Size: 10956
 Section: utils
 Priority: optional
 Homepage: https://github.com/f1dot4/homebrew-flexcli
 Description: FlexCLI - Management CLI for FlexCoach AI fitness platform
  Allows users and developers to interact with the backend API to manage
  profiles, training plans, goals, and system status.
-Filename: pool/main/f/flexcli/flexcli_0.2.56_amd64.deb
-Size: 6326996
-MD5sum: f4153ebe7ef1a58c0d56606706a367db
-SHA1: f1d2c12227057717bc4cf0eb64f7b3e3f63a45f1
-SHA256: 17e89055305e31daa1dad8c9f7fe58aa70fca313eff88017d0ab72ec8b9245e5
+Filename: pool/main/f/flexcli/flexcli_0.2.57_amd64.deb
+Size: 6352042
+MD5sum: 1fae67cf45131ce47c53818bd7550760
+SHA1: 660ed074beb12afc632c949366bdd8a3094227a4
+SHA256: 86d229d889864e856213a397f2b77cd187be5581e8aa3ca2bac672f7456ba905
