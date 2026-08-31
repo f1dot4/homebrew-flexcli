@@ -152,12 +152,70 @@ func newDataActivityShowCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				}
 				fmt.Printf("  • %-28s %v\n", k+":", v)
 			}
+
+			printActivityWeather(client, activityID)
+			printActivitySplits(client, activityID)
+			printActivityHRZones(client, activityID)
+
 			return nil
 		},
 	}
 
 	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
 	return cmd
+}
+
+// printActivityWeather fetches and prints the activity's recorded weather, if any.
+func printActivityWeather(client *api.Client, activityID string) {
+	resp, err := client.Request("GET", "/api/activity/"+activityID+"/weather", nil)
+	if err != nil {
+		return
+	}
+	var weather map[string]interface{}
+	if err := json.Unmarshal(resp.Data, &weather); err != nil || weather == nil {
+		return
+	}
+	fmt.Println("\nWeather:")
+	fmt.Printf("  • %-28s %v\n", "temperature_c:", weather["temperature_c"])
+	fmt.Printf("  • %-28s %v\n", "humidity:", weather["humidity"])
+	fmt.Printf("  • %-28s %v\n", "wind_speed_mps:", weather["wind_speed_mps"])
+	fmt.Printf("  • %-28s %v\n", "condition:", weather["condition"])
+}
+
+// printActivitySplits fetches and prints a summary table of the activity's splits, if any.
+func printActivitySplits(client *api.Client, activityID string) {
+	resp, err := client.Request("GET", "/api/activity/"+activityID+"/splits", nil)
+	if err != nil {
+		return
+	}
+	var splits []map[string]interface{}
+	if err := json.Unmarshal(resp.Data, &splits); err != nil || len(splits) == 0 {
+		return
+	}
+	fmt.Println("\nSplits:")
+	fmt.Printf("  %-6s  %-14s  %10s  %10s  %6s\n", "#", "TYPE", "DIST (m)", "DUR (s)", "AVG HR")
+	for _, s := range splits {
+		fmt.Printf("  %-6v  %-14v  %10v  %10v  %6v\n",
+			s["split_number"], s["split_type"], s["distance_m"], s["duration_s"], s["avg_hr"])
+	}
+}
+
+// printActivityHRZones fetches and prints the activity's HR zone time distribution, if any.
+func printActivityHRZones(client *api.Client, activityID string) {
+	resp, err := client.Request("GET", "/api/activity/"+activityID+"/hr-zones", nil)
+	if err != nil {
+		return
+	}
+	var zones []map[string]interface{}
+	if err := json.Unmarshal(resp.Data, &zones); err != nil || len(zones) == 0 {
+		return
+	}
+	fmt.Println("\nHR Zones:")
+	fmt.Printf("  %-6s  %10s  %10s  %10s\n", "ZONE", "LOW", "HIGH", "DUR (s)")
+	for _, z := range zones {
+		fmt.Printf("  %-6v  %10v  %10v  %10v\n",
+			z["zone_number"], z["zone_low_bpm"], z["zone_high_bpm"], z["duration_s"])
+	}
 }
 
 func newDataActivityDownloadCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
