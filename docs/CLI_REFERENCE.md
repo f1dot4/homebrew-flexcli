@@ -1673,8 +1673,10 @@ Usage:
   flexcli profile data sync [command]
 
 Available Commands:
-  garmin      Sync data from Garmin Connect
-  withings    Sync data from Withings
+  activity-enrichment Sync Garmin activity weather, splits, HR zones, and exercise sets now (normally weekly)
+  gamification        Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)
+  garmin              Sync data from Garmin Connect
+  withings            Sync data from Withings
 
 Flags:
   -h, --help   help for sync
@@ -1686,6 +1688,42 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile data sync [command] --help" for more information about a command.
+```
+
+### `flexcli profile data sync activity-enrichment`
+
+```
+Sync Garmin activity weather, splits, HR zones, and exercise sets now (normally weekly)
+
+Usage:
+  flexcli profile data sync activity-enrichment [flags]
+
+Flags:
+  -h, --help   help for activity-enrichment
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data sync gamification`
+
+```
+Sync Garmin badges, challenges, gear, goals, workouts, and devices now (normally weekly)
+
+Usage:
+  flexcli profile data sync gamification [flags]
+
+Flags:
+  -h, --help   help for gamification
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile data sync garmin`
