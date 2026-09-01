@@ -349,7 +349,14 @@ func newAdminHealthMetricCmd(ctx *config.Context) *cobra.Command {
 	correctCmd := &cobra.Command{
 		Use:   "correct <user_id> <date> <metric_name> <value>",
 		Short: "Overwrite one raw health metric reading and re-aggregate that day",
-		Args:  cobra.ExactArgs(4),
+		Long: `Overwrite one raw health metric reading and re-aggregate that day.
+
+WARNING: for --source withings, this correction is temporary. The next
+Withings sync (routine, or an explicit "flexcli profile data sync withings
+--start-date/--end-date" backfill) will re-pull and overwrite it with
+whatever Withings currently reports. Fix the value in Withings itself for
+the correction to stick.`,
+		Args: cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := api.NewClient(ctx.ServerURL, ctx.APIKey)
 			client.IsAdmin = true
@@ -373,6 +380,9 @@ func newAdminHealthMetricCmd(ctx *config.Context) *cobra.Command {
 			}
 
 			fmt.Println(resp.Message)
+			if correctSource == "withings" {
+				fmt.Println("⚠️  This is temporary: the next Withings sync will overwrite this value unless it's also fixed in Withings.")
+			}
 			return nil
 		},
 	}
