@@ -1734,7 +1734,9 @@ Usage:
   flexcli profile data sync withings [flags]
 
 Flags:
-  -h, --help   help for withings
+      --end-date string     Backfill through this date (YYYY-MM-DD), bypassing the routine sync window; requires --start-date
+  -h, --help                help for withings
+      --start-date string   Backfill from this date (YYYY-MM-DD), bypassing the routine sync window; requires --end-date
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
