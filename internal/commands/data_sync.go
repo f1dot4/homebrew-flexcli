@@ -71,12 +71,30 @@ func newDataSyncGarminCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 }
 
 func newDataSyncWithingsCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	return &cobra.Command{
+	var startDate string
+	var endDate string
+
+	cmd := &cobra.Command{
 		Use:   "withings",
 		Short: "Sync data from Withings",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateDateFlag(startDate, "--start-date"); err != nil {
+				return err
+			}
+			if err := validateDateFlag(endDate, "--end-date"); err != nil {
+				return err
+			}
+			if (startDate == "") != (endDate == "") {
+				return fmt.Errorf("--start-date and --end-date must both be provided, or neither")
+			}
+
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-			events, err := client.PostSSE("/api/sync/withings/stream")
+
+			path := "/api/sync/withings/stream"
+			if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
+				path += "?" + dateQuery
+			}
+			events, err := client.PostSSE(path)
 			if err != nil {
 				return err
 			}
@@ -113,4 +131,8 @@ func newDataSyncWithingsCmd(rootCfg **config.Config, resolvedCtx *config.Context
 			return nil
 		},
 	}
+
+	cmd.Flags().StringVar(&startDate, "start-date", "", "Backfill from this date (YYYY-MM-DD), bypassing the routine sync window; requires --end-date")
+	cmd.Flags().StringVar(&endDate, "end-date", "", "Backfill through this date (YYYY-MM-DD), bypassing the routine sync window; requires --start-date")
+	return cmd
 }
