@@ -26,6 +26,7 @@ func newDataNutritionCmd(rootCfg **config.Config, resolvedCtx *config.Context) *
 	cmd.AddCommand(newDataNutritionLogCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataNutritionListCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataNutritionDeleteCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataNutritionRestoreCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -254,6 +255,35 @@ func newDataNutritionDeleteCmd(rootCfg **config.Config, resolvedCtx *config.Cont
 
 	cmd.Flags().BoolVar(&hard, "hard", false, "Permanently delete entry from database")
 	_ = cmd.Flags().MarkHidden("hard")
+
+	return cmd
+}
+
+func newDataNutritionRestoreCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "restore <id>",
+		Short: "Restore a soft-deleted nutrition log entry",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			id := args[0]
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			path := fmt.Sprintf("/api/nutrition-log/%s/restore", id)
+			resp, err := client.Request("POST", path, nil)
+			if err != nil {
+				return err
+			}
+
+			if resp.Success {
+				fmt.Println("✅ Nutrition entry restored successfully.")
+			} else {
+				fmt.Printf("❌ Failed to restore nutrition entry: %s\n", resp.Message)
+			}
+			return nil
+		},
+	}
+
+	cmd.Hidden = true
 
 	return cmd
 }

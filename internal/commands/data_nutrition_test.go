@@ -58,16 +58,57 @@ func TestNewDataNutritionCmdTree(t *testing.T) {
 	}
 
 	subCommands := cmd.Commands()
-	if len(subCommands) != 3 {
-		t.Fatalf("expected 3 subcommands, got %d", len(subCommands))
+	if len(subCommands) != 4 {
+		t.Fatalf("expected 4 subcommands, got %d", len(subCommands))
 	}
 
 	names := map[string]bool{}
 	for _, sub := range subCommands {
 		names[sub.Use] = true
 	}
-	if !names["log"] || !names["list"] || !names["delete <id>"] {
-		t.Errorf("expected subcommands 'log', 'list', and 'delete <id>', got %v", names)
+	if !names["log"] || !names["list"] || !names["delete <id>"] || !names["restore <id>"] {
+		t.Errorf("expected subcommands 'log', 'list', 'delete <id>', and 'restore <id>', got %v", names)
+	}
+}
+
+func TestNewDataNutritionRestoreCmd(t *testing.T) {
+	var cfg *config.Config
+	ctx := &config.Context{
+		ServerURL: "http://localhost:8000",
+		APIKey:    "test-key",
+	}
+
+	restoreCmd := newDataNutritionRestoreCmd(&cfg, ctx)
+	if restoreCmd.Use != "restore <id>" {
+		t.Errorf("expected Use 'restore <id>', got %q", restoreCmd.Use)
+	}
+	if !restoreCmd.Hidden {
+		t.Errorf("expected restore command to be Hidden")
+	}
+
+	// Verify exact args = 1
+	if err := restoreCmd.Args(restoreCmd, []string{}); err == nil {
+		t.Errorf("expected error for 0 args, got nil")
+	}
+	if err := restoreCmd.Args(restoreCmd, []string{"id1", "id2"}); err == nil {
+		t.Errorf("expected error for 2 args, got nil")
+	}
+	if err := restoreCmd.Args(restoreCmd, []string{"id1"}); err != nil {
+		t.Errorf("expected nil error for 1 arg, got %v", err)
+	}
+}
+
+func TestDataNutritionCmd_RestoreHiddenFromHelp(t *testing.T) {
+	var cfg *config.Config
+	ctx := &config.Context{
+		ServerURL: "http://localhost:8000",
+		APIKey:    "test-key",
+	}
+
+	cmd := newDataNutritionCmd(&cfg, ctx)
+	usage := cmd.UsageString()
+	if strings.Contains(usage, "restore") {
+		t.Errorf("expected 'restore' to be absent from usage/help text, got: %s", usage)
 	}
 }
 
