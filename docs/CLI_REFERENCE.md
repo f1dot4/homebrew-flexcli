@@ -192,7 +192,13 @@ Use "flexcli admin health-metric [command] --help" for more information about a 
 ### `flexcli admin health-metric correct`
 
 ```
-Overwrite one raw health metric reading and re-aggregate that day
+Overwrite one raw health metric reading and re-aggregate that day.
+
+WARNING: for --source withings, this correction is temporary. The next
+Withings sync (routine, or an explicit "flexcli profile data sync withings
+--start-date/--end-date" backfill) will re-pull and overwrite it with
+whatever Withings currently reports. Fix the value in Withings itself for
+the correction to stick.
 
 Usage:
   flexcli admin health-metric correct <user_id> <date> <metric_name> <value> [flags]
@@ -2226,6 +2232,7 @@ Usage:
   flexcli profile stats report [command]
 
 Available Commands:
+  generate    Generate a meso or macro cycle report on demand
   list        List recent training reports
   show        Show detailed training report
 
@@ -2239,6 +2246,24 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 
 Use "flexcli profile stats report [command] --help" for more information about a command.
+```
+
+### `flexcli profile stats report generate`
+
+```
+Generate a meso or macro cycle report on demand
+
+Usage:
+  flexcli profile stats report generate [meso|macro] [flags]
+
+Flags:
+  -h, --help   help for generate
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
 ### `flexcli profile stats report list`
