@@ -18,6 +18,30 @@ func NewReportCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.C
 
 	cmd.AddCommand(newReportListCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newReportShowCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newReportGenerateCmd(rootCfg, resolvedCtx))
+
+	return cmd
+}
+
+func newReportGenerateCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:       "generate [meso|macro]",
+		Short:     "Generate a meso or macro cycle report on demand",
+		Args:      cobra.MatchAll(cobra.ExactArgs(1), cobra.OnlyValidArgs),
+		ValidArgs: []string{"meso", "macro"},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			cycle := args[0]
+
+			resp, err := client.Request("POST", fmt.Sprintf("/api/reports/%s/generate", cycle), nil)
+			if err != nil {
+				return err
+			}
+
+			fmt.Println(resp.Message)
+			return nil
+		},
+	}
 
 	return cmd
 }
