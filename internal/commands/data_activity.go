@@ -156,6 +156,7 @@ func newDataActivityShowCmd(rootCfg **config.Config, resolvedCtx *config.Context
 			printActivityWeather(client, activityID)
 			printActivitySplits(client, activityID)
 			printActivityHRZones(client, activityID)
+			printActivityPowerZones(client, activityID)
 			printActivityExerciseSets(client, activityID)
 
 			return nil
@@ -216,6 +217,24 @@ func printActivityHRZones(client *api.Client, activityID string) {
 	for _, z := range zones {
 		fmt.Printf("  %-6v  %10v  %10v  %10v\n",
 			z["zone_number"], z["zone_low_bpm"], z["zone_high_bpm"], z["duration_s"])
+	}
+}
+
+// printActivityPowerZones fetches and prints the activity's power zone time distribution, if any.
+func printActivityPowerZones(client *api.Client, activityID string) {
+	resp, err := client.Request("GET", "/api/activity/"+activityID+"/power-zones", nil)
+	if err != nil {
+		return
+	}
+	var zones []map[string]interface{}
+	if err := json.Unmarshal(resp.Data, &zones); err != nil || len(zones) == 0 {
+		return
+	}
+	fmt.Println("\nPower Zones:")
+	fmt.Printf("  %-6s  %10s  %10s  %10s\n", "ZONE", "LOW (W)", "HIGH (W)", "DUR (s)")
+	for _, z := range zones {
+		fmt.Printf("  %-6v  %10v  %10v  %10v\n",
+			z["zone_number"], z["zone_low_watts"], z["zone_high_watts"], z["duration_s"])
 	}
 }
 
