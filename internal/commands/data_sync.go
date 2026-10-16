@@ -21,6 +21,7 @@ func newDataSyncCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra
 
 	cmd.AddCommand(newDataSyncGarminCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataSyncWithingsCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataSyncGymCoachCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
