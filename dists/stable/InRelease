@@ -8,27 +8,27 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: FlexCLI apt repository
-Date: Fri, 16 Oct 2026 21:38:30 UTC
+Date: Fri, 16 Oct 2026 23:51:14 UTC
 MD5Sum:
- 0b2a14755a65f1da356f1e5ee634379e 646 main/binary-amd64/Packages
- 5b4bb78f89f76087f0b083457e0f31d4 474 main/binary-amd64/Packages.gz
+ a53a6e120ce51525da0e67b49d513ded 646 main/binary-amd64/Packages
+ 264045a959ecc15e662e91ced88a0ca0 473 main/binary-amd64/Packages.gz
 SHA256:
- 321b0aa7abcb1f3c1a2dd0db69ba43879aa9fa193f81a96ab33110d4a52b6c6d 646 main/binary-amd64/Packages
- f9102ef8c1c3f6b08231bfac9a3a437d2ae941450bd5486140d0386e0959634d 474 main/binary-amd64/Packages.gz
+ 636cf744b218969139e7458690d8072782fd15822159dbe2bc47108ecc2beab8 646 main/binary-amd64/Packages
+ ac04b06d57e5c12dba2d2d14b8bcffae400077063fcc927a9d72e42a4eee3dec 473 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAEBCAA5FiEEOlCCEdUk2VcLbMypMAW9JVwwbE4FAmrSmVYbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMCwzAAoJEDAFvSVcMGxOu1YQAKFsQFcDpfumAIJLdshd
-BKxe5PByYNvszIFQ6Bc4r/T6axHxuFh3U1IQ3fDJgSbZufD2Kcq/jWhu/Ez2lb68
-5o9eFjPTstr6bp574v/45bKYz34FxNtLX+fFjEw794ARZD5SdtnufQ59rM5UOWww
-oDgncKmM2NbcVdd+7DQLfutE2uU38QeImGCXPsKxmkk/9gnm+SaAuowSjIhM6dKl
-r/G65GeEBRW1wwg6Epxfh3qWzlKBpHboTnD6xadH/cw44eKMVdmLgslKK6NVLNAm
-l8Fh/KShkC74rIF+6JsLX1fuAsCQ3wEYWiQVqAEnVVrodNa4QzeGiN8Ia6UIokDy
-w+DpQ1tvlzxPvQ57pLaztcRJTu17WfqCKBXrn1R7QSI6DaVkKqlRpA8/FZwMUpQY
-IKv2uiVy3eo23L6ecxMcKuJsCz2NEzAdKw6/mhppE8FwSXFm8A8QtvlBobGEg8DB
-qjpfV4Fp3FldcolS8h/OOe33aOFJu7kOdV7zZgaSdwwCpC4eq424N9Mpcm7DWA4e
-RkHFraWkzGRx9pRA/m5ZozLL4V9uzjPvvg/Bcm9GN6gDVjrjaDYZ8zXQ4D/233YJ
-jLh9OPDexBFqYY3BxOjR3D9bTYuTcwR+knhDQOsW/z8cthlw/5xOJTtS4yjgDdxW
-CCXP3BDPWSVKdofeX0eeQQi8
-=J3GW
+iQJPBAEBCAA5FiEEOlCCEdUk2VcLbMypMAW9JVwwbE4FAmrSuHIbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMCwzAAoJEDAFvSVcMGxOFWgP/R4q+IoO7NA9mPpZqcd2
+F6ruTJpPakUbWXFX4JwAL+EBNoGjCbfw7gCjA4lE69U+ujRPh4Z8PetwbOvbkwbO
+YSafvFyKCES+DMIx84zrHJdZeX7DoklcJdEmPzEdDMz4PpGyJH0kffM5JMIhGLIo
+1OZvsWEPYsZkEm95OAWQ5tuenbgnq/of9JUJCaD3TxPRe2a67V9aQ/G7QDI3gerl
+Il6NL9IzP25/7hdfRWxHg0tri+/bpuFbcKBbPYhkFbyY/SiQnIQ3tNtaZ52PEfkp
+XPgWg+OXBOsZAde/RVnpxOglGUs5QfDouffg0M8dm346rg7VInAiPMyyB2SRq4d9
+msvkbdszxzOM+rRJRyOaNDOT3ctagI8EN1epVyoY/V9goMpHm1RT5s225qtkrxxM
+CALX/4gIEqs8CoanoWbSSGYvuq/IRSeKoBVIFmRuEzea4NSmx4i+Ec3fmrQtWI4f
+hvY+8adSKoAUMou1nugD007RtNYDjn7Zf5/oZYKGwcZGeA3fEcQga0hCJVJt3c1o
+vHFTSae9rzOucCXghR7x1GdTKs/0JBdgmLXl6FMzH/9SnEc+XKufXrRYQWhzRHqa
+CnNsEHj//ggfFWOvBqDO5axcMLkdGj8lEv1tHv47kSMyYda8A1PwtEugXYCP+au7
+uyWh46L1VBN5k0yYI1e6oNts
+=OMvx
 -----END PGP SIGNATURE-----
