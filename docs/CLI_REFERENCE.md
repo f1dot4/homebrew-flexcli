@@ -816,6 +816,7 @@ Usage:
 
 Available Commands:
   garmin      Manage Garmin connection and settings
+  gymcoach    Manage GymCoach connection and settings
   status      Get system status
   withings    Manage Withings connection and settings
 
@@ -909,6 +910,130 @@ Flags:
       --interval int            Sync interval in hours
       --lookback-manual int     Days to look back for manual sync
       --lookback-schedule int   Days to look back for scheduled sync
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect gymcoach`
+
+```
+Manage GymCoach connection and settings
+
+Usage:
+  flexcli profile connect gymcoach [command]
+
+Available Commands:
+  config      Manage the GymCoach server URL and MCP token
+
+Flags:
+  -h, --help   help for gymcoach
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect gymcoach [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect gymcoach config`
+
+```
+Manage the GymCoach server URL and MCP token
+
+Usage:
+  flexcli profile connect gymcoach config [command]
+
+Available Commands:
+  delete      Delete the stored GymCoach MCP token
+  get         Show the current GymCoach configuration and status
+  set         Set the GymCoach server URL and/or MCP token
+  test        Test the GymCoach connection by listing today's trainings
+
+Flags:
+  -h, --help   help for config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect gymcoach config [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect gymcoach config delete`
+
+```
+Delete the stored GymCoach MCP token
+
+Usage:
+  flexcli profile connect gymcoach config delete [flags]
+
+Flags:
+  -h, --help   help for delete
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect gymcoach config get`
+
+```
+Show the current GymCoach configuration and status
+
+Usage:
+  flexcli profile connect gymcoach config get [flags]
+
+Flags:
+  -h, --help   help for get
+      --json   Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect gymcoach config set`
+
+```
+Set the GymCoach server URL and/or MCP token
+
+Usage:
+  flexcli profile connect gymcoach config set [flags]
+
+Flags:
+  -h, --help           help for set
+      --token string   GymCoach MCP token (prompted if omitted)
+      --url string     GymCoach server URL (optional; blank keeps the default)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect gymcoach config test`
+
+```
+Test the GymCoach connection by listing today's trainings
+
+Usage:
+  flexcli profile connect gymcoach config test [flags]
+
+Flags:
+  -h, --help   help for test
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
@@ -1114,6 +1239,7 @@ Available Commands:
   activity     Manage Garmin activities (alias: act): list, show, download, upload, delete
   fitness      View imported fitness data: personal records
   garmin       Garmin gamification, equipment, goals, workouts, and devices
+  gymcoach     Inspect GymCoach trainings
   healthmetric View imported health metrics (alias: hm): list, show, delete
   nutrition    Manage nutrition logs (alias: nut): log, list, delete
   sync         Manually trigger Garmin or Withings synchronization
@@ -1504,6 +1630,49 @@ Global Flags:
       --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
 ```
 
+### `flexcli profile data gymcoach`
+
+```
+Inspect GymCoach trainings
+
+Usage:
+  flexcli profile data gymcoach [command]
+
+Available Commands:
+  trainings   List recent GymCoach trainings
+
+Flags:
+  -h, --help   help for gymcoach
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile data gymcoach [command] --help" for more information about a command.
+```
+
+### `flexcli profile data gymcoach trainings`
+
+```
+List recent GymCoach trainings
+
+Usage:
+  flexcli profile data gymcoach trainings [flags]
+
+Flags:
+      --days int   Number of days to look back (default 30)
+  -h, --help       help for trainings
+      --json       Output as JSON
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
 ### `flexcli profile data healthmetric`
 
 ```
@@ -1699,6 +1868,7 @@ Usage:
 
 Available Commands:
   garmin      Sync data from Garmin Connect
+  gymcoach    Sync GymCoach: push trainings to Garmin and set bodyweight
   withings    Sync data from Withings
 
 Flags:
@@ -1723,6 +1893,28 @@ Usage:
 
 Flags:
   -h, --help   help for garmin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data sync gymcoach`
+
+```
+Sync GymCoach: push trainings to Garmin and set bodyweight
+
+Usage:
+  flexcli profile data sync gymcoach [flags]
+
+Flags:
+      --end-date string     Backfill through this date (YYYY-MM-DD); requires --start-date
+  -h, --help                help for gymcoach
+      --start-date string   Backfill from this date (YYYY-MM-DD); requires --end-date
+      --trainings           Push GymCoach trainings to Garmin
+      --weight              Push the latest bodyweight to GymCoach
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
