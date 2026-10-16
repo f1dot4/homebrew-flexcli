@@ -88,7 +88,6 @@ func main() {
 	rootCmd.AddCommand(commands.NewConfigCmd(&cfgFile, &rootCfg))
 	rootCmd.AddCommand(commands.NewContextCmd(&cfgFile, &rootCfg))
 	rootCmd.AddCommand(commands.NewProfileCmd(&rootCfg, &resolvedCtx))
-	rootCmd.AddCommand(commands.NewConnectCmd(&rootCfg, &resolvedCtx))
 	rootCmd.AddCommand(commands.NewPlanCmd(&rootCfg, &resolvedCtx))
 	rootCmd.AddCommand(commands.NewAdminCmd(&rootCfg, &resolvedCtx))
 

@@ -22,7 +22,6 @@ Available Commands:
   admin       System administration commands
   completion  Generate the autocompletion script for the specified shell
   config      Configure CLI settings for an environment
-  connect     Manage device connections and system status
   context     Manage environments (contexts)
   help        Help about any command
   plan        Manage training plans
@@ -388,220 +387,6 @@ Global Flags:
       --context string   Use specific context from config
 ```
 
-### `flexcli connect`
-
-```
-Manage device connections and system status
-
-Usage:
-  flexcli connect [command]
-
-Available Commands:
-  garmin      Manage Garmin connection and settings
-  status      Get system status
-  withings    Manage Withings connection and settings
-
-Flags:
-  -h, --help   help for connect
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-
-Use "flexcli connect [command] --help" for more information about a command.
-```
-
-### `flexcli connect garmin`
-
-```
-Manage Garmin connection and settings
-
-Usage:
-  flexcli connect garmin [command]
-
-Available Commands:
-  config      Manage garmin expert settings
-
-Flags:
-  -h, --help   help for garmin
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-
-Use "flexcli connect garmin [command] --help" for more information about a command.
-```
-
-### `flexcli connect garmin config`
-
-```
-Manage garmin expert settings
-
-Usage:
-  flexcli connect garmin config [command]
-
-Available Commands:
-  get         Get expert settings
-  set         Update expert settings
-
-Flags:
-  -h, --help   help for config
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-
-Use "flexcli connect garmin config [command] --help" for more information about a command.
-```
-
-### `flexcli connect garmin config get`
-
-```
-Get expert settings
-
-Usage:
-  flexcli connect garmin config get [flags]
-
-Flags:
-  -h, --help   help for get
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
-### `flexcli connect garmin config set`
-
-```
-Update expert settings
-
-Usage:
-  flexcli connect garmin config set [flags]
-
-Flags:
-  -h, --help                    help for set
-      --interval int            Sync interval in hours
-      --lookback-manual int     Days to look back for manual sync
-      --lookback-schedule int   Days to look back for scheduled sync
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
-### `flexcli connect status`
-
-```
-Get system status
-
-Usage:
-  flexcli connect status [flags]
-
-Flags:
-  -h, --help   help for status
-      --json   Output in JSON format
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
-### `flexcli connect withings`
-
-```
-Manage Withings connection and settings
-
-Usage:
-  flexcli connect withings [command]
-
-Available Commands:
-  config      Manage withings expert settings
-
-Flags:
-  -h, --help   help for withings
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-
-Use "flexcli connect withings [command] --help" for more information about a command.
-```
-
-### `flexcli connect withings config`
-
-```
-Manage withings expert settings
-
-Usage:
-  flexcli connect withings config [command]
-
-Available Commands:
-  get         Get expert settings
-  set         Update expert settings
-
-Flags:
-  -h, --help   help for config
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-
-Use "flexcli connect withings config [command] --help" for more information about a command.
-```
-
-### `flexcli connect withings config get`
-
-```
-Get expert settings
-
-Usage:
-  flexcli connect withings config get [flags]
-
-Flags:
-  -h, --help   help for get
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
-### `flexcli connect withings config set`
-
-```
-Update expert settings
-
-Usage:
-  flexcli connect withings config set [flags]
-
-Flags:
-  -h, --help           help for set
-      --interval int   Sync interval in hours
-
-Global Flags:
-      --config string    config file (default is $HOME/.flexcli.json)
-      --context string   Use specific context from config
-      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
-      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
-```
-
 ### `flexcli context`
 
 ```
@@ -841,6 +626,7 @@ Usage:
 
 Available Commands:
   body        Body metrics and thresholds
+  connect     Manage device connections and system status
   constraint  Manage physical constraints
   data        Sync & data: manual sync, activities, health metrics
   delete      Permanently delete user profile and all data
@@ -1012,6 +798,220 @@ Flags:
       --json               Output in JSON format
       --sex string         Sex (male/female/other)
       --weight float       Weight in kg
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect`
+
+```
+Manage device connections and system status
+
+Usage:
+  flexcli profile connect [command]
+
+Available Commands:
+  garmin      Manage Garmin connection and settings
+  status      Get system status
+  withings    Manage Withings connection and settings
+
+Flags:
+  -h, --help   help for connect
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect garmin`
+
+```
+Manage Garmin connection and settings
+
+Usage:
+  flexcli profile connect garmin [command]
+
+Available Commands:
+  config      Manage garmin expert settings
+
+Flags:
+  -h, --help   help for garmin
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect garmin [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect garmin config`
+
+```
+Manage garmin expert settings
+
+Usage:
+  flexcli profile connect garmin config [command]
+
+Available Commands:
+  get         Get expert settings
+  set         Update expert settings
+
+Flags:
+  -h, --help   help for config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect garmin config [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect garmin config get`
+
+```
+Get expert settings
+
+Usage:
+  flexcli profile connect garmin config get [flags]
+
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect garmin config set`
+
+```
+Update expert settings
+
+Usage:
+  flexcli profile connect garmin config set [flags]
+
+Flags:
+  -h, --help                    help for set
+      --interval int            Sync interval in hours
+      --lookback-manual int     Days to look back for manual sync
+      --lookback-schedule int   Days to look back for scheduled sync
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect status`
+
+```
+Get system status
+
+Usage:
+  flexcli profile connect status [flags]
+
+Flags:
+  -h, --help   help for status
+      --json   Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect withings`
+
+```
+Manage Withings connection and settings
+
+Usage:
+  flexcli profile connect withings [command]
+
+Available Commands:
+  config      Manage withings expert settings
+
+Flags:
+  -h, --help   help for withings
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect withings [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect withings config`
+
+```
+Manage withings expert settings
+
+Usage:
+  flexcli profile connect withings config [command]
+
+Available Commands:
+  get         Get expert settings
+  set         Update expert settings
+
+Flags:
+  -h, --help   help for config
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile connect withings config [command] --help" for more information about a command.
+```
+
+### `flexcli profile connect withings config get`
+
+```
+Get expert settings
+
+Usage:
+  flexcli profile connect withings config get [flags]
+
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile connect withings config set`
+
+```
+Update expert settings
+
+Usage:
+  flexcli profile connect withings config set [flags]
+
+Flags:
+  -h, --help           help for set
+      --interval int   Sync interval in hours
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
