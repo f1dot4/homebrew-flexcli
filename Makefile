@@ -65,7 +65,7 @@ release: test docs
 	@$(MAKE) build VERSION=v$(v)
 	@# Build .deb package
 	@VERSION=$(v) nfpm package --config nfpm.yaml --packager deb --target bin/
-	@git add -f cmd/flexcli/main.go Formula/flexcli.rb bin/ docs/CLI_REFERENCE.md
+	@git add -f cmd/flexcli/main.go Formula/flexcli.rb bin/flexcli-linux bin/flexcli-mac bin/flexcli_$(v)_amd64.deb docs/CLI_REFERENCE.md
 	@git commit -m "chore: release v$(v)"
 	@git tag v$(v)
 	@echo "Pushing tag to GitHub to generate archive..."
