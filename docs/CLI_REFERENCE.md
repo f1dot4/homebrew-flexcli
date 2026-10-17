@@ -926,6 +926,9 @@ Manage GymCoach connection and settings
 Usage:
   flexcli profile connect gymcoach [command]
 
+Aliases:
+  gymcoach, gym
+
 Available Commands:
   config      Manage the GymCoach MCP URL
 
@@ -1637,6 +1640,9 @@ Inspect GymCoach trainings
 Usage:
   flexcli profile data gymcoach [command]
 
+Aliases:
+  gymcoach, gym
+
 Available Commands:
   trainings   List recent GymCoach trainings
 
@@ -1908,8 +1914,12 @@ Sync GymCoach: push recent trainings to Garmin
 Usage:
   flexcli profile data sync gymcoach [flags]
 
+Aliases:
+  gymcoach, gym
+
 Flags:
       --end-date string     Backfill through this date (YYYY-MM-DD); requires --start-date
+      --force               Recreate activities even if already synced (e.g. deleted in Garmin)
   -h, --help                help for gymcoach
       --start-date string   Backfill from this date (YYYY-MM-DD); requires --end-date
 
