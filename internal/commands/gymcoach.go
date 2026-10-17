@@ -18,8 +18,9 @@ import (
 
 func NewGymCoachConnectionCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "gymcoach",
-		Short: "Manage GymCoach connection and settings",
+		Use:     "gymcoach",
+		Aliases: []string{"gym"},
+		Short:   "Manage GymCoach connection and settings",
 	}
 
 	cmd.AddCommand(newGymCoachConfigCmd(rootCfg, resolvedCtx))
@@ -167,8 +168,9 @@ func newGymCoachConfigTestCmd(rootCfg **config.Config, resolvedCtx *config.Conte
 
 func NewGymCoachDataCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "gymcoach",
-		Short: "Inspect GymCoach trainings",
+		Use:     "gymcoach",
+		Aliases: []string{"gym"},
+		Short:   "Inspect GymCoach trainings",
 	}
 
 	cmd.AddCommand(newGymCoachTrainingsCmd(rootCfg, resolvedCtx))
@@ -241,10 +243,12 @@ func newGymCoachTrainingsCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	var startDate string
 	var endDate string
+	var force bool
 
 	cmd := &cobra.Command{
-		Use:   "gymcoach",
-		Short: "Sync GymCoach: push recent trainings to Garmin",
+		Use:     "gymcoach",
+		Aliases: []string{"gym"},
+		Short:   "Sync GymCoach: push recent trainings to Garmin",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := validateDateFlag(startDate, "--start-date"); err != nil {
 				return err
@@ -256,8 +260,15 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				return fmt.Errorf("--start-date and --end-date must both be provided, or neither")
 			}
 
+			dateQuery := buildDateRangeQuery(startDate, endDate)
+			if force {
+				if dateQuery != "" {
+					dateQuery += "&"
+				}
+				dateQuery += "force=true"
+			}
 			path := "/api/activity/import/gymcoach"
-			if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
+			if dateQuery != "" {
 				path += "?" + dateQuery
 			}
 
@@ -282,6 +293,10 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 					ActivityID  string `json:"activity_id"`
 					Action      string `json:"action"`
 				} `json:"synced"`
+				Skipped []struct {
+					Date        string `json:"date"`
+					WorkoutName string `json:"workout_name"`
+				} `json:"skipped"`
 				Failures []struct {
 					Date        string `json:"date"`
 					WorkoutName string `json:"workout_name"`
@@ -304,6 +319,9 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				}
 				fmt.Printf("  %s %s — %s (id %s)\n", icon, s.Date, s.WorkoutName, s.ActivityID)
 			}
+			for _, s := range data.Skipped {
+				fmt.Printf("  ⏭ %s — %s (already synced)\n", s.Date, s.WorkoutName)
+			}
 			for _, f := range data.Failures {
 				fmt.Printf("  ❌ %s — %s: %s\n", f.Date, f.WorkoutName, f.Error)
 			}
@@ -313,5 +331,6 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 
 	cmd.Flags().StringVar(&startDate, "start-date", "", "Backfill from this date (YYYY-MM-DD); requires --end-date")
 	cmd.Flags().StringVar(&endDate, "end-date", "", "Backfill through this date (YYYY-MM-DD); requires --start-date")
+	cmd.Flags().BoolVar(&force, "force", false, "Recreate activities even if already synced (e.g. deleted in Garmin)")
 	return cmd
 }
