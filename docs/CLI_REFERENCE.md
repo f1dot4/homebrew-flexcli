@@ -927,7 +927,7 @@ Usage:
   flexcli profile connect gymcoach [command]
 
 Available Commands:
-  config      Manage the GymCoach server URL and MCP token
+  config      Manage the GymCoach MCP URL
 
 Flags:
   -h, --help   help for gymcoach
@@ -944,7 +944,7 @@ Use "flexcli profile connect gymcoach [command] --help" for more information abo
 ### `flexcli profile connect gymcoach config`
 
 ```
-Manage the GymCoach server URL and MCP token
+Manage the GymCoach MCP URL
 
 Usage:
   flexcli profile connect gymcoach config [command]
