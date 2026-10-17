@@ -950,9 +950,9 @@ Usage:
   flexcli profile connect gymcoach config [command]
 
 Available Commands:
-  delete      Delete the stored GymCoach MCP token
+  delete      Delete the stored GymCoach MCP URL
   get         Show the current GymCoach configuration and status
-  set         Set the GymCoach server URL and/or MCP token
+  set         Set the GymCoach MCP URL (token embedded)
   test        Test the GymCoach connection by listing today's trainings
 
 Flags:
@@ -970,7 +970,7 @@ Use "flexcli profile connect gymcoach config [command] --help" for more informat
 ### `flexcli profile connect gymcoach config delete`
 
 ```
-Delete the stored GymCoach MCP token
+Delete the stored GymCoach MCP URL
 
 Usage:
   flexcli profile connect gymcoach config delete [flags]
@@ -1007,15 +1007,14 @@ Global Flags:
 ### `flexcli profile connect gymcoach config set`
 
 ```
-Set the GymCoach server URL and/or MCP token
+Set the GymCoach MCP URL (token embedded)
 
 Usage:
   flexcli profile connect gymcoach config set [flags]
 
 Flags:
-  -h, --help           help for set
-      --token string   GymCoach MCP token (prompted if omitted)
-      --url string     GymCoach server URL (optional; blank keeps the default)
+  -h, --help         help for set
+      --url string   GymCoach MCP URL, e.g. https://gym.leidinger.xyz/mcp?token=gmc_...
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
@@ -1868,7 +1867,7 @@ Usage:
 
 Available Commands:
   garmin      Sync data from Garmin Connect
-  gymcoach    Sync GymCoach: push trainings to Garmin and set bodyweight
+  gymcoach    Sync GymCoach: push recent trainings to Garmin
   withings    Sync data from Withings
 
 Flags:
@@ -1904,7 +1903,7 @@ Global Flags:
 ### `flexcli profile data sync gymcoach`
 
 ```
-Sync GymCoach: push trainings to Garmin and set bodyweight
+Sync GymCoach: push recent trainings to Garmin
 
 Usage:
   flexcli profile data sync gymcoach [flags]
@@ -1913,8 +1912,6 @@ Flags:
       --end-date string     Backfill through this date (YYYY-MM-DD); requires --start-date
   -h, --help                help for gymcoach
       --start-date string   Backfill from this date (YYYY-MM-DD); requires --end-date
-      --trainings           Push GymCoach trainings to Garmin
-      --weight              Push the latest bodyweight to GymCoach
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)

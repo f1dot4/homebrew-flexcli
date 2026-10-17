@@ -10,7 +10,6 @@ import (
 	"github.com/f1dot4/flexcli/internal/api"
 	"github.com/f1dot4/flexcli/internal/config"
 	"github.com/spf13/cobra"
-	"golang.org/x/term"
 )
 
 // ---------------------------------------------------------------------------
@@ -30,7 +29,7 @@ func NewGymCoachConnectionCmd(rootCfg **config.Config, resolvedCtx *config.Conte
 func newGymCoachConfigCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "config",
-		Short: "Manage the GymCoach server URL and MCP token",
+		Short: "Manage the GymCoach MCP URL",
 	}
 
 	cmd.AddCommand(newGymCoachConfigGetCmd(rootCfg, resolvedCtx))
@@ -60,7 +59,7 @@ func newGymCoachConfigGetCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 
 			var status struct {
 				Connected bool    `json:"connected"`
-				BaseURL   string  `json:"base_url"`
+				URL       string  `json:"url"`
 				LastSync  *string `json:"last_sync"`
 			}
 			if err := json.Unmarshal(resp.Data, &status); err != nil {
@@ -79,7 +78,7 @@ func newGymCoachConfigGetCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 			w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 			fmt.Fprintln(w, "SETTING\tVALUE")
 			fmt.Fprintf(w, "Status\t%s\n", connected)
-			fmt.Fprintf(w, "Server URL\t%s\n", status.BaseURL)
+			fmt.Fprintf(w, "MCP URL\t%s\n", status.URL)
 			fmt.Fprintf(w, "Last Sync\t%s\n", lastSync)
 			w.Flush()
 			return nil
@@ -91,34 +90,17 @@ func newGymCoachConfigGetCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 }
 
 func newGymCoachConfigSetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	var url string
-	var token string
+	var mcpURL string
 
 	cmd := &cobra.Command{
 		Use:   "set",
-		Short: "Set the GymCoach server URL and/or MCP token",
+		Short: "Set the GymCoach MCP URL (token embedded)",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if url == "" && token == "" {
-				return fmt.Errorf("nothing to update: provide --url and/or --token")
+			if strings.TrimSpace(mcpURL) == "" {
+				return fmt.Errorf("--url is required (the GymCoach MCP URL, including its token)")
 			}
 
-			if token == "" {
-				fmt.Print("Enter GymCoach MCP token: ")
-				byteToken, err := term.ReadPassword(int(os.Stdin.Fd()))
-				if err != nil {
-					return err
-				}
-				fmt.Println()
-				token = strings.TrimSpace(string(byteToken))
-			}
-
-			body := map[string]interface{}{}
-			if url != "" {
-				body["base_url"] = url
-			}
-			if token != "" {
-				body["mcp_token"] = token
-			}
+			body := map[string]interface{}{"url": strings.TrimSpace(mcpURL)}
 
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 			resp, err := client.Request("POST", "/api/connect/gymcoach/config", body)
@@ -135,15 +117,14 @@ func newGymCoachConfigSetCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 		},
 	}
 
-	cmd.Flags().StringVar(&url, "url", "", "GymCoach server URL (optional; blank keeps the default)")
-	cmd.Flags().StringVar(&token, "token", "", "GymCoach MCP token (prompted if omitted)")
+	cmd.Flags().StringVar(&mcpURL, "url", "", "GymCoach MCP URL, e.g. https://gym.leidinger.xyz/mcp?token=gmc_...")
 	return cmd
 }
 
 func newGymCoachConfigDeleteCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
 	return &cobra.Command{
 		Use:   "delete",
-		Short: "Delete the stored GymCoach MCP token",
+		Short: "Delete the stored GymCoach MCP URL",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 			resp, err := client.Request("DELETE", "/api/connect/gymcoach/config", nil)
@@ -258,14 +239,12 @@ func newGymCoachTrainingsCmd(rootCfg **config.Config, resolvedCtx *config.Contex
 // ---------------------------------------------------------------------------
 
 func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	var trainings bool
-	var weight bool
 	var startDate string
 	var endDate string
 
 	cmd := &cobra.Command{
 		Use:   "gymcoach",
-		Short: "Sync GymCoach: push trainings to Garmin and set bodyweight",
+		Short: "Sync GymCoach: push recent trainings to Garmin",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := validateDateFlag(startDate, "--start-date"); err != nil {
 				return err
@@ -277,52 +256,26 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				return fmt.Errorf("--start-date and --end-date must both be provided, or neither")
 			}
 
-			// Default to doing both when no explicit selection is made.
-			if !trainings && !weight {
-				trainings = true
-				weight = true
+			path := "/api/activity/import/gymcoach"
+			if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
+				path += "?" + dateQuery
 			}
 
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-
-			if trainings {
-				path := "/api/activity/import/gymcoach"
-				if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
-					path += "?" + dateQuery
-				}
-				resp, err := client.Request("POST", path, nil)
-				if err != nil {
-					return err
-				}
-				if resp.Success {
-					fmt.Printf("✅ Trainings sync complete: %s\n", resp.Message)
-				} else {
-					fmt.Printf("❌ Trainings sync failed: %s\n", resp.Message)
-					return fmt.Errorf("trainings sync failed")
-				}
+			resp, err := client.Request("POST", path, nil)
+			if err != nil {
+				return err
+			}
+			if !resp.Success {
+				fmt.Printf("❌ GymCoach sync failed: %s\n", resp.Message)
+				return fmt.Errorf("gymcoach sync failed")
 			}
 
-			if weight {
-				resp, err := client.Request(
-					"POST", "/api/connect/gymcoach/sync-weight", nil,
-				)
-				if err != nil {
-					return err
-				}
-				if resp.Success {
-					fmt.Printf("✅ %s\n", resp.Message)
-				} else {
-					fmt.Printf("❌ Weight sync failed: %s\n", resp.Message)
-					return fmt.Errorf("weight sync failed")
-				}
-			}
-
+			fmt.Printf("✅ GymCoach sync complete: %s\n", resp.Message)
 			return nil
 		},
 	}
 
-	cmd.Flags().BoolVar(&trainings, "trainings", false, "Push GymCoach trainings to Garmin")
-	cmd.Flags().BoolVar(&weight, "weight", false, "Push the latest bodyweight to GymCoach")
 	cmd.Flags().StringVar(&startDate, "start-date", "", "Backfill from this date (YYYY-MM-DD); requires --end-date")
 	cmd.Flags().StringVar(&endDate, "end-date", "", "Backfill through this date (YYYY-MM-DD); requires --start-date")
 	return cmd
