@@ -271,7 +271,42 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				return fmt.Errorf("gymcoach sync failed")
 			}
 
-			fmt.Printf("✅ GymCoach sync complete: %s\n", resp.Message)
+			var data struct {
+				NewCount      int `json:"new_count"`
+				EnrichedCount int `json:"enriched_count"`
+				SkippedCount  int `json:"skipped_count"`
+				FailedCount   int `json:"failed_count"`
+				Synced        []struct {
+					Date        string `json:"date"`
+					WorkoutName string `json:"workout_name"`
+					ActivityID  string `json:"activity_id"`
+					Action      string `json:"action"`
+				} `json:"synced"`
+				Failures []struct {
+					Date        string `json:"date"`
+					WorkoutName string `json:"workout_name"`
+					Error       string `json:"error"`
+				} `json:"failures"`
+			}
+			if err := json.Unmarshal(resp.Data, &data); err != nil {
+				fmt.Printf("✅ GymCoach sync complete: %s\n", resp.Message)
+				return nil
+			}
+
+			fmt.Printf(
+				"✅ GymCoach sync complete (%d new, %d enriched, %d skipped, %d failed)\n",
+				data.NewCount, data.EnrichedCount, data.SkippedCount, data.FailedCount,
+			)
+			for _, s := range data.Synced {
+				icon := "🆕"
+				if s.Action == "enriched" {
+					icon = "✏️"
+				}
+				fmt.Printf("  %s %s — %s (id %s)\n", icon, s.Date, s.WorkoutName, s.ActivityID)
+			}
+			for _, f := range data.Failures {
+				fmt.Printf("  ❌ %s — %s: %s\n", f.Date, f.WorkoutName, f.Error)
+			}
 			return nil
 		},
 	}
