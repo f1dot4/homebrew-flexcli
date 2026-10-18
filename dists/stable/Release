@@ -5,10 +5,10 @@ Codename: stable
 Architectures: amd64
 Components: main
 Description: FlexCLI apt repository
-Date: Sat, 17 Oct 2026 21:04:32 UTC
+Date: Sun, 18 Oct 2026 06:02:13 UTC
 MD5Sum:
- 8cbb6c1a060d8fdd17a5c0df747ca422 646 main/binary-amd64/Packages
- 37d8c913648e8640b743aecf562e6294 473 main/binary-amd64/Packages.gz
+ 2e53ce8a0d7354552a81ffc8ea817acd 646 main/binary-amd64/Packages
+ 8ee95769b3c6be88495059c061efb90d 474 main/binary-amd64/Packages.gz
 SHA256:
- 52bdc0e2c321253ba46d550d5338017fede5ee78ebfa58082d32f389b1ec3726 646 main/binary-amd64/Packages
- aefa3cea11c274234ffbf5b1ae1e9b7377c61b316f93bafc7c390ad6fea75a4b 473 main/binary-amd64/Packages.gz
+ e31a0991b0b231d6c5641b7fdaea83ebc1f01d219a7452243354fd691f6be0a0 646 main/binary-amd64/Packages
+ d4a836e7efb966de8e94b03b038fa7dec8eec978b99d8e3b89a6aaec7684a32e 474 main/binary-amd64/Packages.gz
