@@ -1420,7 +1420,8 @@ Usage:
   flexcli profile data activity upload <file> [flags]
 
 Flags:
-  -h, --help   help for upload
+  -h, --help             help for upload
+      --privacy string   Activity privacy (private, subscribers, groups, public)
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)

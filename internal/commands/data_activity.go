@@ -386,7 +386,9 @@ func newDataActivityDownloadBulkCmd(rootCfg **config.Config, resolvedCtx *config
 }
 
 func newDataActivityUploadCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
-	return &cobra.Command{
+	var privacy string
+
+	cmd := &cobra.Command{
 		Use:   "upload <file>",
 		Short: "Upload a FIT/GPX/TCX file to Garmin Connect",
 		Args:  cobra.ExactArgs(1),
@@ -401,20 +403,41 @@ func newDataActivityUploadCmd(rootCfg **config.Config, resolvedCtx *config.Conte
 				return fmt.Errorf("unsupported file type %s (must be .fit, .gpx, or .tcx)", ext)
 			}
 
+			privacy = strings.ToLower(strings.TrimSpace(privacy))
+			if privacy != "" &&
+				privacy != "private" &&
+				privacy != "subscribers" &&
+				privacy != "groups" &&
+				privacy != "public" {
+				return fmt.Errorf("invalid privacy level %q (choose from: private, subscribers, groups, public)", privacy)
+			}
+
+			fields := map[string]string{}
+			if privacy != "" {
+				fields["privacy"] = privacy
+			}
+
 			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-			resp, err := client.UploadFile("/api/activity/upload", filePath)
+			resp, err := client.UploadFile("/api/activity/upload", filePath, fields)
 			if err != nil {
 				return fmt.Errorf("upload failed: %w", err)
 			}
 
 			if resp.Success {
 				fmt.Printf("Uploaded %s successfully.\n", filepath.Base(filePath))
+				if privacy != "" {
+					fmt.Printf("Privacy set to %s.\n", privacy)
+				}
 			} else {
 				fmt.Printf("Upload failed: %s\n", resp.Message)
 			}
 			return nil
 		},
 	}
+
+	cmd.Flags().StringVar(&privacy, "privacy", "", "Activity privacy (private, subscribers, groups, public)")
+
+	return cmd
 }
 
 func newDataActivityDeleteCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {

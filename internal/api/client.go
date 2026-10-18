@@ -248,8 +248,9 @@ func (c *Client) DownloadFile(path string, destPath string) error {
 	return err
 }
 
-// UploadFile performs a multipart POST, uploading the file at filePath.
-func (c *Client) UploadFile(path string, filePath string) (*APIResponse, error) {
+// UploadFile performs a multipart POST, uploading the file at filePath with
+// optional additional form fields.
+func (c *Client) UploadFile(path string, filePath string, fields map[string]string) (*APIResponse, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file %s: %w", filePath, err)
@@ -264,6 +265,14 @@ func (c *Client) UploadFile(path string, filePath string) (*APIResponse, error) 
 	}
 	if _, err = io.Copy(part, file); err != nil {
 		return nil, err
+	}
+	for key, value := range fields {
+		if value == "" {
+			continue
+		}
+		if err := writer.WriteField(key, value); err != nil {
+			return nil, err
+		}
 	}
 	writer.Close()
 
