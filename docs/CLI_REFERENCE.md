@@ -1922,6 +1922,7 @@ Flags:
       --end-date string     Backfill through this date (YYYY-MM-DD); requires --start-date
       --force               Recreate activities even if already synced (e.g. deleted in Garmin)
   -h, --help                help for gymcoach
+      --id string           Target a specific session for force resync (session ID)
       --start-date string   Backfill from this date (YYYY-MM-DD); requires --end-date
 
 Global Flags:
