@@ -31,6 +31,7 @@ func newDataActivityCmd(rootCfg **config.Config, resolvedCtx *config.Context) *c
 
 	cmd.AddCommand(newDataActivityDeleteCmd(rootCfg, resolvedCtx))
 	cmd.AddCommand(newDataActivityRenameCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataActivityPrivacyCmd(rootCfg, resolvedCtx))
 
 	return cmd
 }
@@ -485,4 +486,122 @@ func newDataActivityRenameCmd(rootCfg **config.Config, resolvedCtx *config.Conte
 			return nil
 		},
 	}
+}
+
+func newDataActivityPrivacyCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "privacy",
+		Short: "Manage activity privacy (get/set)",
+	}
+
+	cmd.AddCommand(newDataActivityPrivacyGetCmd(rootCfg, resolvedCtx))
+	cmd.AddCommand(newDataActivityPrivacySetCmd(rootCfg, resolvedCtx))
+
+	return cmd
+}
+
+func newDataActivityPrivacyGetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var activityID string
+	var asJSON bool
+
+	cmd := &cobra.Command{
+		Use:   "get",
+		Short: "Get the privacy level of an activity (defaults to 'latest')",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			path := fmt.Sprintf("/api/activity/%s/privacy", activityID)
+			resp, err := client.Request("GET", path, nil)
+			if err != nil {
+				return fmt.Errorf("get privacy failed: %w", err)
+			}
+
+			if asJSON {
+				fmt.Println(string(resp.Data))
+				return nil
+			}
+
+			var data struct {
+				Privacy string `json:"privacy"`
+			}
+			if err := json.Unmarshal(resp.Data, &data); err != nil {
+				return fmt.Errorf("failed to parse response: %w", err)
+			}
+
+			privacyLabels := map[string]string{
+				"private":     "🔒 Private",
+				"subscribers": "👥 Connections",
+				"groups":      "🏘️  Groups",
+				"public":      "🌍 Public",
+			}
+
+			label := privacyLabels[data.Privacy]
+			if label == "" {
+				label = data.Privacy
+			}
+
+			fmt.Printf("Activity %s privacy: %s\n", activityID, label)
+			return nil
+		},
+	}
+
+	cmd.Flags().StringVar(&activityID, "id", "latest", "Activity ID (defaults to 'latest')")
+	cmd.Flags().BoolVar(&asJSON, "json", false, "Output in JSON format")
+	return cmd
+}
+
+func newDataActivityPrivacySetCmd(rootCfg **config.Config, resolvedCtx *config.Context) *cobra.Command {
+	var activityID string
+
+	cmd := &cobra.Command{
+		Use:   "set <privacy>",
+		Short: "Set the privacy level of an activity (private, subscribers, groups, public)",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			privacy := args[0]
+
+			// Validate privacy value
+			validPrivacy := map[string]bool{
+				"private":     true,
+				"subscribers": true,
+				"groups":      true,
+				"public":      true,
+			}
+			if !validPrivacy[privacy] {
+				return fmt.Errorf("invalid privacy level '%s'. Valid options: private, subscribers, groups, public", privacy)
+			}
+
+			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			body := map[string]string{
+				"privacy": privacy,
+			}
+
+			path := fmt.Sprintf("/api/activity/%s/privacy", activityID)
+			resp, err := client.Request("PUT", path, body)
+			if err != nil {
+				return fmt.Errorf("set privacy failed: %w", err)
+			}
+
+			if resp.Success {
+				privacyLabels := map[string]string{
+					"private":     "🔒 Private",
+					"subscribers": "👥 Connections",
+					"groups":      "🏘️  Groups",
+					"public":      "🌍 Public",
+				}
+				label := privacyLabels[privacy]
+				if label == "" {
+					label = privacy
+				}
+				fmt.Printf("✅ Activity %s privacy set to: %s\n", activityID, label)
+			} else {
+				fmt.Printf("❌ Set privacy failed: %s\n", resp.Message)
+			}
+			return nil
+		},
+	}
+
+	cmd.Flags().StringVar(&activityID, "id", "latest", "Activity ID (defaults to 'latest')")
+	return cmd
 }
