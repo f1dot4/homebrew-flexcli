@@ -244,6 +244,7 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 	var startDate string
 	var endDate string
 	var force bool
+	var id string
 
 	cmd := &cobra.Command{
 		Use:     "gymcoach",
@@ -266,6 +267,12 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 					dateQuery += "&"
 				}
 				dateQuery += "force=true"
+			}
+			if id != "" {
+				if dateQuery != "" {
+					dateQuery += "&"
+				}
+				dateQuery += "id=" + id
 			}
 			path := "/api/activity/import/gymcoach"
 			if dateQuery != "" {
@@ -332,5 +339,6 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 	cmd.Flags().StringVar(&startDate, "start-date", "", "Backfill from this date (YYYY-MM-DD); requires --end-date")
 	cmd.Flags().StringVar(&endDate, "end-date", "", "Backfill through this date (YYYY-MM-DD); requires --start-date")
 	cmd.Flags().BoolVar(&force, "force", false, "Recreate activities even if already synced (e.g. deleted in Garmin)")
+	cmd.Flags().StringVar(&id, "id", "", "Target a specific session for force resync (session ID)")
 	return cmd
 }
