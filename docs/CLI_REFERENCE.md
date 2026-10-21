@@ -1274,6 +1274,7 @@ Available Commands:
   download      Download an activity file from Garmin Connect (defaults to 'latest')
   download-bulk Download multiple activities in a ZIP bundle
   list          List synced activities with their Garmin activity IDs
+  privacy       Manage activity privacy (get/set)
   rename        Rename an activity in Garmin Connect (defaults to 'latest')
   show          Show details for a specific activity (defaults to 'latest')
   upload        Upload a FIT/GPX/TCX file to Garmin Connect
@@ -1366,6 +1367,69 @@ Flags:
       --page int            Page number (default 1)
       --page-size int       Number of activities per page (default 20)
       --start-date string   Only include activities on or after this date (YYYY-MM-DD)
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data activity privacy`
+
+```
+Manage activity privacy (get/set)
+
+Usage:
+  flexcli profile data activity privacy [command]
+
+Available Commands:
+  get         Get the privacy level of an activity (defaults to 'latest')
+  set         Set the privacy level of an activity (private, subscribers, groups, public)
+
+Flags:
+  -h, --help   help for privacy
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+
+Use "flexcli profile data activity privacy [command] --help" for more information about a command.
+```
+
+### `flexcli profile data activity privacy get`
+
+```
+Get the privacy level of an activity (defaults to 'latest')
+
+Usage:
+  flexcli profile data activity privacy get [flags]
+
+Flags:
+  -h, --help        help for get
+      --id string   Activity ID (defaults to 'latest') (default "latest")
+      --json        Output in JSON format
+
+Global Flags:
+      --config string    config file (default is $HOME/.flexcli.json)
+      --context string   Use specific context from config
+      --key string       FlexCoach API key override (env: FLEXCLI_API_KEY)
+      --server string    FlexCoach server URL override (env: FLEXCLI_SERVER_URL)
+```
+
+### `flexcli profile data activity privacy set`
+
+```
+Set the privacy level of an activity (private, subscribers, groups, public)
+
+Usage:
+  flexcli profile data activity privacy set <privacy> [flags]
+
+Flags:
+  -h, --help        help for set
+      --id string   Activity ID (defaults to 'latest') (default "latest")
 
 Global Flags:
       --config string    config file (default is $HOME/.flexcli.json)
