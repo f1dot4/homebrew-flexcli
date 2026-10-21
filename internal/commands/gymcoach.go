@@ -290,11 +290,14 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 			}
 
 			var data struct {
-				NewCount      int `json:"new_count"`
-				EnrichedCount int `json:"enriched_count"`
-				SkippedCount  int `json:"skipped_count"`
-				FailedCount   int `json:"failed_count"`
-				Synced        []struct {
+				NewCount          int      `json:"new_count"`
+				EnrichedCount     int      `json:"enriched_count"`
+				SkippedCount      int      `json:"skipped_count"`
+				FailedCount       int      `json:"failed_count"`
+				WeightPushStatus  string   `json:"weight_push_status"`
+				WeightKg          *float64 `json:"weight_kg"`
+				WeightPushMessage *string  `json:"weight_push_message"`
+				Synced            []struct {
 					Date        string `json:"date"`
 					WorkoutName string `json:"workout_name"`
 					ActivityID  string `json:"activity_id"`
@@ -319,6 +322,22 @@ func newDataSyncGymCoachCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				"✅ GymCoach sync complete (%d new, %d enriched, %d skipped, %d failed)\n",
 				data.NewCount, data.EnrichedCount, data.SkippedCount, data.FailedCount,
 			)
+
+			// Display weight push status if present
+			if data.WeightPushStatus != "" && data.WeightPushStatus != "disabled" {
+				if data.WeightPushStatus == "pushed" && data.WeightKg != nil {
+					fmt.Printf("  💪 Weight: pushed %.1f kg to GymCoach\n", *data.WeightKg)
+				} else if data.WeightPushStatus == "unchanged" && data.WeightPushMessage != nil {
+					fmt.Printf("  💪 Weight: %s\n", *data.WeightPushMessage)
+				} else if data.WeightPushStatus == "stale" || data.WeightPushStatus == "no_data" {
+					if data.WeightPushMessage != nil {
+						fmt.Printf("  ⚠️  Weight: %s\n", *data.WeightPushMessage)
+					}
+				} else if data.WeightPushStatus == "failed" && data.WeightPushMessage != nil {
+					fmt.Printf("  ❌ Weight push failed: %s\n", *data.WeightPushMessage)
+				}
+			}
+
 			for _, s := range data.Synced {
 				icon := "🆕"
 				if s.Action == "enriched" {
