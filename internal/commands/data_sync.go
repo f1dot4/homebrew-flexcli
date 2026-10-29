@@ -3,9 +3,10 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
-	"github.com/f1dot4/flexcli/internal/api"
 	"github.com/f1dot4/flexcli/internal/config"
+	"github.com/f1dot4/flexcli/internal/mcp"
 	"github.com/spf13/cobra"
 )
 
@@ -31,39 +32,48 @@ func newDataSyncGarminCmd(rootCfg **config.Config, resolvedCtx *config.Context) 
 		Use:   "garmin",
 		Short: "Sync data from Garmin Connect",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
-			events, err := client.PostSSE("/api/sync/garmin/stream")
+			client := mcp.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+
+			// Start sync job
+			result, err := client.CallTool("sync_garmin", map[string]interface{}{})
 			if err != nil {
-				return err
+				return fmt.Errorf("failed to start sync: %w", err)
 			}
 
-			var syncSuccess bool
-			var finalError string
-
-			for event := range events {
-				if event.Event == "result" {
-					var result struct {
-						Success bool   `json:"success"`
-						Error   string `json:"error"`
-					}
-					if err := json.Unmarshal([]byte(event.Data), &result); err == nil {
-						syncSuccess = result.Success
-						finalError = result.Error
-					}
-				} else {
-					fmt.Printf("🔄 %s\n", event.Data)
-				}
+			// Parse job response
+			var jobResp struct {
+				JobID  string `json:"job_id"`
+				Status string `json:"status"`
+			}
+			if err := json.Unmarshal(result, &jobResp); err != nil {
+				return fmt.Errorf("failed to parse response: %w", err)
 			}
 
-			if syncSuccess {
-				fmt.Println("✅ Garmin synchronization complete.")
+			// Poll for completion
+			status, err := mcp.PollForCompletion(
+				client,
+				"get_sync_status",
+				jobResp.JobID,
+				1*time.Second,
+				func(message string) {
+					fmt.Printf("🔄 %s\n", message)
+				},
+			)
+			if err != nil {
+				return fmt.Errorf("sync failed: %w", err)
+			}
+
+			// Parse result
+			var syncResult struct {
+				Success          bool `json:"success"`
+				ActivitiesSynced int  `json:"activities_synced"`
+				WellnessSynced   int  `json:"wellness_synced"`
+			}
+			if err := json.Unmarshal(status.Result, &syncResult); err == nil {
+				fmt.Printf("✅ Garmin synchronization complete: %d activities, %d wellness entries\n",
+					syncResult.ActivitiesSynced, syncResult.WellnessSynced)
 			} else {
-				if finalError != "" {
-					fmt.Printf("❌ Garmin synchronization failed: %s\n", finalError)
-				} else {
-					fmt.Println("❌ Garmin synchronization failed.")
-				}
-				return fmt.Errorf("sync failed")
+				fmt.Println("✅ Garmin synchronization complete.")
 			}
 
 			return nil
@@ -89,44 +99,60 @@ func newDataSyncWithingsCmd(rootCfg **config.Config, resolvedCtx *config.Context
 				return fmt.Errorf("--start-date and --end-date must both be provided, or neither")
 			}
 
-			client := api.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
+			client := mcp.NewClient(resolvedCtx.ServerURL, resolvedCtx.APIKey)
 
-			path := "/api/sync/withings/stream"
-			if dateQuery := buildDateRangeQuery(startDate, endDate); dateQuery != "" {
-				path += "?" + dateQuery
+			// Build arguments
+			toolArgs := map[string]interface{}{}
+			if startDate != "" {
+				toolArgs["start_date"] = startDate
 			}
-			events, err := client.PostSSE(path)
+			if endDate != "" {
+				toolArgs["end_date"] = endDate
+			}
+
+			// Start sync job
+			result, err := client.CallTool("sync_withings", toolArgs)
 			if err != nil {
-				return err
+				return fmt.Errorf("failed to start sync: %w", err)
 			}
 
-			var syncSuccess bool
-			var finalError string
+			// Parse job response
+			var jobResp struct {
+				JobID  string `json:"job_id"`
+				Status string `json:"status"`
+			}
+			if err := json.Unmarshal(result, &jobResp); err != nil {
+				return fmt.Errorf("failed to parse response: %w", err)
+			}
 
-			for event := range events {
-				if event.Event == "result" {
-					var result struct {
-						Success bool   `json:"success"`
-						Error   string `json:"error"`
-					}
-					if err := json.Unmarshal([]byte(event.Data), &result); err == nil {
-						syncSuccess = result.Success
-						finalError = result.Error
-					}
+			// Poll for completion
+			status, err := mcp.PollForCompletion(
+				client,
+				"get_sync_status",
+				jobResp.JobID,
+				1*time.Second,
+				func(message string) {
+					fmt.Printf("🔄 %s\n", message)
+				},
+			)
+			if err != nil {
+				return fmt.Errorf("sync failed: %w", err)
+			}
+
+			// Parse result
+			var syncResult struct {
+				Success           bool   `json:"success"`
+				Message           string `json:"message"`
+				MeasurementsSynced int   `json:"measurements_synced"`
+			}
+			if err := json.Unmarshal(status.Result, &syncResult); err == nil {
+				if syncResult.Message != "" {
+					fmt.Printf("✅ %s (%d measurements)\n", syncResult.Message, syncResult.MeasurementsSynced)
 				} else {
-					fmt.Printf("🔄 %s\n", event.Data)
+					fmt.Printf("✅ Withings synchronization complete: %d measurements\n", syncResult.MeasurementsSynced)
 				}
-			}
-
-			if syncSuccess {
-				fmt.Println("✅ Withings synchronization complete.")
 			} else {
-				if finalError != "" {
-					fmt.Printf("❌ Withings synchronization failed: %s\n", finalError)
-				} else {
-					fmt.Println("❌ Withings synchronization failed.")
-				}
-				return fmt.Errorf("sync failed")
+				fmt.Println("✅ Withings synchronization complete.")
 			}
 
 			return nil
