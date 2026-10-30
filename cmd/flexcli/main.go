@@ -16,7 +16,7 @@ var (
 	contextName string
 	rootCfg     *config.Config
 	resolvedCtx config.Context
-	Version     = "0.9.0"
+	Version     = "0.10.0"
 )
 
 var rootCmd = &cobra.Command{
